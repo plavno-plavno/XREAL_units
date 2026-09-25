@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EQ-1001 · Centrifugal pump P-12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+
+  :root {
+    /* Оцинкованный нейтрал с холодным уклоном + синий предписывающих знаков. */
+    --ground:      #f2f3f1;
+    --surface:     #ffffff;
+    --surface-sunk:#e9ebe8;
+    --ink:         #151a1c;
+    --ink-muted:   #5d6763;
+    --ink-faint:   #8a938e;
+    --rule:        #d3d8d6;
+    --rule-strong: #b6bdb9;
+    --accent:      #12518c;
+    --accent-soft: #e4edf6;
+    --warn:        #a35c06;
+    --warn-soft:   #f8efe1;
+    --plate-face:  #e4e7e3;
+    --plate-edge:  #c2c8c3;
+    --qr-field:    #ffffff;
+    --qr-ink:      #11161a;
+    --shadow:      0 1px 0 rgba(21, 26, 28, .06), 0 2px 10px -6px rgba(21, 26, 28, .28);
+
+    --step-0: 1rem;
+    --step-1: 1.125rem;
+    --step-2: 1.5rem;
+    --step-3: 2rem;
+    --step-4: 2.75rem;
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --narrow: "Archivo Narrow", "IBM Plex Sans Condensed", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #101413;
+      --surface:     #181d1c;
+      --surface-sunk:#111615;
+      --ink:         #e6eae7;
+      --ink-muted:   #9aa5a0;
+      --ink-faint:   #6d7873;
+      --rule:        #2b332f;
+      --rule-strong: #3c4641;
+      --accent:      #6aa9e8;
+      --accent-soft: #16273a;
+      --warn:        #d79a4a;
+      --warn-soft:   #2a2116;
+      --plate-face:  #222927;
+      --plate-edge:  #333c38;
+      --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #101413;
+    --surface:     #181d1c;
+    --surface-sunk:#111615;
+    --ink:         #e6eae7;
+    --ink-muted:   #9aa5a0;
+    --ink-faint:   #6d7873;
+    --rule:        #2b332f;
+    --rule-strong: #3c4641;
+    --accent:      #6aa9e8;
+    --accent-soft: #16273a;
+    --warn:        #d79a4a;
+    --warn-soft:   #2a2116;
+    --plate-face:  #222927;
+    --plate-edge:  #333c38;
+    --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 4rem;
+  }
+
+  a { color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+
+  /* ---------- карточка устройства (то, что открывается в очках) ---------- */
+
+  /* Отдельный корень, а не секция стенда: в очках это единственное, что
+     должно быть на экране. Шире и крупнее стенда — читают с расстояния
+     вытянутой руки, часто боковым зрением. */
+  .device {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem) 3rem;
+  }
+
+  .device[hidden] { display: none !important; }
+
+  .dev-plate {
+    background: var(--plate-face);
+    border: 1px solid var(--plate-edge);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+  }
+
+  .dev-id {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: .05em;
+  }
+
+  .dev-kind {
+    font-family: var(--narrow);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--plate-edge);
+    padding: .1rem .45rem;
+  }
+
+  .dev-doc {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--ink-faint);
+  }
+
+  .device h1 { margin: 1.2rem 0 0; font-size: var(--step-3); }
+
+  .dev-where {
+    font-family: var(--narrow);
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    margin: .25rem 0 0;
+  }
+
+  .dev-sheet {
+    font-size: .85rem;
+    color: var(--ink-faint);
+    margin: .15rem 0 0;
+  }
+
+  .dev-block { margin-top: 2rem; }
+
+  .dev-block h2 {
+    font-family: var(--narrow);
+    font-weight: 700;
+    font-size: var(--step-2);
+    margin: 0 0 .1rem;
+  }
+
+  .dev-block .src {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 .8rem;
+  }
+
+  /* Нормы — главное, ради чего инспектор смотрит на экран: крупно,
+     моноширинно, числа друг под другом. */
+  .norms {
+    display: grid;
+    gap: .5rem;
+  }
+
+  .norm {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: .7rem .9rem;
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+    flex-wrap: wrap;
+  }
+
+  .norm-name {
+    font-family: var(--narrow);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .norm-range {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .steps, .issues { margin: 0; padding: 0; list-style: none; display: grid; gap: .45rem; }
+
+  .steps li, .issues li {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: .6rem .9rem .6rem 2.4rem;
+    position: relative;
+    font-size: .95rem;
+  }
+
+  .steps li::before {
+    content: counter(step);
+    counter-increment: step;
+    position: absolute;
+    left: .9rem;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--ink-faint);
+  }
+
+  .steps { counter-reset: step; }
+
+  .issues li {
+    border-left: 3px solid var(--warn);
+    background: var(--warn-soft);
+    padding-left: .9rem;
+  }
+
+  .sections { display: grid; gap: 1rem; }
+
+  .section-card {
+    background: var(--surface-sunk);
+    border: 1px solid var(--rule);
+    padding: .85rem 1rem;
+  }
+
+  .section-card h3 {
+    font-family: var(--narrow);
+    font-size: .95rem;
+    font-weight: 600;
+    margin: 0 0 .3rem;
+    color: var(--ink);
+  }
+
+  .section-card p { margin: 0; font-size: .9rem; color: var(--ink-muted); }
+
+  /* Переход между устройствами — «покликать» на стенде. */
+  .dev-nav {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+  }
+
+  .dev-nav a {
+    font-family: var(--narrow);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule-strong);
+    padding: .4rem .7rem;
+    text-decoration: none;
+    color: var(--ink-muted);
+  }
+
+  .dev-nav a:hover { border-color: var(--accent); color: var(--accent); }
+  .dev-nav a.stand { margin-left: auto; border-style: dashed; }
+
+  .dev-miss {
+    background: var(--warn-soft);
+    border: 1px solid var(--warn);
+    padding: 1rem 1.15rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .norm-range { margin-left: 0; font-size: 1.05rem; }
+    .dev-doc { margin-left: 0; flex-basis: 100%; }
+    .dev-nav a.stand { margin-left: 0; }
+  }
+
+
+  /* ---------- схема агрегата ---------- */
+
+  /* Рисунок встроенный: внешние картинки в опубликованной странице
+     блокируются, а схема ещё и переживает смену темы — она нарисована
+     теми же переменными, что и всё остальное. */
+  .dev-art {
+    margin-top: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+    padding: 1rem 1rem .6rem;
+  }
+
+  .dev-art svg { width: 100%; height: auto; display: block; }
+
+  .art-cap {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: .6rem 0 0;
+    text-align: right;
+  }
+
+  .art-fill   { fill: var(--surface-sunk); stroke: var(--rule-strong); stroke-width: 2; }
+  .art-plate  { fill: var(--plate-face);   stroke: var(--plate-edge);  stroke-width: 2; }
+  .art-thin   { fill: none; stroke: var(--rule-strong); stroke-width: 1.5; }
+  .art-line   { fill: none; stroke: var(--ink-muted); stroke-width: 2; stroke-linecap: round; }
+  .art-accent { fill: none; stroke: var(--accent); stroke-width: 2.5;
+                stroke-linecap: round; stroke-linejoin: round; }
+  .art-glass  { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+  .art-tag    { font-family: var(--mono); font-size: 11px; fill: var(--ink-faint);
+                letter-spacing: .08em; }
+  .art-read   { font-family: var(--mono); font-size: 15px; font-weight: 600;
+                fill: var(--accent); }
+
+
+  /* Schematic and round order side by side. */
+  .brief { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+           gap: 1.2rem; align-items: start; margin-top: 1.2rem; }
+  @media (max-width: 720px) { .brief { grid-template-columns: minmax(0, 1fr); } }
+
+  .howto { background: var(--surface); border: 1px solid var(--rule);
+           box-shadow: var(--shadow); padding: 1rem 1.1rem; }
+  .howto h2 { font-family: var(--narrow); font-weight: 700; font-size: var(--step-1);
+              margin: 0 0 .1rem; }
+  .howto .src { font-family: var(--mono); font-size: .68rem; letter-spacing: .06em;
+                text-transform: uppercase; color: var(--ink-faint); margin: 0 0 .7rem; }
+  .howto ol { margin: 0; padding-left: 1.2rem; display: grid; gap: .4rem;
+              font-size: .9rem; color: var(--ink-muted); }
+  .howto ol b { color: var(--ink); font-weight: 600; }
+  .howto .tip { margin: .85rem 0 0; padding-top: .7rem; border-top: 1px dashed var(--rule);
+                font-size: .85rem; color: var(--ink-muted); }
+  .howto .tip b { color: var(--warn); font-weight: 600; }
+
+  /* Норма превращается в карточку: что мерить, сколько должно быть,
+     где смотреть и когда бить тревогу. */
+  .norm { display: grid; gap: .3rem; align-items: start; }
+  .norm-top { display: flex; align-items: baseline; gap: .9rem; flex-wrap: wrap; }
+  .norm-how { font-size: .875rem; color: var(--ink-muted); }
+  .norm-flag { font-size: .85rem; color: var(--warn); }
+  .norm-flag b { font-weight: 600; }
+  .issue-do { margin: .45rem 0 0; font-size: .875rem; color: var(--ink); }
+  .issue-do b { font-weight: 600; }
+
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="dev-plate">
+    <span class="punch"></span>
+    <span class="dev-id">EQ-1001</span>
+    <span class="dev-kind">pump</span>
+    <span class="dev-doc">DOC-P12-MAINT</span>
+  </div>
+
+  <h1>Centrifugal pump P-12</h1>
+  <p class="dev-where">Pump room, level -1</p>
+  <p class="dev-sheet">P-12 centrifugal pump — monthly service sheet</p>
+
+  <div class="brief">
+    <figure class="dev-art" style="margin:0"><svg viewBox="0 0 400 210" role="img" aria-label="Centrifugal pump: volute, coupling guard, motor on a baseplate"><rect class="art-plate" x="28" y="168" width="344" height="16"/><path class="art-thin" d="M36 184l-8 12M76 184l-8 12M116 184l-8 12M156 184l-8 12M196 184l-8 12M236 184l-8 12M276 184l-8 12M316 184l-8 12M356 184l-8 12"/><rect class="art-fill" x="214" y="100" width="122" height="64" rx="4"/><path class="art-thin" d="M232 108v48M248 108v48M264 108v48M280 108v48M296 108v48M312 108v48"/><rect class="art-fill" x="252" y="84" width="42" height="18" rx="2"/><rect class="art-thin" x="186" y="116" width="28" height="30"/><path class="art-thin" d="M200 116v30"/><circle class="art-fill" cx="130" cy="128" r="48"/><circle class="art-thin" cx="130" cy="128" r="17"/><path class="art-thin" d="M130 111a17 17 0 0 1 0 34 30 30 0 0 0 0-46"/><rect class="art-fill" x="28" y="114" width="54" height="28"/><rect class="art-plate" x="78" y="106" width="9" height="44"/><rect class="art-fill" x="114" y="40" width="32" height="44"/><rect class="art-plate" x="106" y="34" width="48" height="9"/><circle class="art-glass" cx="180" cy="62" r="14"/><path class="art-accent" d="M180 62l7-7"/><path class="art-thin" d="M166 62h-20"/><path class="art-accent" d="M6 128h16"/><path class="art-accent" d="M14 121l8 7-8 7"/><path class="art-accent" d="M130 30V14"/><path class="art-accent" d="M123 22l7-8 7 8"/><text class="art-tag" x="6" y="150">IN</text><text class="art-tag" x="146" y="24">OUT</text><text class="art-tag" x="248" y="200">M</text></svg><figcaption class="art-cap">Schematic · centrifugal pump, motor driven</figcaption></figure>
+    <div class="howto">
+      <h2>Round order</h2>
+      <p class="src">the assistant asks in exactly this order</p>
+      <ol>
+      <li><b>Visual.</b> Damage to the housing, cables and connectors — before starting.</li>
+      <li><b>Operation.</b> Starts and runs steady: no unusual noise, vibration or smell.</li>
+      <li><b>Readings — 3.</b> Check each against the range below and say it out loud.</li>
+      <li><b>Service — 4 steps.</b> The list below, in order.</li>
+      <li><b>Known issue.</b> This unit has its own — check it separately.</li>
+      <li><b>Safety.</b> Guards in place, the emergency stop trips.</li>
+      <li><b>Work done.</b> What was replaced, cleaned or adjusted.</li>
+      </ol>
+      <p class="tip"><b>Say the figure out loud.</b> A reading you did not
+        speak cannot be recorded — the server checks the number against your
+        own words. And answer as you go: a turn that saves them all for the
+        end is sent back.</p>
+    </div>
+  </div>
+
+  <section class="dev-block">
+    <h2>What to check, and how</h2>
+    <p class="src">ranges from the service sheet — the server judges against them</p>
+    <div class="norms">
+      <div class="norm"><div class="norm-top"><span class="norm-name">discharge pressure</span><span class="norm-range">4.2–4.8 bar</span></div><div class="norm-how">Gauge on the discharge nozzle, right after the volute. Read it with the pump running, no sooner than two minutes after start — the needle jumps on start-up.</div><div class="norm-flag"><b>Out of range:</b> Climbing past 5 bar is the seal flush line, not the impeller.</div></div>
+      <div class="norm"><div class="norm-top"><span class="norm-name">bearing temperature</span><span class="norm-range">≤ 70 °C</span></div><div class="norm-how">Infrared thermometer on the bearing housing metal, coupling side. Not on the guard — the guard always reads cooler.</div><div class="norm-flag"><b>Out of range:</b> Above 70 C stop the pump and report it; do not wait for the end of the round.</div></div>
+      <div class="norm"><div class="norm-top"><span class="norm-name">vibration at the bearing housing</span><span class="norm-range">≤ 4.5 mm/s</span></div><div class="norm-how">Vibration meter held vertically on the bearing housing, probe pressed against clean metal.</div></div>
+    </div>
+  </section>
+
+  <section class="dev-block">
+    <h2>Service steps</h2>
+    <p class="src">this round, in order</p>
+    <ul class="steps">
+      <li>inspect the mechanical seal for weeping</li>
+      <li>grease both bearings with two strokes of EP2</li>
+      <li>confirm the coupling guard is bolted</li>
+      <li>verify the local emergency stop trips the motor</li>
+    </ul>
+  </section>
+
+  <section class="dev-block">
+    <h2>Known issues</h2>
+    <p class="src">what to expect from this unit in particular</p>
+    <ul class="issues">
+      <li>the seal flush line clogs — a slow pressure climb above 5 bar usually means the flush line, not the impeller</li>
+    </ul>
+    <p class="issue-do"><b>What to do:</b> Pressure drop or weeping — check the seal flush line first. Look at the impeller last.</p>
+  </section>
+
+  <section class="dev-block">
+    <h2>Service sheet, verbatim</h2>
+    <p class="src">the same text the assistant reads</p>
+    <div class="sections">
+      <div class="section-card"><h3>Normal operating range</h3><p>Discharge pressure 4.2 to 4.8 bar, bearing temperature below 70 C, no visible shaft seal leakage. Vibration at the bearing housing below 4.5 mm/s.</p></div>
+      <div class="section-card"><h3>Monthly service</h3><p>Inspect the mechanical seal for weeping, grease both bearings with two strokes of EP2, confirm the coupling guard is bolted, verify the local emergency stop trips the motor.</p></div>
+      <div class="section-card"><h3>Known issues</h3><p>Seal flush line clogs on this unit; a slow pressure climb above 5 bar usually means the flush line, not the impeller.</p></div>
+    </div>
+  </section>
+
+  <nav class="dev-nav">
+    <a href="EQ-1002.html">EQ-1002</a>
+    <a href="EQ-1003.html">EQ-1003</a>
+    <a href="EQ-1004.html">EQ-1004</a>
+    <a class="stand" href="../index.html">Stand and QR codes</a>
+  </nav>
+</div>
+</body>
+</html>

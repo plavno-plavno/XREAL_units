@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EQ-1002 · Air compressor AC-3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+
+  :root {
+    /* Оцинкованный нейтрал с холодным уклоном + синий предписывающих знаков. */
+    --ground:      #f2f3f1;
+    --surface:     #ffffff;
+    --surface-sunk:#e9ebe8;
+    --ink:         #151a1c;
+    --ink-muted:   #5d6763;
+    --ink-faint:   #8a938e;
+    --rule:        #d3d8d6;
+    --rule-strong: #b6bdb9;
+    --accent:      #12518c;
+    --accent-soft: #e4edf6;
+    --warn:        #a35c06;
+    --warn-soft:   #f8efe1;
+    --plate-face:  #e4e7e3;
+    --plate-edge:  #c2c8c3;
+    --qr-field:    #ffffff;
+    --qr-ink:      #11161a;
+    --shadow:      0 1px 0 rgba(21, 26, 28, .06), 0 2px 10px -6px rgba(21, 26, 28, .28);
+
+    --step-0: 1rem;
+    --step-1: 1.125rem;
+    --step-2: 1.5rem;
+    --step-3: 2rem;
+    --step-4: 2.75rem;
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --narrow: "Archivo Narrow", "IBM Plex Sans Condensed", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #101413;
+      --surface:     #181d1c;
+      --surface-sunk:#111615;
+      --ink:         #e6eae7;
+      --ink-muted:   #9aa5a0;
+      --ink-faint:   #6d7873;
+      --rule:        #2b332f;
+      --rule-strong: #3c4641;
+      --accent:      #6aa9e8;
+      --accent-soft: #16273a;
+      --warn:        #d79a4a;
+      --warn-soft:   #2a2116;
+      --plate-face:  #222927;
+      --plate-edge:  #333c38;
+      --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #101413;
+    --surface:     #181d1c;
+    --surface-sunk:#111615;
+    --ink:         #e6eae7;
+    --ink-muted:   #9aa5a0;
+    --ink-faint:   #6d7873;
+    --rule:        #2b332f;
+    --rule-strong: #3c4641;
+    --accent:      #6aa9e8;
+    --accent-soft: #16273a;
+    --warn:        #d79a4a;
+    --warn-soft:   #2a2116;
+    --plate-face:  #222927;
+    --plate-edge:  #333c38;
+    --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 4rem;
+  }
+
+  a { color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+
+  /* ---------- карточка устройства (то, что открывается в очках) ---------- */
+
+  /* Отдельный корень, а не секция стенда: в очках это единственное, что
+     должно быть на экране. Шире и крупнее стенда — читают с расстояния
+     вытянутой руки, часто боковым зрением. */
+  .device {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem) 3rem;
+  }
+
+  .device[hidden] { display: none !important; }
+
+  .dev-plate {
+    background: var(--plate-face);
+    border: 1px solid var(--plate-edge);
+    box-shadow: var(--shadow);
+    padding: 1rem 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-wrap: wrap;
+  }
+
+  .dev-id {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: .05em;
+  }
+
+  .dev-kind {
+    font-family: var(--narrow);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--plate-edge);
+    padding: .1rem .45rem;
+  }
+
+  .dev-doc {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--ink-faint);
+  }
+
+  .device h1 { margin: 1.2rem 0 0; font-size: var(--step-3); }
+
+  .dev-where {
+    font-family: var(--narrow);
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    margin: .25rem 0 0;
+  }
+
+  .dev-sheet {
+    font-size: .85rem;
+    color: var(--ink-faint);
+    margin: .15rem 0 0;
+  }
+
+  .dev-block { margin-top: 2rem; }
+
+  .dev-block h2 {
+    font-family: var(--narrow);
+    font-weight: 700;
+    font-size: var(--step-2);
+    margin: 0 0 .1rem;
+  }
+
+  .dev-block .src {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 .8rem;
+  }
+
+  /* Нормы — главное, ради чего инспектор смотрит на экран: крупно,
+     моноширинно, числа друг под другом. */
+  .norms {
+    display: grid;
+    gap: .5rem;
+  }
+
+  .norm {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: .7rem .9rem;
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+    flex-wrap: wrap;
+  }
+
+  .norm-name {
+    font-family: var(--narrow);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .norm-range {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .steps, .issues { margin: 0; padding: 0; list-style: none; display: grid; gap: .45rem; }
+
+  .steps li, .issues li {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: .6rem .9rem .6rem 2.4rem;
+    position: relative;
+    font-size: .95rem;
+  }
+
+  .steps li::before {
+    content: counter(step);
+    counter-increment: step;
+    position: absolute;
+    left: .9rem;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--ink-faint);
+  }
+
+  .steps { counter-reset: step; }
+
+  .issues li {
+    border-left: 3px solid var(--warn);
+    background: var(--warn-soft);
+    padding-left: .9rem;
+  }
+
+  .sections { display: grid; gap: 1rem; }
+
+  .section-card {
+    background: var(--surface-sunk);
+    border: 1px solid var(--rule);
+    padding: .85rem 1rem;
+  }
+
+  .section-card h3 {
+    font-family: var(--narrow);
+    font-size: .95rem;
+    font-weight: 600;
+    margin: 0 0 .3rem;
+    color: var(--ink);
+  }
+
+  .section-card p { margin: 0; font-size: .9rem; color: var(--ink-muted); }
+
+  /* Переход между устройствами — «покликать» на стенде. */
+  .dev-nav {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+  }
+
+  .dev-nav a {
+    font-family: var(--narrow);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule-strong);
+    padding: .4rem .7rem;
+    text-decoration: none;
+    color: var(--ink-muted);
+  }
+
+  .dev-nav a:hover { border-color: var(--accent); color: var(--accent); }
+  .dev-nav a.stand { margin-left: auto; border-style: dashed; }
+
+  .dev-miss {
+    background: var(--warn-soft);
+    border: 1px solid var(--warn);
+    padding: 1rem 1.15rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .norm-range { margin-left: 0; font-size: 1.05rem; }
+    .dev-doc { margin-left: 0; flex-basis: 100%; }
+    .dev-nav a.stand { margin-left: 0; }
+  }
+
+
+  /* ---------- схема агрегата ---------- */
+
+  /* Рисунок встроенный: внешние картинки в опубликованной странице
+     блокируются, а схема ещё и переживает смену темы — она нарисована
+     теми же переменными, что и всё остальное. */
+  .dev-art {
+    margin-top: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+    padding: 1rem 1rem .6rem;
+  }
+
+  .dev-art svg { width: 100%; height: auto; display: block; }
+
+  .art-cap {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: .6rem 0 0;
+    text-align: right;
+  }
+
+  .art-fill   { fill: var(--surface-sunk); stroke: var(--rule-strong); stroke-width: 2; }
+  .art-plate  { fill: var(--plate-face);   stroke: var(--plate-edge);  stroke-width: 2; }
+  .art-thin   { fill: none; stroke: var(--rule-strong); stroke-width: 1.5; }
+  .art-line   { fill: none; stroke: var(--ink-muted); stroke-width: 2; stroke-linecap: round; }
+  .art-accent { fill: none; stroke: var(--accent); stroke-width: 2.5;
+                stroke-linecap: round; stroke-linejoin: round; }
+  .art-glass  { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+  .art-tag    { font-family: var(--mono); font-size: 11px; fill: var(--ink-faint);
+                letter-spacing: .08em; }
+  .art-read   { font-family: var(--mono); font-size: 15px; font-weight: 600;
+                fill: var(--accent); }
+
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="dev-plate">
+    <span class="punch"></span>
+    <span class="dev-id">EQ-1002</span>
+    <span class="dev-kind">compressor</span>
+    <span class="dev-doc">DOC-AC3-MAINT</span>
+  </div>
+
+  <h1>Air compressor AC-3</h1>
+  <p class="dev-where">Compressor hall, bay 2</p>
+  <p class="dev-sheet">AC-3 screw compressor — weekly service sheet</p>
+
+    <figure class="dev-art" style="margin:1.2rem 0 0"><svg viewBox="0 0 400 210" role="img" aria-label="Винтовой компрессор в шкафу и вертикальный ресивер"><path class="art-thin" d="M14 186h372"/><rect class="art-fill" x="32" y="58" width="198" height="112" rx="3"/><path class="art-thin" d="M50 100h162M50 112h162M50 124h162M50 136h162M50 148h162"/><rect class="art-glass" x="48" y="70" width="60" height="20" rx="2"/><circle class="art-accent" cx="124" cy="80" r="4"/><circle class="art-thin" cx="140" cy="80" r="4"/><path class="art-thin" d="M212 104v22"/><rect class="art-plate" x="44" y="170" width="24" height="10"/><rect class="art-plate" x="194" y="170" width="24" height="10"/><rect class="art-fill" x="230" y="104" width="38" height="14"/><rect class="art-fill" x="268" y="70" width="72" height="92"/><ellipse class="art-fill" cx="304" cy="70" rx="36" ry="11"/><ellipse class="art-plate" cx="304" cy="162" rx="36" ry="11"/><path class="art-thin" d="M280 170v16M328 170v16"/><circle class="art-glass" cx="304" cy="98" r="15"/><path class="art-accent" d="M304 98l8-6"/><path class="art-line" d="M304 173v9h14"/><text class="art-tag" x="286" y="200">DRAIN</text><path class="art-accent" d="M342 90h26"/><path class="art-accent" d="M360 83l8 7-8 7"/><text class="art-tag" x="344" y="76">AIR</text></svg><figcaption class="art-cap">Схема · винтовой компрессор с ресивером</figcaption></figure>
+
+  <section class="dev-block">
+    <h2>Нормальные показания</h2>
+    <p class="src">сервисный лист · то, с чем сверяет сервер</p>
+    <div class="norms">
+      <div class="norm"><span class="norm-name">working pressure</span><span class="norm-range">7.0–7.5 bar</span></div>
+      <div class="norm"><span class="norm-name">oil temperature</span><span class="norm-range">75–95 °C</span></div>
+      <div class="norm"><span class="norm-name">intake filter differential</span><span class="norm-range">≤ 0.05 bar</span></div>
+    </div>
+  </section>
+
+  <section class="dev-block">
+    <h2>Регламент</h2>
+    <p class="src">что нужно сделать на этом обходе</p>
+    <ul class="steps">
+      <li>drain the condensate manually and confirm the auto drain fires</li>
+      <li>check the oil level in the sight glass is at half</li>
+      <li>wipe and inspect the intake filter</li>
+      <li>listen for unloader chatter at idle</li>
+    </ul>
+  </section>
+
+  <section class="dev-block">
+    <h2>Известные болячки</h2>
+    <p class="src">чего ждать именно от этого узла</p>
+    <ul class="issues">
+      <li>the auto drain valve sticks in cold weather — a puddle under bay 2 means the drain, check it before suspecting the separator</li>
+    </ul>
+  </section>
+
+  <section class="dev-block">
+    <h2>Сервисный лист дословно</h2>
+    <p class="src">тот же текст, что читает ассистент</p>
+    <div class="sections">
+      <div class="section-card"><h3>Normal operating range</h3><p>Working pressure 7.0 to 7.5 bar, oil temperature 75 to 95 C, condensate drain cycling automatically. Intake filter differential below 0.05 bar.</p></div>
+      <div class="section-card"><h3>Weekly service</h3><p>Drain condensate manually and confirm the auto drain fires, check oil level in the sight glass at half, wipe and inspect the intake filter, listen for unloader chatter at idle.</p></div>
+      <div class="section-card"><h3>Known issues</h3><p>The auto drain valve on this unit sticks in cold weather; a puddle under bay 2 means the drain, check it before suspecting the separator.</p></div>
+    </div>
+  </section>
+
+  <nav class="dev-nav">
+    <a href="EQ-1001.html">EQ-1001</a>
+    <a href="EQ-1003.html">EQ-1003</a>
+    <a href="EQ-1004.html">EQ-1004</a>
+    <a class="stand" href="../index.html">Все устройства и QR-коды</a>
+  </nav>
+</div>
+</body>
+</html>

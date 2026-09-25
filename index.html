@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Метки обхода XREAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script src="vendor/qrcode.js"></script>
+<style>
+  :root {
+    /* Оцинкованный нейтрал с холодным уклоном + синий предписывающих знаков. */
+    --ground:      #f2f3f1;
+    --surface:     #ffffff;
+    --surface-sunk:#e9ebe8;
+    --ink:         #151a1c;
+    --ink-muted:   #5d6763;
+    --ink-faint:   #8a938e;
+    --rule:        #d3d8d6;
+    --rule-strong: #b6bdb9;
+    --accent:      #12518c;
+    --accent-soft: #e4edf6;
+    --warn:        #a35c06;
+    --warn-soft:   #f8efe1;
+    --plate-face:  #e4e7e3;
+    --plate-edge:  #c2c8c3;
+    --qr-field:    #ffffff;
+    --qr-ink:      #11161a;
+    --shadow:      0 1px 0 rgba(21, 26, 28, .06), 0 2px 10px -6px rgba(21, 26, 28, .28);
+
+    --step-0: 1rem;
+    --step-1: 1.125rem;
+    --step-2: 1.5rem;
+    --step-3: 2rem;
+    --step-4: 2.75rem;
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --narrow: "Archivo Narrow", "IBM Plex Sans Condensed", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #101413;
+      --surface:     #181d1c;
+      --surface-sunk:#111615;
+      --ink:         #e6eae7;
+      --ink-muted:   #9aa5a0;
+      --ink-faint:   #6d7873;
+      --rule:        #2b332f;
+      --rule-strong: #3c4641;
+      --accent:      #6aa9e8;
+      --accent-soft: #16273a;
+      --warn:        #d79a4a;
+      --warn-soft:   #2a2116;
+      --plate-face:  #222927;
+      --plate-edge:  #333c38;
+      --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #101413;
+    --surface:     #181d1c;
+    --surface-sunk:#111615;
+    --ink:         #e6eae7;
+    --ink-muted:   #9aa5a0;
+    --ink-faint:   #6d7873;
+    --rule:        #2b332f;
+    --rule-strong: #3c4641;
+    --accent:      #6aa9e8;
+    --accent-soft: #16273a;
+    --warn:        #d79a4a;
+    --warn-soft:   #2a2116;
+    --plate-face:  #222927;
+    --plate-edge:  #333c38;
+    --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 4rem;
+  }
+
+  a { color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ---------- шапка ---------- */
+
+  .site {
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    align-items: baseline;
+  }
+
+  h1 {
+    font-family: var(--narrow);
+    font-weight: 700;
+    font-size: var(--step-4);
+    line-height: 1.05;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+    margin: .5rem 0 0;
+  }
+
+  .lede {
+    max-width: 62ch;
+    color: var(--ink-muted);
+    margin: .75rem 0 0;
+  }
+
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- строка, которую шлёт приложение ---------- */
+
+  .wire {
+    margin-top: 1.75rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    padding: 1rem 1.15rem;
+    display: grid;
+    gap: .55rem;
+  }
+
+  .wire-label {
+    font-family: var(--narrow);
+    font-weight: 600;
+    font-size: .8rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .wire code {
+    font-family: var(--mono);
+    font-size: .8125rem;
+    line-height: 1.7;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+    padding-bottom: .15rem;
+  }
+
+  .wire .slot { color: var(--accent); font-weight: 600; }
+  .wire-note { font-size: .875rem; color: var(--ink-muted); margin: 0; }
+
+  /* ---------- рубрики групп ---------- */
+
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+    margin: 3rem 0 1.15rem;
+  }
+
+  .group-head h2 {
+    font-family: var(--narrow);
+    font-weight: 700;
+    font-size: var(--step-2);
+    letter-spacing: .01em;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .group-head .count {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .group-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .group-note {
+    color: var(--ink-muted);
+    font-size: .9375rem;
+    max-width: 62ch;
+    margin: -.4rem 0 1.4rem;
+  }
+
+  /* ---------- бирка ---------- */
+
+  .tags {
+    display: grid;
+    /* min(), иначе на экране уже 320 px трек шире вьюпорта и страница едет вбок */
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+    gap: 1.25rem;
+  }
+
+  .tag {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* Верх бирки — «шапка таблички»: номер узла и пробитое отверстие. */
+  .tag-plate {
+    background: var(--plate-face);
+    border-bottom: 1px solid var(--plate-edge);
+    padding: .7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .punch {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--ground);
+    box-shadow: inset 0 0 0 1px var(--plate-edge);
+    flex: none;
+  }
+
+  .tag-id {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .95rem;
+    letter-spacing: .04em;
+  }
+
+  .tag-kind {
+    margin-left: auto;
+    font-family: var(--narrow);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .tag-body {
+    padding: 1.1rem 1rem 1rem;
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+  }
+
+  /* Поле кода всегда светлое: сканеры ждут тёмное на светлом. */
+  .qr {
+    background: var(--qr-field);
+    border: 1px solid var(--plate-edge);
+    padding: 7px;
+    flex: none;
+    width: 148px;
+    height: 148px;
+    display: grid;
+    place-items: center;
+    cursor: zoom-in;
+    font: inherit;
+    color: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+
+  .qr:hover, .qr:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  /* Ничего не рисуем поверх поля: правый нижний угол кода — служебные
+     модули, любая метка там сбивает сканер. Подсказка — курсор и рамка. */
+
+  .tags.big .qr { width: 210px; height: 210px; }
+
+  .qr svg { width: 100%; height: auto; display: block; shape-rendering: crispEdges; }
+  .qr svg path, .qr svg rect { fill: var(--qr-ink); }
+  .qr-fallback {
+    font-family: var(--mono);
+    font-size: .68rem;
+    color: #b02b2b;
+    text-align: center;
+    padding: .4rem;
+    line-height: 1.4;
+  }
+
+  .tag-meta { min-width: 0; display: grid; gap: .5rem; align-content: start; }
+
+  .tag-name {
+    font-family: var(--narrow);
+    font-weight: 600;
+    font-size: var(--step-1);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* Название бирки ведёт на страницу юнита — ту же, что зашита в код. */
+  .tag-name a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+  .tag-name a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .specs {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .2rem .7rem;
+    font-size: .8125rem;
+  }
+
+  .specs dt {
+    font-family: var(--narrow);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: .18rem;
+  }
+
+  .specs dd { margin: 0; color: var(--ink-muted); }
+  .specs dd.mono { font-family: var(--mono); font-size: .75rem; font-variant-numeric: tabular-nums; }
+
+  .verdict {
+    font-size: .8125rem;
+    display: grid;
+    gap: .25rem;
+    padding-top: .15rem;
+  }
+
+  .verdict span { display: flex; gap: .4rem; align-items: baseline; }
+  .verdict .yes { color: var(--accent); font-weight: 600; }
+  .verdict .no  { color: var(--warn); font-weight: 600; }
+
+  /* низ бирки — что именно зашито и кнопка копирования */
+  .tag-foot {
+    border-top: 1px dashed var(--rule);
+    padding: .7rem 1rem .85rem;
+    display: grid;
+    gap: .5rem;
+  }
+
+  .encoded {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--ink-muted);
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+  }
+
+  .encoded b { color: var(--ink); font-weight: 600; }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 0;
+  }
+
+  .copy {
+    justify-self: start;
+    font-family: var(--narrow);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    padding: .38rem .7rem;
+    transition: background .15s ease, border-color .15s ease;
+  }
+
+  .copy:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .copy[data-done="1"] { color: var(--ink); border-color: var(--accent); background: var(--accent-soft); }
+
+  /* ---------- крайние случаи ---------- */
+
+  .tag.edge .tag-plate { background: var(--warn-soft); border-bottom-color: var(--warn); }
+  .tag.edge .tag-id { color: var(--warn); }
+
+  /* ---------- верстак ---------- */
+
+  .bench {
+    margin-top: 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem;
+    padding: 1.4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 720px) {
+    .bench { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .field { display: grid; gap: .45rem; }
+
+  .field label {
+    font-family: var(--narrow);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .field input {
+    font-family: var(--mono);
+    font-size: .85rem;
+    padding: .6rem .7rem;
+    background: var(--surface-sunk);
+    color: var(--ink);
+    border: 1px solid var(--rule-strong);
+    border-radius: 0;
+    width: 100%;
+  }
+
+  .field input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px var(--accent-soft); }
+
+  .resolve {
+    margin-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    padding-top: .9rem;
+    display: grid;
+    gap: .55rem;
+    font-size: .875rem;
+  }
+
+  .resolve-row { display: flex; gap: .6rem; align-items: baseline; }
+
+  .resolve-key {
+    font-family: var(--narrow);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    min-width: 8.5rem;
+  }
+
+  .resolve-val { color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
+  .resolve-val.dim { color: var(--ink-muted); }
+  .resolve-val.bad { color: var(--warn); font-weight: 600; }
+  .resolve-val.good { color: var(--accent); font-weight: 600; }
+
+  .bench .qr { width: 190px; height: 190px; }
+
+  .presets { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+
+  .preset {
+    font-family: var(--mono);
+    font-size: .72rem;
+    background: transparent;
+    border: 1px dashed var(--rule-strong);
+    color: var(--ink-muted);
+    padding: .3rem .5rem;
+  }
+
+  .preset:hover { border-style: solid; border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- правила ---------- */
+
+  .rules { display: grid; gap: .8rem; margin-top: 1.3rem; }
+
+  .rule-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: .9rem;
+    align-items: start;
+    border-left: 2px solid var(--rule-strong);
+    padding: .1rem 0 .1rem .9rem;
+  }
+
+  .rule-item.hard { border-left-color: var(--warn); }
+
+  .rule-item code {
+    font-family: var(--mono);
+    font-size: .8rem;
+    background: var(--surface-sunk);
+    padding: .05rem .3rem;
+  }
+
+  .rule-mark {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: var(--ink-faint);
+    padding-top: .22rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rule-item.hard .rule-mark { color: var(--warn); }
+  .rule-text { margin: 0; font-size: .9375rem; color: var(--ink-muted); }
+  .rule-text b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- тумблер размера ---------- */
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    align-items: center;
+    margin: 1.1rem 0 0;
+  }
+
+  .toggle {
+    font-family: var(--narrow);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    color: var(--ink-muted);
+    padding: .38rem .7rem;
+  }
+
+  .toggle[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+  footer {
+    margin-top: 3.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    font-size: .8125rem;
+    color: var(--ink-faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem 1.25rem;
+  }
+
+  footer code { font-family: var(--mono); font-size: .76rem; }
+
+  /* ---------- просмотр кода на весь экран ---------- */
+
+  .viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    /* Фон модалки белый в любой теме: вокруг кода нет тёмной рамки,
+       камере очков проще поймать экспозицию и тихую зону. */
+    background: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: clamp(.75rem, 2vh, 1.5rem);
+    padding: clamp(.75rem, 2.5vw, 1.75rem);
+    animation: viewer-in .14s ease-out;
+  }
+
+  .viewer[hidden] { display: none; }
+
+  @keyframes viewer-in { from { opacity: 0; } to { opacity: 1; } }
+
+  .viewer-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #151a1c;
+    min-height: 2rem;
+  }
+
+  .viewer-id {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .95rem;
+    letter-spacing: .04em;
+  }
+
+  .viewer-name {
+    font-family: var(--narrow);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #5d6763;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .viewer-tools { margin-left: auto; display: flex; gap: .5rem; align-items: center; flex: none; }
+
+  .vbtn {
+    font-family: var(--narrow);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(21, 26, 28, .3);
+    color: #151a1c;
+    padding: .4rem .7rem;
+    transition: background .15s ease, border-color .15s ease;
+  }
+
+  .vbtn:hover { background: rgba(21, 26, 28, .06); border-color: rgba(21, 26, 28, .65); }
+  .vbtn:focus-visible { outline: 2px solid #12518c; outline-offset: 2px; }
+  .vbtn.icon { font-family: var(--mono); font-size: 1rem; line-height: 1; padding: .35rem .6rem; }
+
+  .viewer-stage {
+    display: grid;
+    place-items: center;
+    min-height: 0;
+  }
+
+  /* Белое поле остаётся белым и здесь — сканеру нужно тёмное на светлом.
+     Размер ведём от высоты: в альбомной ориентации ширина упёрлась бы
+     в экран и код поехал бы прямоугольником, а растянутый код не читается. */
+  .viewer-field {
+    background: #ffffff;
+    padding: clamp(10px, 2.2vmin, 22px);
+    height: min(78vmin, 620px);
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    box-shadow: none;
+  }
+
+  /* viewBox квадратный, поэтому height + width:auto держат код квадратным
+     даже если коробке досталась неквадратная область. */
+  .viewer-field svg {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    shape-rendering: crispEdges;
+  }
+  .viewer-field svg path { fill: #11161a; }
+
+  .viewer-foot {
+    display: grid;
+    gap: .55rem;
+    justify-items: center;
+    text-align: center;
+    color: #5d6763;
+  }
+
+  .viewer-payload {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: #151a1c;
+    overflow-wrap: anywhere;
+    max-width: 68ch;
+    line-height: 1.5;
+  }
+
+  .viewer-hint { font-size: .78rem; color: #6d7873; }
+  .viewer-hint kbd {
+    font-family: var(--mono);
+    font-size: .72rem;
+    border: 1px solid rgba(21, 26, 28, .3);
+    padding: .05rem .3rem;
+    margin: 0 .1rem;
+  }
+
+  body.viewing { overflow: hidden; }
+
+  /* ---------- узкий экран ---------- */
+
+  @media (max-width: 600px) {
+    :root {
+      --step-4: 2.05rem;
+      --step-3: 1.6rem;
+      --step-2: 1.3rem;
+      --step-1: 1.05rem;
+    }
+
+    .site { font-size: .7rem; gap: .35rem .9rem; }
+    .wire { padding: .85rem .9rem; }
+    .wire code { font-size: .74rem; }
+
+    /* Бирка разворачивается: код сверху и крупнее, данные под ним во всю ширину.
+       В строку они на телефоне не помещаются — метке остаётся сотня пикселей. */
+    .tag-body {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .9rem;
+      padding-bottom: 1.1rem;
+    }
+
+    .qr { width: min(210px, 62vw); height: min(210px, 62vw); }
+    .tags.big .qr { width: min(300px, 84vw); height: min(300px, 84vw); }
+    .tag-meta { width: 100%; }
+
+    .group-head { margin-top: 2.3rem; }
+
+    .bench { padding: 1rem; gap: 1.1rem; }
+    .bench .qr { width: min(210px, 62vw); height: min(210px, 62vw); }
+
+    /* Ровно 16 px: на меньшем размере iOS зумит страницу при фокусе в поле. */
+    .field input { font-size: 16px; }
+
+    .resolve-row { flex-direction: column; gap: .05rem; }
+    .resolve-key { min-width: 0; }
+
+    .rule-item { gap: .7rem; padding-left: .75rem; }
+
+    /* Шапка просмотра в две строки: кнопки уезжали за край экрана. */
+    .viewer-bar { flex-wrap: wrap; row-gap: .6rem; }
+    .viewer-name { flex: 1 1 auto; }
+    .viewer-tools {
+      margin-left: 0;
+      flex: 1 1 100%;
+      justify-content: flex-end;
+    }
+
+    .viewer-field { height: min(86vmin, 620px); padding: 10px; }
+    .viewer-payload { font-size: .74rem; }
+    .viewer-hint { font-size: .72rem; }
+  }
+
+  @media (max-width: 380px) {
+    .vbtn { padding: .34rem .5rem; font-size: .72rem; letter-spacing: .05em; }
+    .vbtn.icon { padding: .3rem .45rem; }
+    .viewer-id { font-size: .85rem; }
+    .tag-plate { padding: .6rem .8rem; }
+    .tag-body, .tag-foot { padding-left: .8rem; padding-right: .8rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="site">
+      <span>Plavno Plant, Building C</span>
+      <span>Ассистент Iris · XREAL One</span>
+      <span>Реестр: data.json</span>
+    </div>
+    <h1>Метки обхода</h1>
+    <p class="lede">
+      Мишени для сканера очков. QR здесь <strong>не часть протокола</strong> — внутри просто текст,
+      и приложение отправляет его содержимое как есть. Четыре метки ниже соответствуют юнитам
+      демо-реестра, две — крайним случаям резолвера.
+    </p>
+
+    <div class="wire">
+      <div class="wire-label">Что уходит после скана</div>
+      <code>{ "commandName": "sendTextCommand",
+  "text": "[glasses] QR scanned: url=<span class="slot">&lt;содержимое кода&gt;</span>" }</code>
+      <p class="wire-note">
+        Префикс добавляет приложение. В самом коде его быть не должно — иначе уедет дважды.
+      </p>
+    </div>
+
+    <div class="toolbar">
+      <button class="toggle" id="sizeToggle" type="button" aria-pressed="false">Крупные коды</button>
+      <span style="font-size:.8125rem;color:var(--ink-faint)">
+        или нажмите на любой код — раскроется на весь экран
+      </span>
+    </div>
+  </header>
+
+  <section>
+    <div class="group-head">
+      <h2>В реестре</h2>
+      <span class="count">4 юнита</span>
+    </div>
+    <p class="group-note">
+      Ассистент узнаёт агрегат и отвечает по его сервисному листу. Страница по ссылке
+      не откроется — домен <code style="font-family:var(--mono);font-size:.8rem">.example</code> выдуман;
+      для демо с живым браузером подставьте свою ссылку в верстаке ниже.
+    </p>
+    <div class="tags" id="registry"></div>
+  </section>
+
+  <section>
+    <div class="group-head">
+      <h2>Крайние случаи</h2>
+      <span class="count">2 метки</span>
+    </div>
+    <p class="group-note">
+      Эти две проверяют ветки разбора, а не оборудование: как резолвер поведёт себя без ссылки
+      и как — со ссылкой, которой в реестре нет.
+    </p>
+    <div class="tags" id="edges"></div>
+  </section>
+
+  <section>
+    <div class="group-head">
+      <h2>Своя ссылка</h2>
+      <span class="count">верстак</span>
+    </div>
+    <p class="group-note">
+      Достаточно, чтобы <code style="font-family:var(--mono);font-size:.8rem">EQ-1001</code>…<code style="font-family:var(--mono);font-size:.8rem">EQ-1004</code>
+      встречался где-нибудь в строке: поиск идёт по всей ссылке, регистр не важен. Тогда браузер
+      откроет вашу страницу, а имя и документ приедут из реестра.
+    </p>
+
+    <div class="bench">
+      <div>
+        <div class="field">
+          <label for="url">Содержимое кода</label>
+          <input id="url" type="text" spellcheck="false" autocomplete="off"
+                 value="">
+        </div>
+        <div class="presets">
+          <button class="preset" type="button" data-url="https://docs.example.com/equipment/EQ-1002">id в пути</button>
+          <button class="preset" type="button" data-url="https://docs.example.com/sheet?unit=EQ-1003">id в query</button>
+          <button class="preset" type="button" data-url="https://intranet.local/docs/eq-1004/view">строчными</button>
+          <button class="preset" type="button" data-url="https://docs.example.com/equipment/EQ1002">без дефиса</button>
+        </div>
+
+        <div class="resolve" id="resolve"></div>
+      </div>
+
+      <div>
+        <button class="qr" id="customQr" type="button" aria-label="Открыть код на весь экран"></button>
+        <button class="copy" type="button" id="customCopy" style="margin-top:.7rem">Копировать строку</button>
+      </div>
+    </div>
+
+    <div class="rules">
+      <div class="rule-item hard">
+        <span class="rule-mark">01</span>
+        <p class="rule-text"><b>Дефис обязателен.</b> Резолвер ищет <code>EQ-\d{3,}</code>.
+          Код с <code>EQ1002</code> откроется как незнакомая страница, и ассистент не будет
+          знать про агрегат ничего.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-mark">02</span>
+        <p class="rule-text"><b>Не зашивайте префикс.</b> В коде — только содержимое;
+          <code>[glasses] QR scanned:</code> приписывает приложение.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-mark">03</span>
+        <p class="rule-text"><b>Для настоящего оборудования — всегда <code>url=</code>.</b>
+          У аргумента <code>equipment_id</code> закрытый список из четырёх демо-id, реальный
+          номер узла в этой форме получит отказ.</p>
+      </div>
+      <div class="rule-item">
+        <span class="rule-mark">04</span>
+        <p class="rule-text"><b>Очки не обязательны.</b> Ту же строку можно отправить руками
+          через <code>sendTextCommand</code> — по проводу она неотличима от прочитанного кода.
+          Кнопка «копировать» на каждой метке даёт её целиком.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Код на весь экран">
+    <div class="viewer-bar">
+      <span class="viewer-id" id="viewerId"></span>
+      <span class="viewer-name" id="viewerName"></span>
+      <span class="viewer-tools">
+        <button class="vbtn icon" type="button" id="viewerPrev" aria-label="Предыдущий код">←</button>
+        <button class="vbtn icon" type="button" id="viewerNext" aria-label="Следующий код">→</button>
+        <button class="vbtn" type="button" id="viewerCopy">Копировать строку</button>
+        <button class="vbtn icon" type="button" id="viewerClose" aria-label="Закрыть">✕</button>
+      </span>
+    </div>
+    <div class="viewer-stage">
+      <div class="viewer-field" id="viewerField"></div>
+    </div>
+    <div class="viewer-foot">
+      <div class="viewer-payload" id="viewerPayload"></div>
+      <div class="viewer-hint">
+        <kbd>←</kbd><kbd>→</kbd> между кодами · <kbd>Esc</kbd> закрыть · фон тоже закрывает
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Резолвер: <code>_resolve_unit</code>, <code>toolkit.py:218-248</code></span>
+    <span>Сверено на <code>178dcb0</code></span>
+    <span>Протокол целиком — <code>FE_DOCS/wfs/assistants/xreal.md §10.1</code></span>
+  </footer>
+</div>
+
+<script>
+  // --- реестр: то же, что в data.json ассистента -------------------------
+  // Страницы юнитов лежат рядом: equipment/<id>.html. В коде должен быть
+  // абсолютный адрес, поэтому берём его от адреса самого стенда — на GitHub
+  // Pages это будет .../XREAL_units/equipment/. Открытый с диска стенд
+  // (file://) подставляет адрес Pages, иначе в код уедет путь на диске.
+  var PAGES = "https://plavno-plavno.github.io/XREAL_units/";
+  var ROOT = /^https?:$/.test(location.protocol)
+    ? new URL("./", location.href).href
+    : PAGES;
+  var BASE = ROOT + "equipment/";
+  function unitPage(id) { return "equipment/" + id + ".html"; }
+
+  var UNITS = [
+    { id: "EQ-1001", name: "Centrifugal pump P-12", kind: "pump",
+      where: "Pump room, level -1", doc: "DOC-P12-MAINT",
+      cycle: "Ежемесячно", range: "4.2–4.8 бар" },
+    { id: "EQ-1002", name: "Air compressor AC-3", kind: "compressor",
+      where: "Compressor hall, bay 2", doc: "DOC-AC3-MAINT",
+      cycle: "Еженедельно", range: "7.0–7.5 бар" },
+    { id: "EQ-1003", name: "HVAC air handler AHU-7", kind: "hvac",
+      where: "Roof, north plant room", doc: "DOC-AHU7-MAINT",
+      cycle: "Ежеквартально", range: "16–20 °C" },
+    { id: "EQ-1004", name: "Forklift charger FC-2", kind: "charger",
+      where: "Warehouse, charging bay", doc: "DOC-FC2-MAINT",
+      cycle: "Ежемесячно", range: "48 В" }
+  ];
+
+  var EDGES = [
+    { id: "EQ-1002", label: "Голый id", kind: "без ссылки", payload: "EQ-1002",
+      name: "Air compressor AC-3",
+      note: "Резолвер найдёт юнит по id, но открывать в браузере нечего.",
+      known: true, opens: false },
+    { id: "—", label: "Чужая ссылка", kind: "не в реестре",
+      payload: "https://plant.example/pages/boiler-north",
+      name: "boiler-north",
+      note: "Неизвестный юнит: equipment_id придёт null, имя — последний сегмент пути.",
+      known: false, opens: true }
+  ];
+
+  var ID_RE = /EQ-\d{3,}/i;
+  var KNOWN = UNITS.map(function (u) { return u.id; });
+
+  function wireLine(payload) {
+    return '{"commandName":"sendTextCommand","text":"[glasses] QR scanned: url=' + payload + '"}';
+  }
+
+  // --- отрисовка кода ----------------------------------------------------
+  // SVG собираем сами: нужен viewBox, чтобы код тянулся за размером поля —
+  // и в бирке, и на весь экран это одна и та же разметка.
+  function qrSvg(text) {
+    if (typeof qrcode !== "function") return null;
+    var qr = qrcode(0, "M");
+    qr.addData(text);
+    qr.make();
+    var n = qr.getModuleCount(), pad = 3, side = n + pad * 2, d = [];
+    for (var r = 0; r < n; r++) {
+      for (var c = 0; c < n; c++) {
+        if (qr.isDark(r, c)) d.push("M" + (c + pad) + " " + (r + pad) + "h1v1h-1z");
+      }
+    }
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + side + " " + side +
+           '" shape-rendering="crispEdges" role="img" aria-label="QR-код"><path d="' +
+           d.join("") + '"/></svg>';
+  }
+
+  function drawQr(box, text) {
+    box.textContent = "";
+    box.dataset.payload = text || "";
+    if (typeof qrcode !== "function") {
+      box.appendChild(el("div", "qr-fallback",
+        "Генератор не загрузился. Строка ниже — вставьте её в любой генератор."));
+      return;
+    }
+    try {
+      box.innerHTML = qrSvg(text);
+    } catch (e) {
+      box.appendChild(el("div", "qr-fallback", "Слишком длинная строка для одного кода."));
+    }
+  }
+
+  function copyButton(payload) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "copy";
+    b.textContent = "Копировать строку";
+    b.addEventListener("click", function () {
+      var line = wireLine(payload);
+      var done = function () {
+        b.textContent = "Скопировано";
+        b.dataset.done = "1";
+        setTimeout(function () { b.textContent = "Копировать строку"; delete b.dataset.done; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(line).then(done, function () { fallbackCopy(line, done); });
+      } else {
+        fallbackCopy(line, done);
+      }
+    });
+    return b;
+  }
+
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { /* молча: строка видна на бирке */ }
+    document.body.removeChild(ta);
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function spec(dl, key, value, mono) {
+    dl.appendChild(el("dt", null, key));
+    dl.appendChild(el("dd", mono ? "mono" : null, value));
+  }
+
+  function buildTag(opts) {
+    var tag = el("article", "tag" + (opts.edge ? " edge" : ""));
+
+    var plate = el("div", "tag-plate");
+    plate.appendChild(el("span", "punch"));
+    plate.appendChild(el("span", "tag-id", opts.id));
+    plate.appendChild(el("span", "tag-kind", opts.kind));
+    tag.appendChild(plate);
+
+    var body = el("div", "tag-body");
+    var qrBox = el("button", "qr");
+    qrBox.type = "button";
+    qrBox.dataset.id = opts.id;
+    qrBox.dataset.name = opts.name;
+    qrBox.setAttribute("aria-label", "Открыть код " + opts.id + " на весь экран");
+    drawQr(qrBox, opts.payload);
+    body.appendChild(qrBox);
+
+    var meta = el("div", "tag-meta");
+    var name = el("h3", "tag-name");
+    if (opts.href) {
+      var link = el("a", null, opts.name);
+      link.href = opts.href;
+      name.appendChild(link);
+    } else {
+      name.textContent = opts.name;
+    }
+    meta.appendChild(name);
+
+    var dl = el("dl", "specs");
+    opts.specs.forEach(function (s) { spec(dl, s[0], s[1], s[2]); });
+    meta.appendChild(dl);
+
+    var verdict = el("div", "verdict");
+    var a = el("span");
+    a.appendChild(el("b", opts.known ? "yes" : "no", opts.known ? "Узнаёт" : "Не узнаёт"));
+    a.appendChild(el("span", null, opts.known ? "агрегат из реестра" : "агрегата нет в реестре"));
+    var b = el("span");
+    b.appendChild(el("b", opts.opens ? "yes" : "no", opts.opens ? "Откроет" : "Не откроет"));
+    b.appendChild(el("span", null, opts.opens ? "страницу в браузере" : "страницу в браузере"));
+    verdict.appendChild(a);
+    verdict.appendChild(b);
+    meta.appendChild(verdict);
+
+    body.appendChild(meta);
+    tag.appendChild(body);
+
+    var foot = el("div", "tag-foot");
+    var enc = el("div", "encoded");
+    enc.appendChild(el("b", null, "В коде: "));
+    enc.appendChild(document.createTextNode(opts.payload));
+    foot.appendChild(enc);
+    foot.appendChild(copyButton(opts.payload));
+    tag.appendChild(foot);
+
+    return tag;
+  }
+
+  var registry = document.getElementById("registry");
+  UNITS.forEach(function (u) {
+    registry.appendChild(buildTag({
+      id: u.id,
+      kind: u.kind,
+      name: u.name,
+      payload: BASE + u.id + ".html",
+      known: true,
+      opens: true,
+      href: unitPage(u.id),
+      specs: [
+        ["Место", u.where, false],
+        ["Документ", u.doc, true],
+        ["Цикл", u.cycle, false],
+        ["Норма", u.range, true]
+      ]
+    }));
+  });
+
+  var edges = document.getElementById("edges");
+  EDGES.forEach(function (e) {
+    edges.appendChild(buildTag({
+      id: e.label,
+      kind: e.kind,
+      name: e.name,
+      payload: e.payload,
+      known: e.known,
+      opens: e.opens,
+      edge: true,
+      specs: [
+        ["Резолвер", e.note, false],
+        ["equipment_id", e.known ? e.id : "null", true]
+      ]
+    }));
+  });
+
+  // --- верстак: повторяет разбор сервера ---------------------------------
+  var input = document.getElementById("url");
+  var customQr = document.getElementById("customQr");
+  var resolveBox = document.getElementById("resolve");
+  var customCopy = document.getElementById("customCopy");
+
+  function normalize(u) {
+    var s = String(u || "").trim();
+    var m = s.match(/^[a-z][a-z0-9+.-]*:\/\/([^/?#]*)([^?#]*)/i);
+    if (!m) return s.replace(/\/+$/, "").toLowerCase();
+    return (m[1] || "").toLowerCase() + (m[2] || "").replace(/\/+$/, "");
+  }
+
+  function lastSegment(u) {
+    var s = String(u || "").trim();
+    var m = s.match(/^[a-z][a-z0-9+.-]*:\/\/([^/?#]*)([^?#]*)/i);
+    var path = m ? (m[2] || "") : s;
+    var parts = path.replace(/\/+$/, "").split("/");
+    var last = parts[parts.length - 1];
+    return last || (m ? m[1] : s);
+  }
+
+  function resolve(u) {
+    var text = String(u || "").trim();
+    if (!text) return { state: "empty" };
+
+    for (var i = 0; i < UNITS.length; i++) {
+      if (normalize(BASE + UNITS[i].id + ".html") === normalize(text)) {
+        return { state: "known", unit: UNITS[i], how: "совпала ссылка из реестра" };
+      }
+    }
+    var hit = text.match(ID_RE);
+    if (hit) {
+      var id = hit[0].toUpperCase();
+      var idx = KNOWN.indexOf(id);
+      if (idx > -1) return { state: "known", unit: UNITS[idx], how: "id найден в строке" };
+    }
+    return { state: "unknown", name: lastSegment(text) };
+  }
+
+  function row(key, value, cls) {
+    var r = el("div", "resolve-row");
+    r.appendChild(el("span", "resolve-key", key));
+    r.appendChild(el("span", "resolve-val" + (cls ? " " + cls : ""), value));
+    return r;
+  }
+
+  function renderResolve() {
+    var text = input.value.trim();
+    var r = resolve(text);
+    resolveBox.textContent = "";
+
+    customQr.dataset.id = "Своя ссылка";
+
+    if (r.state === "empty") {
+      resolveBox.appendChild(row("Разбор", "Пустая строка — отказ «Nothing to open»", "bad"));
+      customQr.textContent = "";
+      customQr.dataset.payload = "";
+      customQr.dataset.name = "";
+      return;
+    }
+
+    customQr.dataset.name = r.state === "known" ? r.unit.name : "Неизвестный юнит";
+
+    if (r.state === "known") {
+      resolveBox.appendChild(row("Агрегат", r.unit.name, "good"));
+      resolveBox.appendChild(row("equipment_id", r.unit.id, "dim"));
+      resolveBox.appendChild(row("Место", r.unit.where, "dim"));
+      resolveBox.appendChild(row("Как определён", r.how, "dim"));
+    } else {
+      resolveBox.appendChild(row("Агрегат", "Неизвестный юнит", "bad"));
+      resolveBox.appendChild(row("equipment_id", "null", "dim"));
+      resolveBox.appendChild(row("Имя на экране", r.name, "dim"));
+      resolveBox.appendChild(row("Как определён", "id в строке не найден", "dim"));
+    }
+    resolveBox.appendChild(row("Откроется", text, "dim"));
+
+    drawQr(customQr, text);
+
+    try { localStorage.setItem("xreal-qr-url", text); } catch (e) { /* приватное окно — не беда */ }
+  }
+
+  input.addEventListener("input", renderResolve);
+
+  Array.prototype.forEach.call(document.querySelectorAll(".preset"), function (p) {
+    p.addEventListener("click", function () {
+      input.value = p.dataset.url;
+      renderResolve();
+    });
+  });
+
+  customCopy.addEventListener("click", function () {
+    var line = wireLine(input.value.trim());
+    var done = function () {
+      customCopy.textContent = "Скопировано";
+      customCopy.dataset.done = "1";
+      setTimeout(function () { customCopy.textContent = "Копировать строку"; delete customCopy.dataset.done; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(done, function () { fallbackCopy(line, done); });
+    } else {
+      fallbackCopy(line, done);
+    }
+  });
+
+  try {
+    var saved = localStorage.getItem("xreal-qr-url");
+    if (saved) input.value = saved;
+  } catch (e) { /* читать нечего — остаётся пример */ }
+  // Пример по умолчанию — реальная ссылка второй бирки, от адреса этого стенда.
+  if (!input.value) input.value = BASE + "EQ-1002.html";
+
+  renderResolve();
+
+  // --- просмотр кода на весь экран ---------------------------------------
+  var viewer = document.getElementById("viewer");
+  var viewerField = document.getElementById("viewerField");
+  var viewerId = document.getElementById("viewerId");
+  var viewerName = document.getElementById("viewerName");
+  var viewerPayload = document.getElementById("viewerPayload");
+  var viewerCopy = document.getElementById("viewerCopy");
+  var viewerClose = document.getElementById("viewerClose");
+  var viewerPrev = document.getElementById("viewerPrev");
+  var viewerNext = document.getElementById("viewerNext");
+
+  var current = -1;
+  var lastFocused = null;
+
+  // Порядок кодов берём из документа: четыре бирки, две крайние, верстак.
+  function tiles() {
+    return Array.prototype.filter.call(
+      document.querySelectorAll(".qr"),
+      function (t) { return t.dataset.payload; }
+    );
+  }
+
+  function show(i) {
+    var list = tiles();
+    if (!list.length) return;
+    current = (i + list.length) % list.length;
+    var tile = list[current];
+    var payload = tile.dataset.payload;
+
+    viewerId.textContent = tile.dataset.id || "";
+    viewerName.textContent = tile.dataset.name || "";
+    viewerPayload.textContent = payload;
+    viewerField.textContent = "";
+    try {
+      var svg = qrSvg(payload);
+      if (svg) viewerField.innerHTML = svg;
+      else viewerField.appendChild(el("div", "qr-fallback", "Генератор не загрузился."));
+    } catch (e) {
+      viewerField.appendChild(el("div", "qr-fallback", "Слишком длинная строка для одного кода."));
+    }
+
+    var solo = list.length < 2;
+    viewerPrev.hidden = solo;
+    viewerNext.hidden = solo;
+  }
+
+  function openViewer(tile) {
+    var list = tiles();
+    var i = list.indexOf(tile);
+    if (i < 0) return;
+    lastFocused = document.activeElement;
+    viewer.hidden = false;
+    document.body.classList.add("viewing");
+    show(i);
+    viewerClose.focus();
+  }
+
+  function closeViewer() {
+    if (viewer.hidden) return;
+    viewer.hidden = true;
+    document.body.classList.remove("viewing");
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+    lastFocused = null;
+  }
+
+  document.addEventListener("click", function (e) {
+    var tile = e.target.closest ? e.target.closest(".qr") : null;
+    if (tile && tile.dataset.payload) openViewer(tile);
+  });
+
+  viewer.addEventListener("click", function (e) {
+    // Фон и пустое место вокруг кода закрывают; текст строки остаётся выделяемым.
+    if (e.target === viewer || e.target.classList.contains("viewer-stage")) closeViewer();
+  });
+
+  viewerClose.addEventListener("click", closeViewer);
+  viewerPrev.addEventListener("click", function () { show(current - 1); });
+  viewerNext.addEventListener("click", function () { show(current + 1); });
+
+  viewerCopy.addEventListener("click", function () {
+    var line = wireLine(viewerPayload.textContent);
+    var done = function () {
+      viewerCopy.textContent = "Скопировано";
+      setTimeout(function () { viewerCopy.textContent = "Копировать строку"; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(done, function () { fallbackCopy(line, done); });
+    } else {
+      fallbackCopy(line, done);
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (viewer.hidden) return;
+    if (e.key === "Escape") { e.preventDefault(); closeViewer(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); show(current - 1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); }
+  });
+
+  // --- крупные коды ------------------------------------------------------
+  var sizeToggle = document.getElementById("sizeToggle");
+  sizeToggle.addEventListener("click", function () {
+    var on = sizeToggle.getAttribute("aria-pressed") === "true";
+    sizeToggle.setAttribute("aria-pressed", on ? "false" : "true");
+    Array.prototype.forEach.call(document.querySelectorAll(".tags"), function (g) {
+      g.classList.toggle("big", !on);
+    });
+  });
+</script>
+
+</body>
+</html>
