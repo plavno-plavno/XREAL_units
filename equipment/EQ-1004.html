@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,109 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/common.css">
 <style>
+  /* ---------- unit card (what opens in the glasses) ---------- */
 
-  :root {
-    /* Оцинкованный нейтрал с холодным уклоном + синий предписывающих знаков. */
-    --ground:      #f2f3f1;
-    --surface:     #ffffff;
-    --surface-sunk:#e9ebe8;
-    --ink:         #151a1c;
-    --ink-muted:   #5d6763;
-    --ink-faint:   #8a938e;
-    --rule:        #d3d8d6;
-    --rule-strong: #b6bdb9;
-    --accent:      #12518c;
-    --accent-soft: #e4edf6;
-    --warn:        #a35c06;
-    --warn-soft:   #f8efe1;
-    --plate-face:  #e4e7e3;
-    --plate-edge:  #c2c8c3;
-    --qr-field:    #ffffff;
-    --qr-ink:      #11161a;
-    --shadow:      0 1px 0 rgba(21, 26, 28, .06), 0 2px 10px -6px rgba(21, 26, 28, .28);
-
-    --step-0: 1rem;
-    --step-1: 1.125rem;
-    --step-2: 1.5rem;
-    --step-3: 2rem;
-    --step-4: 2.75rem;
-
-    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-    --narrow: "Archivo Narrow", "IBM Plex Sans Condensed", ui-sans-serif, system-ui, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground:      #101413;
-      --surface:     #181d1c;
-      --surface-sunk:#111615;
-      --ink:         #e6eae7;
-      --ink-muted:   #9aa5a0;
-      --ink-faint:   #6d7873;
-      --rule:        #2b332f;
-      --rule-strong: #3c4641;
-      --accent:      #6aa9e8;
-      --accent-soft: #16273a;
-      --warn:        #d79a4a;
-      --warn-soft:   #2a2116;
-      --plate-face:  #222927;
-      --plate-edge:  #333c38;
-      --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --ground:      #101413;
-    --surface:     #181d1c;
-    --surface-sunk:#111615;
-    --ink:         #e6eae7;
-    --ink-muted:   #9aa5a0;
-    --ink-faint:   #6d7873;
-    --rule:        #2b332f;
-    --rule-strong: #3c4641;
-    --accent:      #6aa9e8;
-    --accent-soft: #16273a;
-    --warn:        #d79a4a;
-    --warn-soft:   #2a2116;
-    --plate-face:  #222927;
-    --plate-edge:  #333c38;
-    --shadow:      0 1px 0 rgba(0, 0, 0, .4), 0 2px 12px -6px rgba(0, 0, 0, .8);
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: var(--step-0);
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 4rem;
-  }
-
-  a { color: var(--accent); }
-
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-
-
-  /* ---------- карточка устройства (то, что открывается в очках) ---------- */
-
-  /* Отдельный корень, а не секция стенда: в очках это единственное, что
-     должно быть на экране. Шире и крупнее стенда — читают с расстояния
-     вытянутой руки, часто боковым зрением. */
+  /* A separate root, not a section of the bench: in the glasses this is the
+     only thing on screen. Wider and larger than the bench — read at arm's
+     length, often with peripheral vision. */
   .device {
     max-width: 780px;
     margin: 0 auto;
@@ -187,8 +91,8 @@
     margin: 0 0 .8rem;
   }
 
-  /* Нормы — главное, ради чего инспектор смотрит на экран: крупно,
-     моноширинно, числа друг под другом. */
+  /* Ranges are the main reason the inspector looks at the screen: large,
+     monospaced, numbers aligned in a column. */
   .norms {
     display: grid;
     gap: .5rem;
@@ -267,7 +171,7 @@
 
   .section-card p { margin: 0; font-size: .9rem; color: var(--ink-muted); }
 
-  /* Переход между устройствами — «покликать» на стенде. */
+  /* Navigation between units — for clicking through on the bench. */
   .dev-nav {
     margin-top: 2.5rem;
     border-top: 1px solid var(--rule);
@@ -306,11 +210,11 @@
   }
 
 
-  /* ---------- схема агрегата ---------- */
+  /* ---------- unit schematic ---------- */
 
-  /* Рисунок встроенный: внешние картинки в опубликованной странице
-     блокируются, а схема ещё и переживает смену темы — она нарисована
-     теми же переменными, что и всё остальное. */
+  /* The drawing is inline: external images are blocked on the published
+     page, and the schematic also survives theme changes — it is drawn
+     with the same variables as everything else. */
   .dev-art {
     margin-top: 1.2rem;
     background: var(--surface);
@@ -358,11 +262,11 @@
   <p class="dev-where">Warehouse, charging bay</p>
   <p class="dev-sheet">FC-2 forklift charger — monthly service sheet</p>
 
-    <figure class="dev-art" style="margin:1.2rem 0 0"><svg viewBox="0 0 400 210" role="img" aria-label="Настенная зарядная станция с кабелем и разъёмом"><path class="art-thin" d="M46 12v176"/><path class="art-thin" d="M46 24l-14 10M46 48l-14 10M46 72l-14 10M46 96l-14 10M46 120l-14 10M46 144l-14 10M46 168l-14 10"/><rect class="art-fill" x="46" y="30" width="168" height="116" rx="3"/><rect class="art-glass" x="64" y="48" width="96" height="40" rx="2"/><text class="art-read" x="76" y="74">48 V</text><circle class="art-accent" cx="176" cy="56" r="5"/><circle class="art-thin" cx="176" cy="72" r="5"/><circle class="art-thin" cx="176" cy="88" r="5"/><path class="art-thin" d="M64 106h132M64 116h132M64 126h132"/><path class="art-line" d="M150 146c6 40 70 46 116 26" stroke-width="3"/><rect class="art-plate" x="262" y="152" width="52" height="32" rx="3"/><path class="art-accent" d="M314 162h16M314 174h16"/><path class="art-thin" d="M274 160v16M288 160v16"/><path class="art-thin" d="M20 192h368"/><text class="art-tag" x="258" y="146">CONNECTOR</text></svg><figcaption class="art-cap">Схема · зарядная станция погрузчика с разъёмом</figcaption></figure>
+    <figure class="dev-art" style="margin:1.2rem 0 0"><svg viewBox="0 0 400 210" role="img" aria-label="Wall-mounted charging station with cable and connector"><path class="art-thin" d="M46 12v176"/><path class="art-thin" d="M46 24l-14 10M46 48l-14 10M46 72l-14 10M46 96l-14 10M46 120l-14 10M46 144l-14 10M46 168l-14 10"/><rect class="art-fill" x="46" y="30" width="168" height="116" rx="3"/><rect class="art-glass" x="64" y="48" width="96" height="40" rx="2"/><text class="art-read" x="76" y="74">48 V</text><circle class="art-accent" cx="176" cy="56" r="5"/><circle class="art-thin" cx="176" cy="72" r="5"/><circle class="art-thin" cx="176" cy="88" r="5"/><path class="art-thin" d="M64 106h132M64 116h132M64 126h132"/><path class="art-line" d="M150 146c6 40 70 46 116 26" stroke-width="3"/><rect class="art-plate" x="262" y="152" width="52" height="32" rx="3"/><path class="art-accent" d="M314 162h16M314 174h16"/><path class="art-thin" d="M274 160v16M288 160v16"/><path class="art-thin" d="M20 192h368"/><text class="art-tag" x="258" y="146">CONNECTOR</text></svg><figcaption class="art-cap">Schematic · forklift charging station with connector</figcaption></figure>
 
   <section class="dev-block">
-    <h2>Нормальные показания</h2>
-    <p class="src">сервисный лист · то, с чем сверяет сервер</p>
+    <h2>Normal readings</h2>
+    <p class="src">ranges from the service sheet — the server judges against them</p>
     <div class="norms">
       <div class="norm"><span class="norm-name">output voltage</span><span class="norm-range">46–50 V</span></div>
       <div class="norm"><span class="norm-name">charge current at end of cycle</span><span class="norm-range">≤ 30 A</span></div>
@@ -370,8 +274,8 @@
   </section>
 
   <section class="dev-block">
-    <h2>Регламент</h2>
-    <p class="src">что нужно сделать на этом обходе</p>
+    <h2>Service steps</h2>
+    <p class="src">this round, in order</p>
     <ul class="steps">
       <li>vacuum the cabinet vents</li>
       <li>inspect the DC connector and the cable strain relief</li>
@@ -381,16 +285,16 @@
   </section>
 
   <section class="dev-block">
-    <h2>Известные болячки</h2>
-    <p class="src">чего ждать именно от этого узла</p>
+    <h2>Known issues</h2>
+    <p class="src">what to expect from this unit in particular</p>
     <ul class="issues">
       <li>pitted connector pins have twice caused a no-charge complaint logged against the battery — check the pins first</li>
     </ul>
   </section>
 
   <section class="dev-block">
-    <h2>Сервисный лист дословно</h2>
-    <p class="src">тот же текст, что читает ассистент</p>
+    <h2>Service sheet, verbatim</h2>
+    <p class="src">the same text the assistant reads</p>
     <div class="sections">
       <div class="section-card"><h3>Normal operating range</h3><p>Output 48 V nominal, charge current tapering below 30 A at end of cycle, cabinet fans running whenever charging, connector pins bright with no pitting.</p></div>
       <div class="section-card"><h3>Monthly service</h3><p>Vacuum the cabinet vents, inspect the DC connector and cable strain relief, confirm the wall-mounted emergency cutoff isolates the charger, check the floor marking around the bay is legible.</p></div>
@@ -402,7 +306,7 @@
     <a href="EQ-1001.html">EQ-1001</a>
     <a href="EQ-1002.html">EQ-1002</a>
     <a href="EQ-1003.html">EQ-1003</a>
-    <a class="stand" href="../index.html">Все устройства и QR-коды</a>
+    <a class="stand" href="../qr.html">All units &amp; QR codes</a>
   </nav>
 </div>
 </body>

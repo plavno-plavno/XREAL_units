@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSI Claw 8 AI+ Guide</title>
+<meta name="description" content="Interactive user guide for the MSI Claw 8 AI+ handheld, driven by voice commands through XREAL glasses.">
+<style>
+/* Built for the browser screen in XREAL One Pro glasses: 1781 x 879 CSS pixels, black is
+   transparent, so the page is dark and everything on it floats over the room. Every screen fits
+   without scrolling — the glasses' WebView does not scroll by itself. Elsewhere the same stage is
+   scaled to fit the window. */
+:root {
+  --bg: #000;
+  --fg: #eef2f5;
+  --dim: #8b97a3;
+  --faint: #1f262d;
+  --line: #2f3841;
+  --accent: #2dd4bf;
+  --accent-soft: rgba(45, 212, 191, .16);
+  --warn: #f5a524;
+  --warn-soft: rgba(245, 165, 36, .14);
+  --ts: 1;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: var(--font); overflow: hidden; }
+body { -webkit-font-smoothing: antialiased; }
+
+#stage {
+  position: absolute; left: 0; top: 0; width: 1781px; height: 879px;
+  transform-origin: 0 0; background: var(--bg); overflow: hidden;
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: 36px 64px 0;
+}
+#stage.flash { animation: flash .9s ease-out 2; }
+@keyframes flash { 0% { box-shadow: inset 0 0 0 0 var(--accent); } 30% { box-shadow: inset 0 0 0 6px var(--accent); } 100% { box-shadow: inset 0 0 0 0 transparent; } }
+
+/* header */
+#top { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; min-height: 60px; }
+#crumb { display: flex; align-items: baseline; gap: 20px; }
+#logo { font-size: calc(22px * var(--ts)); font-weight: 600; color: var(--dim); letter-spacing: .02em; cursor: default; user-select: none; }
+#where { font-size: calc(22px * var(--ts)); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+#counter { font-size: calc(24px * var(--ts)); color: var(--dim); display: flex; align-items: center; gap: 18px; }
+.dots { display: inline-flex; gap: 8px; }
+.dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); display: inline-block; }
+.dots i.done { background: var(--accent); border-color: var(--accent); }
+.dots i.now { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+#main { position: relative; min-height: 0; }
+
+/* footer */
+#bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; border-top: 1px solid var(--faint); margin: 0 -64px; padding: 0 64px; }
+#hint { font-size: calc(22px * var(--ts)); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#hint b { color: var(--fg); font-weight: 600; }
+#nav { display: flex; gap: 12px; align-items: center; font-size: calc(22px * var(--ts)); color: var(--dim); }
+.btn { background: transparent; color: var(--fg); border: 2px solid var(--line); border-radius: 12px; padding: 8px 20px; font: inherit; font-size: calc(22px * var(--ts)); cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn[disabled] { opacity: .35; cursor: default; }
+
+/* note banner */
+#note { position: absolute; left: 64px; right: 64px; top: 104px; z-index: 5; display: none; border-radius: 14px; padding: 16px 24px;
+  font-size: calc(26px * var(--ts)); background: var(--accent-soft); border: 2px solid var(--accent); }
+#note.warning { background: var(--warn-soft); border-color: var(--warn); }
+#note.show { display: block; }
+
+/* home */
+.home h1 { font-size: calc(54px * var(--ts)); margin: 8px 0 4px; font-weight: 700; letter-spacing: -.01em; }
+.home .sub { font-size: calc(26px * var(--ts)); color: var(--dim); margin-bottom: 26px; }
+.tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+.tile { border: 2px solid var(--line); border-radius: 18px; padding: 18px 20px; min-height: 150px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
+.tile:hover, .tile.last { border-color: var(--accent); }
+.tile .t { font-size: calc(27px * var(--ts)); font-weight: 650; line-height: 1.15; }
+.tile .m { font-size: calc(19px * var(--ts)); color: var(--dim); margin-top: 8px; }
+.bar { height: 6px; border-radius: 3px; background: var(--faint); margin-top: 12px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+
+/* item screens */
+.item { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; height: 100%; padding-top: 20px; }
+.item.wide { grid-template-columns: 1fr; }
+.item .text { display: flex; flex-direction: column; min-width: 0; }
+.item h2 { font-size: calc(52px * var(--ts)); line-height: 1.08; margin: 0 0 22px; font-weight: 700; letter-spacing: -.01em; }
+.item p { font-size: calc(30px * var(--ts)); line-height: 1.38; margin: 0 0 18px; color: var(--fg); }
+.item p.list { color: var(--fg); }
+.chk { display: inline-flex; align-items: center; gap: 12px; font-size: calc(22px * var(--ts)); color: var(--dim); margin-top: auto; padding-bottom: 18px; cursor: pointer; user-select: none; }
+.chk .box { width: 30px; height: 30px; border: 3px solid var(--line); border-radius: 8px; display: inline-grid; place-items: center; }
+.chk.on { color: var(--accent); }
+.chk.on .box { border-color: var(--accent); background: var(--accent); }
+.chk.on .box::after { content: ""; width: 9px; height: 16px; border: solid #000; border-width: 0 4px 4px 0; transform: rotate(45deg) translate(-1px, -2px); }
+.inote { font-size: calc(24px * var(--ts)); border-left: 5px solid var(--accent); padding: 8px 0 8px 18px; color: var(--fg); margin-top: 8px; }
+.inote.warning { border-color: var(--warn); }
+.inote::before { content: "ⓘ  "; color: var(--accent); }
+.inote.warning::before { content: "⚠  "; color: var(--warn); }
+
+/* diagram */
+.fig { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+.fig .cap { font-size: calc(20px * var(--ts)); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+.dia { position: relative; overflow: hidden; border-radius: 12px; }
+.dia .zoomer { position: relative; transition: transform .45s ease; }
+.dia img { display: block; width: 100%; height: auto; }
+.dia svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ring { fill: none; stroke: var(--accent); stroke-width: 7; transform-box: fill-box; transform-origin: center; animation: pulse 1.6s ease-in-out infinite; }
+.ring2 { fill: none; stroke: var(--accent); stroke-width: 3; opacity: .5; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.18); opacity: .55; } }
+.mring { fill: none; stroke-width: 12; }
+
+/* view screen */
+.vs { display: grid; grid-template-columns: 1.55fr 1fr; gap: 48px; height: 100%; padding-top: 16px; align-items: center; }
+.callout { border: 2px solid var(--accent); border-radius: 18px; padding: 24px 28px; background: var(--accent-soft); }
+.callout .num { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: #000; font-weight: 800; font-size: calc(24px * var(--ts)); margin-right: 14px; vertical-align: middle; }
+.callout h3 { display: inline; font-size: calc(38px * var(--ts)); vertical-align: middle; }
+.callout p { font-size: calc(28px * var(--ts)); line-height: 1.38; margin: 18px 0 0; }
+.legend { columns: 2; column-gap: 28px; font-size: calc(23px * var(--ts)); line-height: 1.75; }
+.legend div { break-inside: avoid; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.legend div:hover { color: var(--accent); }
+.legend span { display: inline-block; width: 36px; color: var(--accent); font-weight: 700; }
+.legend .hl { color: var(--accent); }
+
+/* led and colour screens */
+.led { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; height: 100%; align-items: center; }
+.pill { width: 420px; height: 150px; border: 4px solid var(--fg); border-radius: 75px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 70px; }
+.pill svg { width: 74px; height: 74px; }
+.lamp { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--line); }
+.lamp.blink { animation: blink 1s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.states div { display: grid; grid-template-columns: 54px 1fr; align-items: center; gap: 8px; font-size: calc(28px * var(--ts)); padding: 12px 18px; border-radius: 14px; margin-bottom: 6px; border: 2px solid transparent; }
+.states div.sel { border-color: var(--accent); background: var(--accent-soft); }
+.states div.sel.warning { border-color: var(--warn); background: var(--warn-soft); }
+.states .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); }
+.states b { font-weight: 650; }
+.states em { font-style: normal; color: var(--dim); }
+.meaning { font-size: calc(32px * var(--ts)); line-height: 1.35; margin-top: 26px; }
+.meaning.warning { color: var(--warn); }
+
+/* search, end */
+.results { padding-top: 18px; }
+.results h2 { font-size: calc(44px * var(--ts)); margin: 0 0 22px; }
+.res { display: grid; grid-template-columns: 60px 1fr; gap: 6px 10px; padding: 16px 20px; border-radius: 16px; border: 2px solid var(--line); margin-bottom: 14px; cursor: pointer; }
+.res:hover { border-color: var(--accent); }
+.res .n { font-size: calc(34px * var(--ts)); font-weight: 800; color: var(--accent); grid-row: span 2; }
+.res .w { font-size: calc(26px * var(--ts)); font-weight: 650; }
+.res .x { font-size: calc(23px * var(--ts)); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.res mark { background: none; color: var(--accent); font-weight: 700; }
+.end h2 { font-size: calc(56px * var(--ts)); margin: 22px 0 10px; color: var(--accent); }
+.end p { font-size: calc(28px * var(--ts)); color: var(--dim); margin: 0 0 24px; }
+.end ol { font-size: calc(26px * var(--ts)); line-height: 1.7; columns: 2; margin: 0 0 28px; padding-left: 36px; }
+.end li.ok::marker { color: var(--accent); }
+.end li:not(.ok) { color: var(--dim); }
+
+/* details overlay */
+#details { position: absolute; z-index: 6; right: 64px; bottom: 96px; width: 760px; display: none; border-radius: 18px; padding: 24px 28px; background: #0b1013; border: 2px solid var(--accent); font-size: calc(26px * var(--ts)); line-height: 1.4; }
+#details.show { display: block; }
+#details h4 { margin: 0 0 10px; font-size: calc(20px * var(--ts)); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+
+/* ── hidden test panel ───────────────────────────────────────────────────── */
+#tp { position: fixed; left: 0; right: 0; bottom: 0; height: 48vh; min-height: 300px; z-index: 50; display: none;
+  background: #111518; border-top: 2px solid var(--accent); color: #d6dde3; font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  grid-template-columns: 1.25fr 1fr; grid-template-rows: auto 1fr; }
+#tp.show { display: grid; }
+#tp header { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; padding: 6px 12px; background: #0b0e10; }
+#tp header b { color: var(--accent); letter-spacing: .1em; }
+#tp header label { display: inline-flex; gap: 6px; align-items: center; }
+#tp .ctl { overflow: auto; padding: 8px 12px; border-right: 1px solid #263037; }
+#tp .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 7px; }
+#tp .row > span:first-child { width: 78px; color: #7d8a95; }
+#tp button { background: #1b2328; color: #e6edf2; border: 1px solid #33414b; border-radius: 6px; padding: 3px 9px; font: inherit; cursor: pointer; }
+#tp button:hover { border-color: var(--accent); color: var(--accent); }
+#tp button.go { border-color: var(--accent); }
+#tp select, #tp input, #tp textarea { background: #0b0e10; color: #e6edf2; border: 1px solid #33414b; border-radius: 6px; padding: 3px 6px; font: inherit; }
+#tp input[type=number] { width: 52px; }
+#tp textarea { width: 100%; height: 54px; resize: vertical; }
+#tp .out { display: grid; grid-template-rows: 1fr auto; min-height: 0; }
+#tp .log { overflow: auto; padding: 6px 10px; }
+#tp .log div { border-bottom: 1px solid #1c2429; padding: 3px 0; white-space: pre-wrap; word-break: break-all; }
+#tp .log .src { color: #7d8a95; }
+#tp .log .ok { color: #4ade80; }
+#tp .log .bad { color: #f87171; }
+#tp .log .gl { color: var(--warn); }
+#tp .log .copy { float: right; font-size: 11px; padding: 0 5px; }
+#tp pre { margin: 0; max-height: 150px; overflow: auto; padding: 6px 10px; background: #0b0e10; border-top: 1px solid #263037; color: #a8b3bc; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="top">
+    <div id="crumb"><span id="logo" title="MSI Claw 8 AI+">MSI Claw 8 AI+</span><span id="where"></span></div>
+    <div id="counter"></div>
+  </div>
+  <div id="main"></div>
+  <div id="bottom">
+    <div id="hint"></div>
+    <div id="nav">
+      <button class="btn" id="bHome" title="Contents">⌂ Home</button>
+      <button class="btn" id="bBack" title="Back">‹ Back</button>
+      <button class="btn" id="bPrev" title="Previous">‹ Prev</button>
+      <button class="btn" id="bNext" title="Next">Next ›</button>
+    </div>
+  </div>
+  <div id="note"></div>
+  <div id="details"></div>
+</div>
+
+<div id="tp" aria-hidden="true">
+  <header>
+    <b>GUIDE TEST PANEL</b>
+    <span id="tpVer"></span>
+    <label><input type="checkbox" id="tpSim"> as glasses (sim)</label>
+    <span style="flex:1"></span>
+    <button id="tpValidate">Validate manifest</button>
+    <button id="tpClear">Clear log</button>
+    <button id="tpHide">Hide ✕</button>
+  </header>
+  <div class="ctl">
+    <div class="row"><span>Navigate</span>
+      <button data-c="open">open</button><button data-c="home">home</button>
+      <button data-c="prev">prev</button><button data-c="next">next</button><button data-c="back">back</button>
+    </div>
+    <div class="row"><span>Section</span>
+      <select id="tpSection"></select> step <input type="number" id="tpStep" min="1" value="1">
+      <button data-c="show_section" data-t="tpSection">show_section</button>
+      <button data-c="show_step" data-t="tpSection" data-s="tpStep">show_step</button>
+      <button data-c="open" data-t="tpSection" data-s="tpStep">open ▸</button>
+    </div>
+    <div class="row"><span>Progress</span>
+      <button data-c="check_step" data-t="tpSection" data-s="tpStep">check_step</button>
+      <button data-c="uncheck_step" data-t="tpSection" data-s="tpStep">uncheck_step</button>
+      <button data-c="reset_progress" data-t="tpSection">reset section</button>
+      <button data-c="reset_progress">reset all</button>
+    </div>
+    <div class="row"><span>Diagram</span>
+      <select id="tpView"></select><button data-c="show_view" data-t="tpView">show_view</button>
+      <select id="tpPart"></select><button class="go" data-c="highlight_part" data-t="tpPart">highlight_part</button>
+    </div>
+    <div class="row"><span>Zoom</span>
+      <button data-c="zoom" data-v="in" data-t="tpPart">in on part</button>
+      <button data-c="zoom" data-v="in">in</button><button data-c="zoom" data-v="out">out</button><button data-c="zoom" data-v="reset">reset</button>
+    </div>
+    <div class="row"><span>Explain</span>
+      <select id="tpLed"></select><button data-c="explain_led" data-t="tpLed">explain_led</button>
+      <select id="tpColor"></select><button data-c="explain_mode_color" data-t="tpColor">explain_mode_color</button>
+    </div>
+    <div class="row"><span>Notes</span>
+      <select id="tpNote"></select><button data-c="show_note" data-t="tpNote">show_note</button>
+      <button data-c="expand">expand</button><button data-c="collapse">collapse</button>
+    </div>
+    <div class="row"><span>Search</span>
+      <input id="tpQuery" value="bluetooth" size="16"><button data-c="search" data-v="#tpQuery">search</button>
+      result <input type="number" id="tpRes" min="1" value="1"><button data-c="show_result" data-v="#tpRes">show_result</button>
+    </div>
+    <div class="row"><span>View</span>
+      <button data-c="text_size" data-v="smaller">text smaller</button><button data-c="text_size" data-v="larger">text larger</button><button data-c="text_size" data-v="reset">text reset</button>
+      <button data-c="attention" data-t="tpPart">attention</button><button data-c="clear">clear</button><button data-c="get_state">get_state</button>
+    </div>
+    <div class="row"><span>Glasses keys</span>
+      <button data-k="plus">+</button><button data-k="minus">−</button><button data-k="plus2">+ +</button><button data-k="minus2">− −</button><button data-k="hold">hold</button>
+    </div>
+    <div class="row"><span>Chains</span>
+      <button data-chain="power">where is power</button><button data-chain="setup">walk first start</button>
+      <button data-chain="led">blinking amber</button><button data-chain="search">search bluetooth</button><button data-chain="errors">errors</button>
+    </div>
+    <div class="row"><span>Errors</span>
+      <button data-raw='{"command":"highlight_part","target":"start_button"}'>unknown_target</button>
+      <button data-raw='{"command":"show_step","target":"first_start","step":12}'>step_out_of_range</button>
+      <button data-raw='{"command":"show_step","target":"charging","step":1}'>not_a_steps_section</button>
+      <button data-raw='{"command":"fly"}'>unknown_command</button>
+    </div>
+    <div class="row" style="display:block"><span>JSON — command, payload or the whole widget</span>
+      <textarea id="tpJson">{ "kind": "guide", "payload": { "protocol": 1, "guide_id": "msi-claw-8-ai-plus", "request_id": "g-test-1", "command": "highlight_part", "target": "usb_c" } }</textarea>
+      <button class="go" id="tpRun">Run JSON</button>
+    </div>
+  </div>
+  <div class="out">
+    <div class="log" id="tpLog"></div>
+    <pre id="tpState"></pre>
+  </div>
+</div>
+
+<script src="../data/guides/msi-claw-8-ai-plus/manifest.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const M = window.GUIDE_MANIFEST;
+  const W = 1781, H = 879;
+  const params = new URLSearchParams(location.search);
+  const STORE = "guide:" + M.guide_id;
+
+  // ── lookups ─────────────────────────────────────────────────────────────────
+  const byId = (list, id) => list.find(x => x.id === id);
+  const sec = id => byId(M.sections, id);
+  const part = id => byId(M.parts, id);
+  const view = id => byId(M.views, id);
+  const led = id => byId(M.leds, id);
+  const colour = id => byId(M.mode_colors, id);
+  const note = id => byId(M.notes, id);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const $ = id => document.getElementById(id);
+
+  // ── state ───────────────────────────────────────────────────────────────────
+  let checked = {};
+  try { checked = JSON.parse(sessionStorage.getItem(STORE + ":checked") || "{}"); } catch (e) { checked = {}; }
+  const saveChecked = () => { try { sessionStorage.setItem(STORE + ":checked", JSON.stringify(checked)); } catch (e) {} };
+
+  const S = {
+    screen: "home", section: "home", step: null, view: null, highlighted: [],
+    led: null, mode_color: null, zoom: 1, zoomPart: null, note: null, expanded: false,
+    text_size: 1, search: null, history: [], last_request_id: null, last_source: null,
+    lastSection: null, opened: false
+  };
+  let noteTimer = null;
+
+  function currentSection() { return S.section && S.section !== "home" ? sec(S.section) : null; }
+  function currentItem() { const s = currentSection(); return s && S.step ? s.items[S.step - 1] : null; }
+  function progressOf(s) { return s.kind === "steps" ? ((checked[s.id] || []).length + "/" + s.items.length) : null; }
+
+  function state() {
+    const s = currentSection();
+    const progress = {};
+    M.sections.filter(x => x.kind === "steps").forEach(x => { progress[x.id] = progressOf(x); });
+    return {
+      guide_id: M.guide_id,
+      manifest_version: M.manifest_version,
+      screen: S.screen,
+      section: S.section,
+      step: S.step,
+      step_count: s ? s.items.length : null,
+      at_start: S.screen === "item" && S.step === 1,
+      at_end: S.screen === "section_end",
+      view: S.view,
+      highlighted: S.highlighted.slice(),
+      led: S.led,
+      mode_color: S.mode_color,
+      zoom: S.zoom,
+      note: S.note,
+      expanded: S.expanded,
+      checked: JSON.parse(JSON.stringify(checked)),
+      progress: progress,
+      search: S.search ? { query: S.search.query, count: S.search.results.length,
+        results: S.search.results.map((r, i) => ({ n: i + 1, section: r.section, step: r.step || null, part: r.part || null, title: r.title })) } : null,
+      text_size: S.text_size,
+      history_depth: S.history.length,
+      last_request_id: S.last_request_id,
+      last_source: S.last_source
+    };
+  }
+
+  // ── errors ──────────────────────────────────────────────────────────────────
+  function E(code, detail) { const e = new Error(detail); e.code = code; e.detail = detail; return e; }
+
+  // "Did you mean": the closest id by shared words with the id, name and aliases, then by edit distance.
+  function closest(list, wanted) {
+    const w = String(wanted || "").toLowerCase().replace(/[_-]+/g, " ").split(/\s+/).filter(Boolean);
+    let best = null, bestScore = -1;
+    list.forEach(x => {
+      const hay = [x.id, x.name, x.title, x.label].concat(x.aliases || []).filter(Boolean).join(" ").toLowerCase().replace(/[_-]+/g, " ");
+      let score = w.filter(t => hay.includes(t)).length * 10 - lev(String(wanted), x.id) / 10;
+      if (score > bestScore) { bestScore = score; best = x; }
+    });
+    return best ? best.id : null;
+  }
+  function lev(a, b) {
+    const m = a.length, n = b.length, d = Array.from({ length: m + 1 }, (_, i) => [i].concat(Array(n).fill(0)));
+    for (let j = 1; j <= n; j++) d[0][j] = j;
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function need(target, list, kind) {
+    if (!target) throw E("missing_target", "This command needs a " + kind + " id in target.");
+    const x = byId(list, target);
+    if (!x) {
+      const c = closest(list, target);
+      throw E("unknown_target", "No " + kind + " '" + target + "'." + (c ? " Closest: '" + c + "'." : ""));
+    }
+    return x;
+  }
+  function needStep(s, step) {
+    const n = parseInt(step, 10);
+    if (!n || n < 1 || n > s.items.length)
+      throw E("step_out_of_range", "Section '" + s.id + "' has " + s.items.length + " " + (s.kind === "steps" ? "steps" : "cards") + "; got " + step + ".");
+    return n;
+  }
+  function needSteps(s) { if (s.kind !== "steps") throw E("not_a_steps_section", "Section '" + s.id + "' is made of cards, not steps. Use show_section."); }
+
+  // ── navigation core ─────────────────────────────────────────────────────────
+  const SNAP = ["screen", "section", "step", "view", "highlighted", "led", "mode_color"];
+  function snapshot() { const o = {}; SNAP.forEach(k => o[k] = Array.isArray(S[k]) ? S[k].slice() : S[k]); o.search = S.search; return o; }
+  function sameScreen(a, b) { return SNAP.every(k => JSON.stringify(a[k]) === JSON.stringify(b[k])); }
+
+  // Moves to another screen. The previous one goes onto the history for `back`, and the
+  // screen-local extras (zoom, details) are reset; a note survives until its own timer.
+  function go(next, opts) {
+    const before = snapshot();
+    const target = Object.assign({ view: null, highlighted: [], led: null, mode_color: null, step: null }, next);
+    const after = Object.assign(snapshot(), target);
+    if (!(opts && opts.noHistory) && !sameScreen(before, after)) {
+      S.history.push(before);
+      if (S.history.length > 20) S.history.shift();
+    }
+    Object.assign(S, target);
+    S.zoom = 1; S.zoomPart = null; S.expanded = false;
+    if (S.section && S.section !== "home") S.lastSection = S.section;
+    S.opened = true;
+  }
+
+  function showItem(s, n) {
+    const it = s.items[n - 1];
+    go({ screen: "item", section: s.id, step: n, view: it.view || null,
+         highlighted: [], led: null, mode_color: null });
+  }
+  function firstUnchecked(s) {
+    if (s.kind !== "steps") return 1;
+    const done = checked[s.id] || [];
+    for (let i = 1; i <= s.items.length; i++) if (done.indexOf(i) < 0) return i;
+    return 1;
+  }
+
+  // ── commands ────────────────────────────────────────────────────────────────
+  const C = {
+    open(a) {
+      if (a.target) {
+        const s = need(a.target, M.sections, "section");
+        if (a.step) { showItem(s, needStep(s, a.step)); } else { showItem(s, firstUnchecked(s)); }
+      } else if (!S.opened) {
+        go({ screen: "home", section: "home" });
+      }
+      attention(null);
+    },
+    home() { go({ screen: "home", section: "home" }); },
+    show_section(a) { const s = need(a.target, M.sections, "section"); showItem(s, firstUnchecked(s)); },
+    show_step(a) {
+      const s = need(a.target, M.sections, "section");
+      needSteps(s);
+      if (!a.step) throw E("step_out_of_range", "show_step needs step (1–" + s.items.length + ").");
+      showItem(s, needStep(s, a.step));
+    },
+    // From a side screen (a diagram, a light, a search) opened in the middle of a section, next
+    // and prev first return to the step the technician was on rather than skipping past it.
+    next() {
+      const s = currentSection();
+      if (S.screen === "home") { showItem(M.sections[0], 1); return; }
+      if (!s || !S.step) { if (s) showItem(s, 1); return; }
+      if (S.screen === "section_end") return;
+      if (S.screen !== "item") { showItem(s, S.step); return; }
+      if (S.step < s.items.length) showItem(s, S.step + 1);
+      else go({ screen: "section_end", section: s.id, step: s.items.length });
+    },
+    prev() {
+      const s = currentSection();
+      if (S.screen === "home" || !s || !S.step) return;
+      if (S.screen === "section_end") { showItem(s, s.items.length); return; }
+      if (S.screen !== "item") { showItem(s, S.step); return; }
+      if (S.step > 1) showItem(s, S.step - 1);
+    },
+    back() {
+      const prev = S.history.pop();
+      if (!prev) return;
+      Object.assign(S, prev);
+      S.zoom = 1; S.zoomPart = null; S.expanded = false;
+    },
+    show_view(a) {
+      const v = need(a.target, M.views, "view");
+      go({ screen: "view", section: S.section, step: S.step, view: v.id });
+    },
+    highlight_part(a) {
+      const p = need(a.target, M.parts, "part");
+      const it = currentItem();
+      // Already on a screen showing this side of the device: light it up in place.
+      if ((S.screen === "item" && it && it.view === p.view) || (S.screen === "view" && S.view === p.view)) {
+        S.highlighted = [p.id]; S.zoom = 1; S.zoomPart = null;
+      } else {
+        go({ screen: "view", section: S.section, step: S.step, view: p.view, highlighted: [p.id] });
+      }
+    },
+    zoom(a) {
+      const v = String(a.value || "");
+      if (["in", "out", "reset"].indexOf(v) < 0) throw E("bad_value", "zoom takes value in, out or reset.");
+      if (a.target) {
+        const p = need(a.target, M.parts, "part");
+        if (S.view !== p.view) C.highlight_part({ target: p.id });
+        S.zoomPart = p.id;
+      }
+      if (!S.view) throw E("bad_value", "There is no diagram on this screen to zoom.");
+      S.zoom = v === "reset" ? 1 : Math.max(1, Math.min(3, +(S.zoom * (v === "in" ? 1.5 : 1 / 1.5)).toFixed(3)));
+      if (S.zoom === 1) S.zoomPart = null;
+    },
+    explain_led(a) {
+      const l = need(a.target, M.leds, "light");
+      go({ screen: "led", section: S.section, step: S.step, led: l.id });
+    },
+    explain_mode_color(a) {
+      const c = need(a.target, M.mode_colors, "colour");
+      go({ screen: "mode_color", section: S.section, step: S.step, view: "front", mode_color: c.id });
+    },
+    show_note(a) {
+      const n = need(a.target, M.notes, "note");
+      S.note = n.id;
+      clearTimeout(noteTimer);
+      noteTimer = setTimeout(() => { S.note = null; render(); }, 20000);
+    },
+    expand(a) {
+      if (a.target) {
+        const n = byId(M.notes, a.target);
+        if (n) { C.show_note({ target: n.id }); return; }
+        const s = need(a.target, M.sections, "section or note");
+        if (S.section !== s.id) showItem(s, firstUnchecked(s));
+      }
+      S.expanded = true;
+    },
+    collapse() { S.expanded = false; },
+    check_step(a) { mark(a, true); },
+    uncheck_step(a) { mark(a, false); },
+    reset_progress(a) {
+      if (a.target) { const s = need(a.target, M.sections, "section"); delete checked[s.id]; }
+      else checked = {};
+      saveChecked();
+    },
+    search(a) {
+      const q = String(a.value || "").trim();
+      if (!q) throw E("bad_value", "search needs words in value.");
+      const results = searchIndex(q);
+      S.search = { query: q, results: results };
+      if (results.length === 1) { openResult(results[0]); S.search.opened = true; }
+      else go({ screen: "search", section: "home" });
+      S.search = { query: q, results: results };
+    },
+    show_result(a) {
+      if (!S.search) throw E("no_search", "There is no search to pick a result from.");
+      const n = parseInt(a.value, 10);
+      if (!n || n < 1 || n > S.search.results.length) throw E("bad_value", "Pick a result from 1 to " + S.search.results.length + ".");
+      openResult(S.search.results[n - 1]);
+    },
+    text_size(a) {
+      const v = String(a.value || "");
+      if (v === "larger") S.text_size = Math.min(1.6, +(S.text_size * 1.15).toFixed(3));
+      else if (v === "smaller") S.text_size = Math.max(0.85, +(S.text_size / 1.15).toFixed(3));
+      else if (v === "reset") S.text_size = 1;
+      else throw E("bad_value", "text_size takes value larger, smaller or reset.");
+    },
+    attention(a) {
+      if (a.target) C.highlight_part({ target: a.target });
+      attention(a.target || null);
+    },
+    clear() { S.highlighted = []; S.zoom = 1; S.zoomPart = null; S.note = null; S.expanded = false; clearTimeout(noteTimer); },
+    get_state() {}
+  };
+
+  function mark(a, on) {
+    const s = need(a.target, M.sections, "section");
+    needSteps(s);
+    if (!a.step) throw E("step_out_of_range", "Needs step (1–" + s.items.length + ").");
+    const n = needStep(s, a.step);
+    if (s.items[n - 1].checkable === false) throw E("not_checkable", "Step " + n + " of '" + s.id + "' can't be ticked.");
+    const list = checked[s.id] || [];
+    const i = list.indexOf(n);
+    if (on && i < 0) list.push(n);
+    if (!on && i >= 0) list.splice(i, 1);
+    list.sort((x, y) => x - y);
+    checked[s.id] = list;
+    saveChecked();
+  }
+
+  function attention(target) {
+    const st = $("stage");
+    st.classList.remove("flash"); void st.offsetWidth; st.classList.add("flash");
+    post({ type: "attention", reason: "command", target: target });
+  }
+
+  // ── search ──────────────────────────────────────────────────────────────────
+  function searchIndex(q) {
+    const words = q.toLowerCase().split(/\W+/).filter(w => w.length > 1);
+    const rows = [];
+    M.sections.forEach(s => {
+      rows.push({ section: s.id, title: s.title, where: "Section", text: s.summary, hay: [s.title, s.summary].concat(s.keywords || []).join(" ") });
+      s.items.forEach(it => rows.push({ section: s.id, step: it.n, title: it.title,
+        where: s.title + (s.kind === "steps" ? " · Step " + it.n : ""), text: it.text,
+        hay: [it.title, it.text, it.details || ""].join(" ") }));
+    });
+    M.parts.forEach(p => rows.push({ part: p.id, title: p.name, where: "Part · " + view(p.view).title, text: p.what,
+      hay: [p.name, p.what].concat(p.aliases || []).join(" ") }));
+    rows.forEach(r => {
+      const h = r.hay.toLowerCase();
+      r.score = words.reduce((n, w) => n + (h.includes(w) ? (r.title.toLowerCase().includes(w) ? 3 : 1) : 0), 0);
+    });
+    return rows.filter(r => r.score > 0).sort((a, b) => b.score - a.score).slice(0, 6)
+      .map(r => ({ section: r.section, step: r.step, part: r.part, title: r.title, where: r.where, text: r.text, words: words }));
+  }
+  function openResult(r) {
+    if (r.part) C.highlight_part({ target: r.part });
+    else { const s = sec(r.section); showItem(s, r.step || firstUnchecked(s)); }
+  }
+
+  // ── rendering ───────────────────────────────────────────────────────────────
+  let maskSeq = 0;
+
+  // A device diagram with the given parts lit up. Everything else is dimmed while a part is lit,
+  // so the eye goes straight to it; the rings pulse.
+  function diagram(viewId, lit, extraRings) {
+    const v = view(viewId);
+    const spots = [];
+    lit.forEach(id => { const p = part(id); if (p && p.view === viewId) p.spots.forEach(s => spots.push(s)); });
+    const mid = "m" + (++maskSeq);
+    const svg =
+      '<svg viewBox="0 0 ' + v.w + " " + v.h + '" preserveAspectRatio="none">' +
+      (spots.length ? '<defs><mask id="' + mid + '"><rect width="100%" height="100%" fill="#fff"/>' +
+        spots.map(s => '<circle cx="' + s.x + '" cy="' + s.y + '" r="' + (s.r * 1.25) + '" fill="#000"/>').join("") +
+        '</mask></defs><rect width="100%" height="100%" fill="#000" opacity=".62" mask="url(#' + mid + ')"/>' : "") +
+      spots.map(s => '<circle class="ring2" cx="' + s.x + '" cy="' + s.y + '" r="' + (s.r * 1.25 + 10) + '"/>' +
+                     '<circle class="ring" cx="' + s.x + '" cy="' + s.y + '" r="' + (s.r * 1.25) + '"/>').join("") +
+      (extraRings || "") + "</svg>";
+    let origin = "50% 50%";
+    const zp = S.zoomPart ? part(S.zoomPart) : (spots.length ? { spots: spots } : null);
+    if (zp && zp.spots && zp.spots[0]) origin = (zp.spots[0].x / v.w * 100) + "% " + (zp.spots[0].y / v.h * 100) + "%";
+    return '<div class="dia"><div class="zoomer" style="transform:scale(' + S.zoom + ');transform-origin:' + origin + '">' +
+           '<img src="' + esc(v.image) + '" alt="' + esc(v.title) + ' of the MSI Claw 8 AI+">' + svg + "</div></div>";
+  }
+
+  function legend(viewId) {
+    return '<div class="legend">' + M.parts.filter(p => p.view === viewId).sort((a, b) => a.number - b.number)
+      .map(p => '<div data-part="' + p.id + '" class="' + (S.highlighted.indexOf(p.id) >= 0 ? "hl" : "") + '"><span>' + p.number + "</span>" + esc(p.name) + "</div>").join("") + "</div>";
+  }
+  function callout(p) {
+    return '<div class="callout"><span class="num">' + p.number + "</span><h3>" + esc(p.name) + "</h3><p>" + esc(p.what) + "</p></div>";
+  }
+  function inlineNote(id) { const n = note(id); return n ? '<div class="inote ' + n.severity + '">' + esc(n.text) + "</div>" : ""; }
+
+  function renderHome() {
+    return '<div class="home"><h1>' + esc(M.device.name) + '</h1><div class="sub">' + esc(M.device.kind[0].toUpperCase() + M.device.kind.slice(1)) +
+      " · " + esc(M.device.os) + " · " + esc(M.device.model) + '</div><div class="tiles">' +
+      M.sections.map(s => {
+        const done = (checked[s.id] || []).length;
+        const meta = s.kind === "steps" ? s.items.length + " steps" + (done ? " · " + done + "/" + s.items.length + " done" : "") : s.items.length + " cards";
+        const bar = s.kind === "steps" ? '<div class="bar"><i style="width:' + (done / s.items.length * 100) + '%"></i></div>' : "";
+        return '<div class="tile' + (S.lastSection === s.id ? " last" : "") + '" data-section="' + s.id + '"><div class="t">' + esc(s.title) +
+               '</div><div><div class="m">' + meta + "</div>" + bar + "</div></div>";
+      }).join("") + "</div></div>";
+  }
+
+  function renderItem() {
+    const s = currentSection(), it = currentItem();
+    const isStep = s.kind === "steps";
+    const done = (checked[s.id] || []).indexOf(it.n) >= 0;
+    let right = "";
+    if (it.screen === "led") right = ledPanel(null);
+    else if (it.screen === "mode_color") right = colourFigure(null);
+    else if (it.legend) right = '<div class="fig">' + diagram(it.view, S.highlighted) + '<div style="height:18px"></div>' + legend(it.view) + "</div>";
+    else if (it.view) {
+      const lit = S.highlighted.length ? S.highlighted : (it.parts || []);
+      const p = S.highlighted.length ? part(S.highlighted[0]) : null;
+      right = '<div class="fig"><div class="cap">' + esc(view(it.view).title) + "</div>" + diagram(it.view, lit) +
+              (p ? '<div style="height:20px"></div>' + callout(p) : "") + "</div>";
+    }
+    const wide = !right;
+    return '<div class="item' + (wide ? " wide" : "") + '"><div class="text"><h2>' + esc(it.title) + "</h2><p>" + esc(it.text).replace(/ · /g, "<br>") + "</p>" +
+      (it.note ? inlineNote(it.note) : "") +
+      (isStep && it.checkable !== false ? '<div class="chk' + (done ? " on" : "") + '" data-check="1"><span class="box"></span>' + (done ? "Done" : "Say “done” when finished") + "</div>" : "") +
+      "</div>" + right + "</div>";
+  }
+
+  function renderView() {
+    const v = view(S.view);
+    const p = S.highlighted.length ? part(S.highlighted[0]) : null;
+    return '<div class="vs"><div class="fig"><div class="cap">' + esc(v.title) + "</div>" + diagram(v.id, S.highlighted) + "</div><div>" +
+      (p ? callout(p) + '<div style="height:28px"></div>' : "") + legend(v.id) + "</div></div>";
+  }
+
+  function ledPanel(selected) {
+    const l = selected ? led(selected) : null;
+    const lamp = l && l.color ? 'style="background:' + l.color + ";border-color:" + l.color + ";box-shadow:0 0 28px " + l.color + '"' : "";
+    return '<div><div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="#eef2f5" stroke-width="2" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.3 6.6a8 8 0 1 0 11.4 0"/></svg>' +
+      '<span class="lamp' + (l && l.blink ? " blink" : "") + '" ' + lamp + "></span></div>" +
+      '<div class="states" style="margin-top:36px">' + M.leds.map(x =>
+        '<div class="' + (x.id === selected ? "sel " + (x.severity || "") : "") + '" data-led="' + x.id + '"><span class="dot" style="' +
+        (x.color ? "background:" + x.color + ";border-color:" + x.color : "") + '"></span><span><b>' + esc(x.label) + "</b> <em>— " + esc(x.meaning.split(".")[0]) + "</em></span></div>").join("") +
+      "</div></div>";
+  }
+  function renderLed() {
+    const l = led(S.led);
+    return '<div class="led">' + ledPanel(l.id) + '<div><h2 style="font-size:calc(56px * var(--ts));margin:0 0 6px">' + esc(l.label) + "</h2>" +
+      '<div class="meaning' + (l.severity === "warning" ? " warning" : "") + '">' + (l.severity === "warning" ? "⚠ " : "") + esc(l.meaning) + "</div></div></div>";
+  }
+
+  function colourFigure(selected) {
+    const c = selected ? colour(selected) : null;
+    let rings = "";
+    if (c) ["left_stick", "right_stick"].forEach(id => part(id).spots.forEach(s => {
+      rings += '<circle class="mring" cx="' + s.x + '" cy="' + s.y + '" r="' + (s.r + 6) + '" stroke="' + c.color + '"/>';
+    }));
+    return '<div class="fig"><div class="cap">Front · stick rings</div>' + diagram("front", [], rings) +
+      '<div class="states" style="margin-top:22px">' + M.mode_colors.map(x =>
+        '<div class="' + (x.id === selected ? "sel" : "") + '" data-colour="' + x.id + '"><span class="dot" style="background:' + x.color + ";border-color:" + x.color +
+        '"></span><span><b>' + esc(x.mode) + "</b> <em>— " + esc(x.meaning) + "</em></span></div>").join("") + "</div></div>";
+  }
+  function renderColour() {
+    const c = colour(S.mode_color);
+    return '<div class="item"><div class="text"><h2>' + esc(c.mode) + "</h2><p>" + esc(c.meaning) + "</p>" +
+      "<p style=\"color:var(--dim)\">Switch modes in MSI Center M › Control Mode, or in Quick Settings. The rings show the mode when Mystic Light is set to InfoMode.</p></div>" +
+      colourFigure(c.id) + "</div>";
+  }
+
+  function renderSearch() {
+    const r = S.search;
+    const mark = (t, words) => words.reduce((h, w) => h.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>"), esc(t));
+    return '<div class="results"><h2>“' + esc(r.query) + "” · " + r.results.length + " result" + (r.results.length === 1 ? "" : "s") + "</h2>" +
+      (r.results.length ? r.results.map((x, i) => '<div class="res" data-result="' + (i + 1) + '"><div class="n">' + (i + 1) + '</div><div class="w">' + esc(x.where) +
+        (x.part || x.step ? " — " + esc(x.title) : "") + '</div><div class="x">' + mark(x.text || "", x.words) + "</div></div>").join("")
+        : '<p style="font-size:calc(30px * var(--ts));color:var(--dim)">Nothing in this guide matches. Try other words, or say “home”.</p>') + "</div>";
+  }
+
+  function renderEnd() {
+    const s = currentSection();
+    const done = checked[s.id] || [];
+    const idx = M.sections.indexOf(s);
+    const nxt = M.sections[idx + 1];
+    return '<div class="end"><h2>Section complete</h2><p>' + esc(s.title) + (s.kind === "steps" ? " · " + done.length + " of " + s.items.length + " done" : "") + "</p><ol>" +
+      s.items.map(it => '<li class="' + (s.kind !== "steps" || done.indexOf(it.n) >= 0 ? "ok" : "") + '">' + esc(it.title) + "</li>").join("") + "</ol>" +
+      (nxt ? '<div class="tile" data-section="' + nxt.id + '" style="max-width:520px"><div class="t">Next: ' + esc(nxt.title) + '</div><div class="m">' + esc(nxt.summary) + "</div></div>" : "") + "</div>";
+  }
+
+  function hintFor() {
+    switch (S.screen) {
+      case "home": return 'Say <b>“show first start”</b> · <b>“where is the power button?”</b> · <b>“what does blinking orange mean?”</b>';
+      case "item": {
+        const s = currentSection();
+        return s.kind === "steps" ? 'Say <b>“done”</b> · <b>“next”</b> · <b>“previous”</b> · <b>“where is …?”</b>' : 'Say <b>“next”</b> · <b>“previous”</b> · <b>“tell me more”</b> · <b>“home”</b>';
+      }
+      case "view": return 'Say <b>“zoom in”</b> · <b>“show the front”</b> · <b>“where is …?”</b> · <b>“back”</b>';
+      case "led": return 'Say <b>“what does white mean?”</b> · <b>“back”</b>';
+      case "mode_color": return 'Say <b>“what does blue mean?”</b> · <b>“back”</b>';
+      case "search": return 'Say <b>“the first one”</b> · <b>“the second one”</b>';
+      case "section_end": return 'Say <b>“next section”</b> · <b>“home”</b>';
+    }
+    return "";
+  }
+
+  function render() {
+    document.documentElement.style.setProperty("--ts", S.text_size);
+    const s = currentSection();
+    const main = $("main");
+    let where = "", counter = "";
+    switch (S.screen) {
+      case "home": main.innerHTML = renderHome(); where = "Guide"; break;
+      case "item": main.innerHTML = renderItem(); where = s.title; break;
+      case "view": main.innerHTML = renderView(); where = view(S.view).title; break;
+      case "led": main.innerHTML = renderLed(); where = "Status light"; break;
+      case "mode_color": main.innerHTML = renderColour(); where = "Stick light colours"; break;
+      case "search": main.innerHTML = renderSearch(); where = "Search"; break;
+      case "section_end": main.innerHTML = renderEnd(); where = s.title; break;
+    }
+    if (s && S.step && (S.screen === "item" || S.screen === "section_end")) {
+      const done = checked[s.id] || [];
+      const label = S.screen === "section_end" ? "Done" : (s.kind === "steps" ? "Step " + S.step + " of " + s.items.length : S.step + " / " + s.items.length);
+      counter = label + ' <span class="dots">' + s.items.map(it =>
+        "<i class=\"" + (done.indexOf(it.n) >= 0 ? "done " : "") + (it.n === S.step && S.screen === "item" ? "now" : "") + "\"></i>").join("") + "</span>";
+    }
+    $("where").textContent = where;
+    $("counter").innerHTML = counter;
+    $("hint").innerHTML = hintFor();
+    $("bHome").disabled = S.screen === "home";
+    $("bBack").disabled = !S.history.length;
+    $("bPrev").disabled = !(s && S.step) || (S.screen === "item" && S.step === 1);
+    $("bNext").disabled = S.screen === "section_end" || S.screen === "search";
+
+    const n = S.note ? note(S.note) : null;
+    $("note").className = n ? "show " + n.severity : "";
+    $("note").innerHTML = n ? (n.severity === "warning" ? "⚠ " : "ⓘ ") + esc(n.text) : "";
+
+    const it = currentItem();
+    const det = $("details");
+    det.className = S.expanded ? "show" : "";
+    det.innerHTML = S.expanded ? "<h4>More</h4>" + esc(it && it.details ? it.details : (it ? it.text : (s ? s.summary : M.title))) : "";
+
+    tpState();
+  }
+
+  // ── host bridge ─────────────────────────────────────────────────────────────
+  // In the glasses, the app registers window.XrealHost. Anywhere else the events go to the test
+  // panel's log and the console, and the page behaves exactly the same.
+  let sim = params.get("host") === "sim";
+  let movedTimer = null;
+  function post(evt) {
+    const s = JSON.stringify(evt);
+    if (window.XrealHost && typeof window.XrealHost.post === "function") { try { window.XrealHost.post(s); } catch (e) {} }
+    if (console && console.info) console.info("guide →", s);
+    log("out", evt);
+    if (sim) simulateGlasses(evt);
+  }
+
+  // What the glasses would send to the assistant (GUIDE_COMMANDS.md §7): rarely, and with the
+  // technician's own paging coalesced into one line once they stop pressing for 1.5 s.
+  function simulateGlasses(evt) {
+    const st = evt.state || {};
+    const line = s => logLine("gl", "[glasses] guide: " + s);
+    if (evt.type === "ready") line("opened guide=" + M.guide_id + " section=" + st.section);
+    if (evt.type === "result" && evt.ok && st.screen === "section_end" && evt.command === "next")
+      line("section_end section=" + st.section + " checked=" + ((st.checked[st.section] || []).length) + "/" + st.step_count);
+    if (evt.type === "state" && (evt.source === "keys" || evt.source === "touch") && st.screen !== "section_end") {
+      clearTimeout(movedTimer);
+      movedTimer = setTimeout(() => {
+        const now = state();
+        line("moved section=" + now.section + (now.step ? " step=" + now.step + "/" + now.step_count : "") + " source=" + evt.source);
+      }, 1500);
+    }
+  }
+
+  // ── entry point ─────────────────────────────────────────────────────────────
+  let seq = 0;
+  const seen = new Set();
+
+  // Accepts the command in any of the forms it travels in: the whole widget, its payload, or
+  // just { command, target, step, value }.
+  function normalize(input) {
+    let x = typeof input === "string" ? JSON.parse(input) : input || {};
+    if (x.widget) x = x.widget;
+    if (x.tool_call && x.tool_call.widget) x = x.tool_call.widget;
+    if (x.kind === "guide" && x.payload) x = x.payload;
+    return x;
+  }
+
+  function run(input, sourceOverride) {
+    let cmd;
+    try { cmd = normalize(input); } catch (e) { cmd = { command: null }; }
+    const source = sourceOverride || cmd.source || "assistant";
+    const rid = cmd.request_id || ("local-" + (++seq));
+    const before = JSON.stringify(state());
+    let res;
+    if (cmd.request_id && seen.has(cmd.request_id)) {
+      res = { ok: true, request_id: rid, duplicate: true, state: state() };
+      post(Object.assign({ type: "result", command: cmd.command, source: source }, res));
+      return res;
+    }
+    if (cmd.request_id) seen.add(cmd.request_id);
+    try {
+      if (cmd.protocol != null && cmd.protocol !== M.protocol) throw E("protocol_mismatch", "Page speaks protocol " + M.protocol + "; got " + cmd.protocol + ".");
+      if (!cmd.command || M.commands.indexOf(cmd.command) < 0 || !C[cmd.command]) throw E("unknown_command", "No command '" + cmd.command + "'.");
+      S.last_request_id = rid; S.last_source = source;
+      C[cmd.command](cmd, source);
+      res = { ok: true, request_id: rid, state: state() };
+    } catch (e) {
+      if (!e.code) { post({ type: "error", message: String(e && e.message || e), where: cmd.command }); e.code = "page_error"; e.detail = String(e.message || e); }
+      res = { ok: false, request_id: rid, error: e.code, detail: e.detail, state: state() };
+    }
+    render();
+    post(Object.assign({ type: "result", command: cmd.command, source: source }, res));
+    if (res.ok && source !== "assistant" && JSON.stringify(res.state) !== before)
+      post({ type: "state", cause: cmd.command, source: source, state: res.state });
+    return res;
+  }
+
+  window.Guide = {
+    run: run,
+    manifest: () => M,
+    state: state,
+    protocol: M.protocol
+  };
+
+  // ── touch, mouse and keyboard on the page itself ────────────────────────────
+  $("main").addEventListener("click", e => {
+    const t = e.target.closest("[data-section],[data-part],[data-check],[data-result],[data-led],[data-colour]");
+    if (!t) return;
+    if (t.dataset.section) run({ command: "show_section", target: t.dataset.section }, "touch");
+    else if (t.dataset.part) run({ command: "highlight_part", target: t.dataset.part }, "touch");
+    else if (t.dataset.result) run({ command: "show_result", value: t.dataset.result }, "touch");
+    else if (t.dataset.led) run({ command: "explain_led", target: t.dataset.led }, "touch");
+    else if (t.dataset.colour) run({ command: "explain_mode_color", target: t.dataset.colour }, "touch");
+    else if (t.dataset.check) {
+      const done = (checked[S.section] || []).indexOf(S.step) >= 0;
+      run({ command: done ? "uncheck_step" : "check_step", target: S.section, step: S.step }, "touch");
+    }
+  });
+  $("bHome").onclick = () => run({ command: "home" }, "touch");
+  $("bBack").onclick = () => run({ command: "back" }, "touch");
+  $("bPrev").onclick = () => run({ command: "prev" }, "touch");
+  $("bNext").onclick = () => run({ command: S.screen === "section_end" ? "home" : "next" }, "touch");
+  document.addEventListener("keydown", e => {
+    if (e.ctrlKey && e.shiftKey && (e.key === "D" || e.key === "d")) { e.preventDefault(); togglePanel(); return; }
+    if (e.target.closest && e.target.closest("#tp")) return;
+    if (e.key === "ArrowRight") run({ command: "next" }, "touch");
+    if (e.key === "ArrowLeft") run({ command: "prev" }, "touch");
+    if (e.key === "Backspace") run({ command: "back" }, "touch");
+    if (e.key === "Home") run({ command: "home" }, "touch");
+  });
+
+  // ── fit the stage to the window ─────────────────────────────────────────────
+  // Above the test panel when it is open, so the page and the panel can be watched together.
+  function fit() {
+    const tp = $("tp");
+    const free = window.innerHeight - (tp.classList.contains("show") ? tp.offsetHeight : 0);
+    const k = Math.min(window.innerWidth / W, free / H);
+    const st = $("stage");
+    st.style.transform = "scale(" + k + ")";
+    st.style.left = Math.max(0, (window.innerWidth - W * k) / 2) + "px";
+    st.style.top = Math.max(0, (free - H * k) / 2) + "px";
+  }
+  window.addEventListener("resize", fit);
+
+  // ── hidden test panel ───────────────────────────────────────────────────────
+  // Every button calls Guide.run with exactly the command the assistant would send, so what works
+  // here works by voice. Opened with ?debug=1, five quick clicks on the name, or Ctrl+Shift+D.
+  function togglePanel(force) {
+    const tp = $("tp");
+    const on = force != null ? force : !tp.classList.contains("show");
+    tp.classList.toggle("show", on);
+    tp.setAttribute("aria-hidden", on ? "false" : "true");
+    fit();
+    tpState();
+  }
+  let clicks = [];
+  $("logo").addEventListener("click", () => {
+    const now = Date.now();
+    clicks = clicks.filter(t => now - t < 2000).concat(now);
+    if (clicks.length >= 5) { clicks = []; togglePanel(); }
+  });
+
+  function opt(sel, list, label) {
+    $(sel).innerHTML = list.map(x => '<option value="' + x.id + '">' + esc(label(x)) + "</option>").join("");
+  }
+  function tpInit() {
+    $("tpVer").textContent = M.guide_id + " · manifest " + M.manifest_version + " · protocol " + M.protocol;
+    opt("tpSection", M.sections, s => s.id + (s.kind === "steps" ? " (" + s.items.length + " steps)" : " (cards)"));
+    opt("tpView", M.views, v => v.id);
+    opt("tpPart", M.parts.slice().sort((a, b) => a.view.localeCompare(b.view) || a.number - b.number), p => p.view + " " + p.number + " · " + p.id);
+    opt("tpLed", M.leds, l => l.id);
+    opt("tpColor", M.mode_colors, c => c.id + " · " + c.mode);
+    opt("tpNote", M.notes, n => n.id);
+    $("tpSim").checked = sim;
+    $("tpSim").onchange = e => { sim = e.target.checked; logLine("src", "glasses simulation " + (sim ? "on" : "off")); };
+
+    document.querySelectorAll("#tp [data-c]").forEach(b => b.onclick = () => {
+      const cmd = { command: b.dataset.c };
+      if (b.dataset.t) cmd.target = $(b.dataset.t).value;
+      if (b.dataset.s) cmd.step = parseInt($(b.dataset.s).value, 10) || null;
+      if (b.dataset.v) cmd.value = b.dataset.v.charAt(0) === "#" ? $(b.dataset.v.slice(1)).value : b.dataset.v;
+      run(cmd, "test");
+    });
+    document.querySelectorAll("#tp [data-raw]").forEach(b => b.onclick = () => run(JSON.parse(b.dataset.raw), "test"));
+    document.querySelectorAll("#tp [data-k]").forEach(b => b.onclick = () => key(b.dataset.k));
+    document.querySelectorAll("#tp [data-chain]").forEach(b => b.onclick = () => chain(b.dataset.chain));
+    $("tpRun").onclick = () => {
+      let x;
+      try { x = JSON.parse($("tpJson").value); } catch (e) { logLine("bad", "JSON: " + e.message); return; }
+      const src = normalize(x).source || "test";
+      run(x, src);
+    };
+    $("tpHide").onclick = () => togglePanel(false);
+    $("tpClear").onclick = () => { $("tpLog").innerHTML = ""; };
+    $("tpValidate").onclick = validate;
+    $("tpLog").addEventListener("click", e => {
+      const b = e.target.closest(".copy");
+      if (b && navigator.clipboard) navigator.clipboard.writeText(b.dataset.text);
+    });
+  }
+
+  // The glasses' keys, as GUIDE_COMMANDS.md §9 maps them.
+  function key(k) {
+    const s = currentSection();
+    if (k === "plus") run({ command: "next" }, "keys");
+    if (k === "minus") run({ command: "prev" }, "keys");
+    if (k === "minus2") run({ command: "back" }, "keys");
+    if (k === "hold") run({ command: "home" }, "keys");
+    if (k === "plus2") {
+      if (S.screen === "item" && s && s.kind === "steps") run({ command: "check_step", target: s.id, step: S.step }, "keys");
+      run({ command: "next" }, "keys");
+    }
+  }
+
+  const CHAINS = {
+    power: [{ command: "home" }, { command: "highlight_part", target: "power_button" }, { command: "zoom", value: "in" }, { command: "back" }],
+    setup: [{ command: "reset_progress", target: "first_start" }, { command: "show_section", target: "first_start" }]
+      .concat([1, 2, 3, 4, 5, 6, 7, 8].reduce((a, n) => a.concat([{ command: "check_step", target: "first_start", step: n }, { command: "next" }]), [])),
+    led: [{ command: "explain_led", target: "amber" }, { command: "explain_led", target: "amber_blinking" }, { command: "show_note", target: "get_it_checked" }],
+    search: [{ command: "search", value: "bluetooth" }, { command: "show_result", value: "1" }],
+    errors: [{ command: "highlight_part", target: "start_button" }, { command: "show_step", target: "first_start", step: 12 },
+             { command: "check_step", target: "charging", step: 1 }, { command: "show_result", value: "9" }, { command: "zoom", value: "sideways" }]
+  };
+  function chain(name) {
+    const list = CHAINS[name];
+    logLine("src", "chain “" + name + "”: " + list.length + " commands");
+    list.forEach((c, i) => setTimeout(() => run(Object.assign({ request_id: "chain-" + name + "-" + Date.now() + "-" + i }, c), "test"), i * 1200));
+  }
+
+  function validate() {
+    const problems = [];
+    const ids = {};
+    ["sections", "views", "parts", "leds", "mode_colors", "notes"].forEach(k => M[k].forEach(x => {
+      if (ids[k + ":" + x.id]) problems.push("duplicate " + k + " id " + x.id);
+      ids[k + ":" + x.id] = 1;
+    }));
+    M.parts.forEach(p => {
+      const v = view(p.view);
+      if (!v) problems.push("part " + p.id + ": unknown view " + p.view);
+      if (!p.spots || !p.spots.length) problems.push("part " + p.id + ": no place on the diagram");
+      (p.spots || []).forEach(s => { if (v && (s.x < 0 || s.y < 0 || s.x > v.w || s.y > v.h)) problems.push("part " + p.id + ": spot outside " + v.id); });
+      if (!p.say) problems.push("part " + p.id + ": no say");
+    });
+    M.sections.forEach(s => s.items.forEach((it, i) => {
+      if (it.n !== i + 1) problems.push(s.id + ": item " + it.id + " is numbered " + it.n + ", expected " + (i + 1));
+      if (it.view && !view(it.view)) problems.push(s.id + "/" + it.id + ": unknown view " + it.view);
+      (it.parts || []).forEach(p => { const x = part(p); if (!x) problems.push(s.id + "/" + it.id + ": unknown part " + p); else if (it.view && x.view !== it.view) problems.push(s.id + "/" + it.id + ": part " + p + " is not on the " + it.view + " view"); });
+      if (it.note && !note(it.note)) problems.push(s.id + "/" + it.id + ": unknown note " + it.note);
+      if (!it.say) problems.push(s.id + "/" + it.id + ": no say");
+    }));
+    M.commands.forEach(c => { if (!C[c]) problems.push("command " + c + " is in the manifest but not implemented"); });
+    Object.keys(C).forEach(c => { if (M.commands.indexOf(c) < 0) problems.push("command " + c + " is implemented but not in the manifest"); });
+    logLine(problems.length ? "bad" : "ok", problems.length ? "manifest: " + problems.length + " problem(s)\n  " + problems.join("\n  ")
+      : "manifest OK — " + M.sections.length + " sections, " + M.parts.length + " parts, " + M.views.length + " views, " + M.commands.length + " commands");
+  }
+
+  function time() { const d = new Date(); return d.toTimeString().slice(0, 8); }
+  function logLine(cls, text) {
+    const box = $("tpLog");
+    if (!box) return;
+    const div = document.createElement("div");
+    div.innerHTML = '<button class="copy" data-text="' + esc(text) + '">copy</button><span class="src">' + time() + "</span> <span class=\"" + cls + "\">" + esc(text) + "</span>";
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+  function log(dir, evt) {
+    if (evt.type === "result") {
+      const st = evt.state || {};
+      logLine(evt.ok ? "ok" : "bad", evt.source + " " + evt.command + " → " + (evt.ok ? "ok" + (evt.duplicate ? " (duplicate, skipped)" : "") : evt.error + ": " + evt.detail) +
+        "  · screen=" + st.screen + " section=" + st.section + (st.step ? " step=" + st.step + "/" + st.step_count : "") + (st.view ? " view=" + st.view : "") +
+        (st.highlighted && st.highlighted.length ? " lit=" + st.highlighted.join(",") : ""));
+    } else {
+      logLine("src", "→ host " + JSON.stringify(evt).slice(0, 400));
+    }
+  }
+  function tpState() { const p = $("tpState"); if (p && $("tp").classList.contains("show")) p.textContent = JSON.stringify(state(), null, 1); }
+
+  // ── start ───────────────────────────────────────────────────────────────────
+  tpInit();
+  fit();
+  const startSection = params.get("section");
+  if (startSection && sec(startSection)) {
+    const s = sec(startSection);
+    const n = parseInt(params.get("step"), 10);
+    showItem(s, n && n >= 1 && n <= s.items.length ? n : firstUnchecked(s));
+    S.history = [];
+  }
+  S.opened = true;
+  render();
+  if (params.get("debug") === "1") togglePanel(true);
+  post({ type: "ready", guide_id: M.guide_id, manifest_version: M.manifest_version, protocol: M.protocol, state: state() });
+
+  // ?cmd=<json> runs one command or a list of them on load, as the test panel would — a link that
+  // opens the page on any screen, for a bug report or a review.
+  if (params.get("cmd")) {
+    try {
+      const list = JSON.parse(params.get("cmd"));
+      (Array.isArray(list) ? list : [list]).forEach(c => run(c, "test"));
+    } catch (e) { logLine("bad", "?cmd: " + e.message); }
+  }
+})();
+</script>
+</body>
+</html>

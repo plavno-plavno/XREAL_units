@@ -1,0 +1,116 @@
+Guide msi-claw-8-ai-plus · manifest 2026-11-09.2 · protocol 1
+MSI Claw 8 AI+ (MS-1T52 A2VM), handheld gaming PC, Windows 11
+URL: https://xreal-units.vercel.app/guides/msi-claw-8-ai-plus.html
+
+Commands: open, home, show_section, show_step, next, prev, back, show_view, highlight_part, zoom, explain_led, explain_mode_color, show_note, expand, collapse, check_step, uncheck_step, reset_progress, search, show_result, text_size, attention, clear, get_state
+
+Sections (id — title — kind):
+  overview — What's in the box — 2 cards
+    1 box: In the box: the Claw, a quick start guide, and the USB-C charger with its cord.
+    2 at_a_glance: It's a Windows 11 handheld with an 8-inch touch screen, two USB-C ports and a fingerprint power button.
+  controls_front — Front and back — 2 cards
+    1 front: Here's the front, with every part numbered.
+    2 back: On the back: the M1 and M2 buttons and the vents.
+  controls_top — Top and bottom edges — 2 cards
+    1 top: Here's the top edge: power, card slot, USB-C ports, audio and volume.
+    2 bottom: There's nothing to press on the bottom edge.
+  first_start — First start — 8 steps
+    1 plug_in: Plug the charger from the box into either USB-C port on the top edge.
+    2 power_on: Press the power button on the top edge once. The stick rings light up while it starts.
+    3 wait_screen: Give it a minute for the screen, and about two for Windows to load.
+    4 region_keyboard: Pick your country or region, then your keyboard layout.
+    5 wifi: Connect to a Wi-Fi network.
+    6 updates: Now it checks for updates, about three minutes, then restarts by itself.
+    7 license_account: Accept the MSI licence, set your preferences, and wait a couple of minutes.
+    8 msi_center_default: Restart it and choose MSI Center M as the start screen when it asks.
+  power_led — Power button and status light — 3 cards
+    1 power_use: Press to turn on or sleep. Hold it to shut down.
+    2 led_states: White is on, amber is charging, blinking amber is a battery fault.
+    3 fingerprint: The power button doubles as the fingerprint reader.
+  charging — Charging and battery — 4 cards
+    1 charge_it: Plug the charger into either USB-C port. The light goes amber while it charges.
+    2 when_full: It stops at full and won't top up until it drops a little. Unplug it once it's full.
+    3 power_bank: A strong enough USB-C power bank can charge it too.
+    4 battery_care: No need to drain it first, but a full run-down once a month helps.
+  msi_center — MSI Center M — 3 cards
+    1 open_center: Press the MSI button, left of the screen.
+    2 panels: It has three panels: game stores, your game library, and settings.
+    3 msi_mode_controls: Use the D-pad to move, A to select and B to go back.
+  modes — Performance and control modes — 4 cards
+    1 user_scenario: AI Engine tunes itself, Endurance saves battery, Manual lets you set the power.
+    2 control_mode: Gamepad Mode for games, Desktop Mode for Windows.
+    3 stick_colours: In InfoMode, the stick rings show the mode: green, blue or red.
+    4 macro_buttons: M1 and M2 on the back can be set to anything, including a recorded macro.
+  quick_settings — Quick Settings — 2 cards
+    1 open_qs: Press the Quick Settings button, right of the screen.
+    2 qs_items: Power, settings, brightness and sound are always there; you can add up to twelve more.
+  connect — Wi-Fi and Bluetooth — 4 steps
+    1 open_msi_center: Press the MSI button, then choose Connection.
+    2 wifi_on: Choose Wi-Fi and switch it on.
+    3 pick_network: Pick your network and connect.
+    4 bluetooth_pair: For Bluetooth, switch it on, pick the device and follow the prompts.
+  sign_in — PIN and fingerprint — 5 steps
+    1 add_password: In Settings, Accounts, Sign-in options, add a password first.
+    2 set_pin: Then set up a Windows Hello PIN.
+    3 start_fingerprint: Now start fingerprint setup and enter your PIN.
+    4 scan_finger: Touch the power button with the same finger a few times.
+    5 add_another: You can add a second finger if you like.
+  safety — Safety and care — 4 cards
+    1 heat: Keep the vents clear, and don't use it above 35 degrees.
+    2 liquids: Keep liquids away and clean it with a dry cloth.
+    3 charger_safety: Use the MSI charger and don't cover it while it's charging.
+    4 when_to_check: Get it checked if it was dropped, got wet, or the cable is damaged.
+  support — Help and support — 3 cards
+    1 manual: The full manual is on the device itself, in the Windows folder.
+    2 battery_calibration: Battery calibration is in MSI Center M, under Settings, Service.
+    3 contact: MSI support is at serwis at msi dot com, or through MSI Center M's Service page.
+
+Views: front, back, top, bottom
+
+Parts (id — name — view — say):
+  abxy — A/B/X/Y buttons — front #1 — The A, B, X and Y buttons are on the right of the screen, above the right stick.
+  right_stick — Right stick — front #2 — The right stick is below the A, B, X and Y buttons.
+  speakers — Stereo speakers — front #3 — The speakers are the grilles in the two lower corners of the front.
+  menu_button — Menu button — front #4 — The Menu button is the upper small button just right of the screen.
+  quick_settings_button — Quick Settings button — front #5 — Quick Settings is the lower small button just right of the screen.
+  touchscreen — Touch screen — front #6 — That's the 8-inch touch screen in the middle.
+  view_button — View button — front #7 — The View button is the upper small button just left of the screen.
+  msi_button — MSI button — front #8 — The MSI button is the lower small button just left of the screen.
+  microphone — Internal microphone — front #9 — The microphone is the small hole at the left edge of the screen.
+  left_stick — Left stick — front #10 — The left stick is at the top left of the front.
+  dpad — Directional pad — front #11 — The D-pad is below the left stick.
+  rear_vent — Ventilator (back) — back #12 — The vents are the two grilles on the back. Keep them uncovered.
+  m2_button — Macro 2 button — back #13 — M2 is on the back, under your right hand.
+  m1_button — Macro 1 button — back #14 — M1 is on the back, under your left hand.
+  rb — RB bumper — top #1 — RB is the lower right shoulder button.
+  rt — RT trigger — top #2 — RT is the upper right shoulder button.
+  volume — Volume buttons — top #3 — Volume is the long button on the top edge, near the right shoulder.
+  top_vent — Ventilator (top) — top #4 — The vent runs along the top edge. Keep it uncovered.
+  usb_c — Thunderbolt 4 (USB-C) ports — top #5 — The two USB-C ports are in the middle of the top edge. Either one charges it.
+  power_button — Power button — top #6 — The power button is on the top edge, left of the card reader. It's also the fingerprint reader.
+  lt — LT trigger — top #7 — LT is the upper left shoulder button.
+  lb — LB bumper — top #8 — LB is the lower left shoulder button.
+  card_reader — microSD card reader — top #9 — The microSD slot is on the top edge, between the power button and the USB-C ports.
+  audio_jack — Combo audio jack — top #10 — The headphone jack is on the top edge, left of the volume button.
+
+Lights:
+  white: On.
+  amber: Charging.
+  amber_blinking: Battery fault. If it keeps blinking, take it to an authorized service centre.
+  off: Off, asleep, or fully charged (or the charger is unplugged).
+
+Stick colours (InfoMode):
+  green: Gamepad Mode
+  blue: Desktop Mode
+  red: MSI Mode
+
+Notes:
+  use_box_charger (warning): Use the charger that came in the box.
+  first_start_on_charger (info): Keep it plugged in the first time you turn it on.
+  dont_block_vents (warning): Don't cover the vents on the top and back.
+  temperature (info): Use at up to 35 °C. Store between 0 and 60 °C.
+  battery_not_removable (info): The battery is built in and can't be replaced by the user.
+  stops_at_90 (info): Once full, it won't top up again until it drops below about 90–99 %.
+  no_liquids (warning): Keep liquids and chemicals away. Wipe it with a dry cloth.
+  get_it_checked (warning): Get it checked if it was dropped, got wet, or the cable is damaged.
+  manual_on_device (info): The full manual is on the device: C:\Windows\User Manual\User Manual.

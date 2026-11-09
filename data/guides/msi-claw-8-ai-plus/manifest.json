@@ -1,0 +1,1337 @@
+{
+  "protocol": 1,
+  "guide_id": "msi-claw-8-ai-plus",
+  "manifest_version": "2026-11-09.2",
+  "title": "MSI Claw 8 AI+ — User Guide",
+  "device": {
+    "vendor": "MSI",
+    "name": "MSI Claw 8 AI+",
+    "model": "MS-1T52",
+    "variant": "A2VM",
+    "kind": "handheld gaming PC",
+    "os": "Windows 11"
+  },
+  "url": "https://xreal-units.vercel.app/guides/msi-claw-8-ai-plus.html",
+  "language": "en",
+  "commands": [
+    "open",
+    "home",
+    "show_section",
+    "show_step",
+    "next",
+    "prev",
+    "back",
+    "show_view",
+    "highlight_part",
+    "zoom",
+    "explain_led",
+    "explain_mode_color",
+    "show_note",
+    "expand",
+    "collapse",
+    "check_step",
+    "uncheck_step",
+    "reset_progress",
+    "search",
+    "show_result",
+    "text_size",
+    "attention",
+    "clear",
+    "get_state"
+  ],
+  "views": [
+    {
+      "id": "front",
+      "title": "Front",
+      "image": "../assets/images/guides/msi-claw-8-ai-plus/front.png",
+      "w": 1129,
+      "h": 550
+    },
+    {
+      "id": "back",
+      "title": "Back",
+      "image": "../assets/images/guides/msi-claw-8-ai-plus/back.png",
+      "w": 1129,
+      "h": 394
+    },
+    {
+      "id": "top",
+      "title": "Top edge",
+      "image": "../assets/images/guides/msi-claw-8-ai-plus/top.png",
+      "w": 1120,
+      "h": 250
+    },
+    {
+      "id": "bottom",
+      "title": "Bottom edge",
+      "image": "../assets/images/guides/msi-claw-8-ai-plus/bottom.png",
+      "w": 1120,
+      "h": 167
+    }
+  ],
+  "parts": [
+    {
+      "id": "abxy",
+      "name": "A/B/X/Y buttons",
+      "number": 1,
+      "view": "front",
+      "aliases": [
+        "face buttons",
+        "a button",
+        "b button",
+        "x button",
+        "y button"
+      ],
+      "spots": [
+        {
+          "x": 912,
+          "y": 173,
+          "r": 55
+        }
+      ],
+      "what": "Game buttons. In MSI Center M: A is Enter, B is Esc, X is Page Down, Y is Page Up.",
+      "say": "The A, B, X and Y buttons are on the right of the screen, above the right stick."
+    },
+    {
+      "id": "right_stick",
+      "name": "Right stick",
+      "number": 2,
+      "view": "front",
+      "aliases": [
+        "right joystick"
+      ],
+      "spots": [
+        {
+          "x": 882,
+          "y": 262,
+          "r": 45
+        }
+      ],
+      "what": "Joystick for games. The ring around it lights up.",
+      "say": "The right stick is below the A, B, X and Y buttons."
+    },
+    {
+      "id": "speakers",
+      "name": "Stereo speakers",
+      "number": 3,
+      "view": "front",
+      "aliases": [
+        "speaker",
+        "sound"
+      ],
+      "spots": [
+        {
+          "x": 262,
+          "y": 412,
+          "r": 40
+        },
+        {
+          "x": 865,
+          "y": 412,
+          "r": 40
+        }
+      ],
+      "what": "Two speakers, in the lower corners of the front.",
+      "say": "The speakers are the grilles in the two lower corners of the front."
+    },
+    {
+      "id": "menu_button",
+      "name": "Menu button",
+      "number": 4,
+      "view": "front",
+      "aliases": [
+        "menu",
+        "three lines"
+      ],
+      "spots": [
+        {
+          "x": 843,
+          "y": 140,
+          "r": 20
+        }
+      ],
+      "what": "Opens settings or help in the current app or game.",
+      "say": "The Menu button is the upper small button just right of the screen."
+    },
+    {
+      "id": "quick_settings_button",
+      "name": "Quick Settings button",
+      "number": 5,
+      "view": "front",
+      "aliases": [
+        "quick settings"
+      ],
+      "spots": [
+        {
+          "x": 843,
+          "y": 200,
+          "r": 20
+        }
+      ],
+      "what": "Opens MSI Quick Settings without leaving the game.",
+      "say": "Quick Settings is the lower small button just right of the screen."
+    },
+    {
+      "id": "touchscreen",
+      "name": "Touch screen",
+      "number": 6,
+      "view": "front",
+      "aliases": [
+        "screen",
+        "display"
+      ],
+      "spots": [
+        {
+          "x": 565,
+          "y": 280,
+          "r": 255
+        }
+      ],
+      "what": "8-inch Full HD multi-touch screen. Use a finger or a stylus.",
+      "say": "That's the 8-inch touch screen in the middle."
+    },
+    {
+      "id": "view_button",
+      "name": "View button",
+      "number": 7,
+      "view": "front",
+      "aliases": [
+        "view",
+        "two squares"
+      ],
+      "spots": [
+        {
+          "x": 283,
+          "y": 148,
+          "r": 20
+        }
+      ],
+      "what": "Does different things depending on the app or game.",
+      "say": "The View button is the upper small button just left of the screen."
+    },
+    {
+      "id": "msi_button",
+      "name": "MSI button",
+      "number": 8,
+      "view": "front",
+      "aliases": [
+        "msi center button",
+        "msi key"
+      ],
+      "spots": [
+        {
+          "x": 283,
+          "y": 195,
+          "r": 20
+        }
+      ],
+      "what": "Opens MSI Center M.",
+      "say": "The MSI button is the lower small button just left of the screen."
+    },
+    {
+      "id": "microphone",
+      "name": "Internal microphone",
+      "number": 9,
+      "view": "front",
+      "aliases": [
+        "mic"
+      ],
+      "spots": [
+        {
+          "x": 298,
+          "y": 345,
+          "r": 14
+        }
+      ],
+      "what": "Built-in microphone, a small hole at the left edge of the screen.",
+      "say": "The microphone is the small hole at the left edge of the screen."
+    },
+    {
+      "id": "left_stick",
+      "name": "Left stick",
+      "number": 10,
+      "view": "front",
+      "aliases": [
+        "left joystick"
+      ],
+      "spots": [
+        {
+          "x": 203,
+          "y": 173,
+          "r": 45
+        }
+      ],
+      "what": "Joystick for games. The ring around it lights up.",
+      "say": "The left stick is at the top left of the front."
+    },
+    {
+      "id": "dpad",
+      "name": "Directional pad",
+      "number": 11,
+      "view": "front",
+      "aliases": [
+        "d-pad",
+        "arrows",
+        "cross"
+      ],
+      "spots": [
+        {
+          "x": 232,
+          "y": 262,
+          "r": 48
+        }
+      ],
+      "what": "Moves up, down, left and right in games and menus.",
+      "say": "The D-pad is below the left stick."
+    },
+    {
+      "id": "rear_vent",
+      "name": "Ventilator (back)",
+      "number": 12,
+      "view": "back",
+      "aliases": [
+        "back vent",
+        "fan grille",
+        "air vent"
+      ],
+      "spots": [
+        {
+          "x": 365,
+          "y": 170,
+          "r": 70
+        },
+        {
+          "x": 760,
+          "y": 170,
+          "r": 70
+        }
+      ],
+      "what": "Air vents that cool the device. Don't cover them.",
+      "say": "The vents are the two grilles on the back. Keep them uncovered."
+    },
+    {
+      "id": "m2_button",
+      "name": "Macro 2 button",
+      "number": 13,
+      "view": "back",
+      "aliases": [
+        "m2",
+        "right back button"
+      ],
+      "spots": [
+        {
+          "x": 862,
+          "y": 183,
+          "r": 30
+        }
+      ],
+      "what": "Programmable button on the back, under your right hand.",
+      "say": "M2 is on the back, under your right hand."
+    },
+    {
+      "id": "m1_button",
+      "name": "Macro 1 button",
+      "number": 14,
+      "view": "back",
+      "aliases": [
+        "m1",
+        "left back button"
+      ],
+      "spots": [
+        {
+          "x": 258,
+          "y": 183,
+          "r": 30
+        }
+      ],
+      "what": "Programmable button on the back, under your left hand.",
+      "say": "M1 is on the back, under your left hand."
+    },
+    {
+      "id": "rb",
+      "name": "RB bumper",
+      "number": 1,
+      "view": "top",
+      "aliases": [
+        "right bumper"
+      ],
+      "spots": [
+        {
+          "x": 915,
+          "y": 158,
+          "r": 30
+        }
+      ],
+      "what": "Right bumper, the lower of the two right shoulder buttons.",
+      "say": "RB is the lower right shoulder button."
+    },
+    {
+      "id": "rt",
+      "name": "RT trigger",
+      "number": 2,
+      "view": "top",
+      "aliases": [
+        "right trigger"
+      ],
+      "spots": [
+        {
+          "x": 930,
+          "y": 125,
+          "r": 35
+        }
+      ],
+      "what": "Right trigger, the upper of the two right shoulder buttons.",
+      "say": "RT is the upper right shoulder button."
+    },
+    {
+      "id": "volume",
+      "name": "Volume buttons",
+      "number": 3,
+      "view": "top",
+      "aliases": [
+        "volume up",
+        "volume down",
+        "volume rocker"
+      ],
+      "spots": [
+        {
+          "x": 770,
+          "y": 177,
+          "r": 35
+        }
+      ],
+      "what": "Turn the speaker volume up or down.",
+      "say": "Volume is the long button on the top edge, near the right shoulder."
+    },
+    {
+      "id": "top_vent",
+      "name": "Ventilator (top)",
+      "number": 4,
+      "view": "top",
+      "aliases": [
+        "top vent"
+      ],
+      "spots": [
+        {
+          "x": 575,
+          "y": 140,
+          "r": 45
+        }
+      ],
+      "what": "Air outlet along the top edge. Don't cover it.",
+      "say": "The vent runs along the top edge. Keep it uncovered."
+    },
+    {
+      "id": "usb_c",
+      "name": "Thunderbolt 4 (USB-C) ports",
+      "number": 5,
+      "view": "top",
+      "aliases": [
+        "usb",
+        "usb-c",
+        "charging port",
+        "thunderbolt",
+        "type-c",
+        "charger port"
+      ],
+      "spots": [
+        {
+          "x": 460,
+          "y": 177,
+          "r": 20
+        },
+        {
+          "x": 505,
+          "y": 177,
+          "r": 20
+        }
+      ],
+      "what": "Two USB-C ports. Either one charges the device, connects displays and accessories.",
+      "say": "The two USB-C ports are in the middle of the top edge. Either one charges it."
+    },
+    {
+      "id": "power_button",
+      "name": "Power button",
+      "number": 6,
+      "view": "top",
+      "aliases": [
+        "power",
+        "on button",
+        "start button",
+        "start",
+        "on off",
+        "fingerprint sensor",
+        "fingerprint",
+        "status light",
+        "led"
+      ],
+      "spots": [
+        {
+          "x": 340,
+          "y": 177,
+          "r": 25
+        }
+      ],
+      "what": "Press to turn on. Press while on to sleep or wake. Hold to shut down. Also the fingerprint reader and the status light.",
+      "say": "The power button is on the top edge, left of the card reader. It's also the fingerprint reader."
+    },
+    {
+      "id": "lt",
+      "name": "LT trigger",
+      "number": 7,
+      "view": "top",
+      "aliases": [
+        "left trigger"
+      ],
+      "spots": [
+        {
+          "x": 190,
+          "y": 125,
+          "r": 35
+        }
+      ],
+      "what": "Left trigger, the upper of the two left shoulder buttons.",
+      "say": "LT is the upper left shoulder button."
+    },
+    {
+      "id": "lb",
+      "name": "LB bumper",
+      "number": 8,
+      "view": "top",
+      "aliases": [
+        "left bumper"
+      ],
+      "spots": [
+        {
+          "x": 215,
+          "y": 160,
+          "r": 30
+        }
+      ],
+      "what": "Left bumper, the lower of the two left shoulder buttons.",
+      "say": "LB is the lower left shoulder button."
+    },
+    {
+      "id": "card_reader",
+      "name": "microSD card reader",
+      "number": 9,
+      "view": "top",
+      "aliases": [
+        "sd card",
+        "memory card",
+        "card slot"
+      ],
+      "spots": [
+        {
+          "x": 400,
+          "y": 178,
+          "r": 22
+        }
+      ],
+      "what": "Slot for a microSD memory card.",
+      "say": "The microSD slot is on the top edge, between the power button and the USB-C ports."
+    },
+    {
+      "id": "audio_jack",
+      "name": "Combo audio jack",
+      "number": 10,
+      "view": "top",
+      "aliases": [
+        "headphone jack",
+        "audio port",
+        "3.5 mm",
+        "headset"
+      ],
+      "spots": [
+        {
+          "x": 700,
+          "y": 173,
+          "r": 20
+        }
+      ],
+      "what": "3.5 mm jack for headphones, a microphone, or a headset with both.",
+      "say": "The headphone jack is on the top edge, left of the volume button."
+    }
+  ],
+  "leds": [
+    {
+      "id": "white",
+      "label": "White",
+      "color": "#ffffff",
+      "blink": false,
+      "meaning": "On.",
+      "say": "White means it's on."
+    },
+    {
+      "id": "amber",
+      "label": "Amber",
+      "color": "#f5a524",
+      "blink": false,
+      "meaning": "Charging.",
+      "say": "Amber means it's charging."
+    },
+    {
+      "id": "amber_blinking",
+      "label": "Blinking amber",
+      "color": "#f5a524",
+      "blink": true,
+      "severity": "warning",
+      "meaning": "Battery fault. If it keeps blinking, take it to an authorized service centre.",
+      "say": "Blinking amber means a battery fault. If it keeps blinking, it needs a service centre."
+    },
+    {
+      "id": "off",
+      "label": "Off",
+      "color": null,
+      "blink": false,
+      "meaning": "Off, asleep, or fully charged (or the charger is unplugged).",
+      "say": "No light means it's off, asleep, or fully charged."
+    }
+  ],
+  "mode_colors": [
+    {
+      "id": "green",
+      "color": "#22c55e",
+      "mode": "Gamepad Mode",
+      "meaning": "Controls work as a game controller.",
+      "say": "Green rings mean Gamepad Mode."
+    },
+    {
+      "id": "blue",
+      "color": "#3b82f6",
+      "mode": "Desktop Mode",
+      "meaning": "Controls work as mouse and keyboard for Windows.",
+      "say": "Blue rings mean Desktop Mode."
+    },
+    {
+      "id": "red",
+      "color": "#ef4444",
+      "mode": "MSI Mode",
+      "meaning": "Controls drive MSI Center M.",
+      "say": "Red rings mean MSI Mode."
+    }
+  ],
+  "notes": [
+    {
+      "id": "use_box_charger",
+      "severity": "warning",
+      "text": "Use the charger that came in the box."
+    },
+    {
+      "id": "first_start_on_charger",
+      "severity": "info",
+      "text": "Keep it plugged in the first time you turn it on."
+    },
+    {
+      "id": "dont_block_vents",
+      "severity": "warning",
+      "text": "Don't cover the vents on the top and back."
+    },
+    {
+      "id": "temperature",
+      "severity": "info",
+      "text": "Use at up to 35 °C. Store between 0 and 60 °C."
+    },
+    {
+      "id": "battery_not_removable",
+      "severity": "info",
+      "text": "The battery is built in and can't be replaced by the user."
+    },
+    {
+      "id": "stops_at_90",
+      "severity": "info",
+      "text": "Once full, it won't top up again until it drops below about 90–99 %."
+    },
+    {
+      "id": "no_liquids",
+      "severity": "warning",
+      "text": "Keep liquids and chemicals away. Wipe it with a dry cloth."
+    },
+    {
+      "id": "get_it_checked",
+      "severity": "warning",
+      "text": "Get it checked if it was dropped, got wet, or the cable is damaged."
+    },
+    {
+      "id": "manual_on_device",
+      "severity": "info",
+      "text": "The full manual is on the device: C:\\Windows\\User Manual\\User Manual."
+    }
+  ],
+  "sections": [
+    {
+      "id": "overview",
+      "title": "What's in the box",
+      "kind": "cards",
+      "summary": "Box contents and the device at a glance.",
+      "keywords": [
+        "box",
+        "contents",
+        "package",
+        "unpack",
+        "specs",
+        "specifications"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "box",
+          "title": "What's in the box",
+          "text": "The MSI Claw 8 AI+ · a Quick Start Guide · the USB-C charger and its power cord · a pouch (some models).",
+          "details": "Check everything before you start. If something is missing or damaged, contact your dealer and keep the box.",
+          "say": "In the box: the Claw, a quick start guide, and the USB-C charger with its cord."
+        },
+        {
+          "n": 2,
+          "id": "at_a_glance",
+          "title": "The device at a glance",
+          "view": "front",
+          "text": "8-inch Full HD touch screen · Windows 11 · Intel Core processor · two Thunderbolt 4 USB-C ports · microSD slot · 3.5 mm audio jack · fingerprint sensor in the power button · under 800 g.",
+          "say": "It's a Windows 11 handheld with an 8-inch touch screen, two USB-C ports and a fingerprint power button."
+        }
+      ]
+    },
+    {
+      "id": "controls_front",
+      "title": "Front and back",
+      "kind": "cards",
+      "summary": "Every button and part on the front and back.",
+      "keywords": [
+        "buttons",
+        "controls",
+        "front",
+        "back",
+        "layout",
+        "sticks",
+        "macro"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "front",
+          "title": "Front",
+          "view": "front",
+          "legend": true,
+          "text": "Sticks, D-pad, A/B/X/Y, four small buttons beside the screen, speakers and microphone.",
+          "say": "Here's the front, with every part numbered."
+        },
+        {
+          "n": 2,
+          "id": "back",
+          "title": "Back",
+          "view": "back",
+          "legend": true,
+          "text": "Two programmable buttons, M1 and M2, and the air vents.",
+          "say": "On the back: the M1 and M2 buttons and the vents."
+        }
+      ]
+    },
+    {
+      "id": "controls_top",
+      "title": "Top and bottom edges",
+      "kind": "cards",
+      "summary": "Shoulder buttons, power, ports and slots.",
+      "keywords": [
+        "ports",
+        "usb",
+        "top",
+        "edge",
+        "triggers",
+        "bumpers",
+        "power",
+        "card",
+        "audio"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "top",
+          "title": "Top edge",
+          "view": "top",
+          "legend": true,
+          "text": "Shoulder buttons, power button, microSD slot, two USB-C ports, audio jack and volume.",
+          "say": "Here's the top edge: power, card slot, USB-C ports, audio and volume."
+        },
+        {
+          "n": 2,
+          "id": "bottom",
+          "title": "Bottom edge",
+          "view": "bottom",
+          "text": "No buttons or ports on the bottom edge.",
+          "say": "There's nothing to press on the bottom edge."
+        }
+      ]
+    },
+    {
+      "id": "first_start",
+      "title": "First start",
+      "kind": "steps",
+      "summary": "Charge, power on and go through Windows setup (about 10 minutes).",
+      "keywords": [
+        "setup",
+        "set up",
+        "oobe",
+        "turn on",
+        "first time",
+        "windows setup",
+        "start"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "plug_in",
+          "title": "Plug in the charger",
+          "view": "top",
+          "parts": [
+            "usb_c"
+          ],
+          "checkable": true,
+          "note": "first_start_on_charger",
+          "camera_hint": "the top edge of the device",
+          "text": "Connect the USB-C charger from the box to either USB-C port on the top edge, then plug it into the wall.",
+          "say": "Plug the charger from the box into either USB-C port on the top edge."
+        },
+        {
+          "n": 2,
+          "id": "power_on",
+          "title": "Press the power button",
+          "view": "top",
+          "parts": [
+            "power_button"
+          ],
+          "checkable": true,
+          "camera_hint": "the power button on the top edge",
+          "text": "Press the power button once. The rings around the sticks light up while it starts, for about 10 seconds.",
+          "say": "Press the power button on the top edge once. The stick rings light up while it starts."
+        },
+        {
+          "n": 3,
+          "id": "wait_screen",
+          "title": "Wait for the screen",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "The screen can take up to a minute to come on, and Windows about two minutes to load.",
+          "say": "Give it a minute for the screen, and about two for Windows to load."
+        },
+        {
+          "n": 4,
+          "id": "region_keyboard",
+          "title": "Choose region and keyboard",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Choose your country or region, then your keyboard layout.",
+          "say": "Pick your country or region, then your keyboard layout."
+        },
+        {
+          "n": 5,
+          "id": "wifi",
+          "title": "Connect to Wi-Fi",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Choose a Wi-Fi network and connect.",
+          "say": "Connect to a Wi-Fi network."
+        },
+        {
+          "n": 6,
+          "id": "updates",
+          "title": "Let it update and restart",
+          "view": "front",
+          "checkable": true,
+          "text": "It checks for updates. This takes about 3 minutes, and the Claw restarts by itself when it's done.",
+          "say": "Now it checks for updates, about three minutes, then restarts by itself."
+        },
+        {
+          "n": 7,
+          "id": "license_account",
+          "title": "Accept the licence and finish setup",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Accept the MSI licence agreement, set your preferences, and wait a couple of minutes for Windows to finish.",
+          "say": "Accept the MSI licence, set your preferences, and wait a couple of minutes."
+        },
+        {
+          "n": 8,
+          "id": "msi_center_default",
+          "title": "Make MSI Center M the start screen",
+          "view": "front",
+          "parts": [
+            "msi_button"
+          ],
+          "checkable": true,
+          "text": "Restart the Claw and follow the prompt to make MSI Center M the start screen. Quick Settings and the MSI features need it.",
+          "details": "You can open MSI Center M any time with the MSI button, left of the screen.",
+          "say": "Restart it and choose MSI Center M as the start screen when it asks."
+        }
+      ]
+    },
+    {
+      "id": "power_led",
+      "title": "Power button and status light",
+      "kind": "cards",
+      "summary": "Turn on, sleep, shut down, and what the light colours mean.",
+      "keywords": [
+        "power",
+        "light",
+        "led",
+        "orange",
+        "amber",
+        "blinking",
+        "white",
+        "sleep",
+        "shut down",
+        "turn off"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "power_use",
+          "title": "Power button",
+          "view": "top",
+          "parts": [
+            "power_button"
+          ],
+          "text": "Press: turn on. Press while on: sleep or wake. Hold, then follow the screen: shut down.",
+          "say": "Press to turn on or sleep. Hold it to shut down."
+        },
+        {
+          "n": 2,
+          "id": "led_states",
+          "title": "Status light",
+          "screen": "led",
+          "text": "The light in the power button shows what the device is doing.",
+          "say": "White is on, amber is charging, blinking amber is a battery fault."
+        },
+        {
+          "n": 3,
+          "id": "fingerprint",
+          "title": "Fingerprint sensor",
+          "view": "top",
+          "parts": [
+            "power_button"
+          ],
+          "text": "The power button also reads your fingerprint to unlock Windows. Set it up under PIN and fingerprint.",
+          "say": "The power button doubles as the fingerprint reader."
+        }
+      ]
+    },
+    {
+      "id": "charging",
+      "title": "Charging and battery",
+      "kind": "cards",
+      "summary": "How to charge, why it stops before 100 %, and battery care.",
+      "keywords": [
+        "charge",
+        "charger",
+        "battery",
+        "power bank",
+        "adapter",
+        "plug"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "charge_it",
+          "title": "Charge it",
+          "view": "top",
+          "parts": [
+            "usb_c"
+          ],
+          "note": "use_box_charger",
+          "text": "Plug the charger from the box into either USB-C port on the top edge. The light turns amber while it charges. You can keep using it, sleep it or turn it off — charging continues.",
+          "say": "Plug the charger into either USB-C port. The light goes amber while it charges."
+        },
+        {
+          "n": 2,
+          "id": "when_full",
+          "title": "When it's full",
+          "note": "stops_at_90",
+          "text": "It stops charging when full, even with the charger connected, and won't top up again until the battery drops below about 90–99 %. Unplug the charger once it's full.",
+          "say": "It stops at full and won't top up until it drops a little. Unplug it once it's full."
+        },
+        {
+          "n": 3,
+          "id": "power_bank",
+          "title": "Power banks",
+          "text": "A USB-C power bank can run and charge it, if its output is high enough for the Claw.",
+          "say": "A strong enough USB-C power bank can charge it too."
+        },
+        {
+          "n": 4,
+          "id": "battery_care",
+          "title": "Battery care",
+          "note": "battery_not_removable",
+          "text": "No need to drain it before charging, but running it down fully once a month helps the battery last. Keep it away from moisture and heat. Not using it for a while? Turn it off and unplug the charger.",
+          "say": "No need to drain it first, but a full run-down once a month helps."
+        }
+      ]
+    },
+    {
+      "id": "msi_center",
+      "title": "MSI Center M",
+      "kind": "cards",
+      "summary": "MSI's control app: games, modes, connections and settings.",
+      "keywords": [
+        "msi center",
+        "app",
+        "launcher",
+        "library",
+        "games",
+        "settings"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "open_center",
+          "title": "Open MSI Center M",
+          "view": "front",
+          "parts": [
+            "msi_button"
+          ],
+          "text": "Press the MSI button, left of the screen. Or open MSI Center M from the desktop — it's pre-installed.",
+          "say": "Press the MSI button, left of the screen."
+        },
+        {
+          "n": 2,
+          "id": "panels",
+          "title": "Three panels",
+          "text": "Gaming Platform — install and open game stores. Game Library — start your games (controls switch to Gamepad Mode). Feature Display — User Scenario, Control Mode, News and Update, Connection, Settings.",
+          "say": "It has three panels: game stores, your game library, and settings."
+        },
+        {
+          "n": 3,
+          "id": "msi_mode_controls",
+          "title": "Buttons in MSI Center M",
+          "view": "front",
+          "parts": [
+            "abxy",
+            "dpad"
+          ],
+          "text": "D-pad: move. A: Enter. B: Esc. X: Page Down. Y: Page Up. LB: Tab. LT: Shift+Tab. You can also tap the screen.",
+          "say": "Use the D-pad to move, A to select and B to go back."
+        }
+      ]
+    },
+    {
+      "id": "modes",
+      "title": "Performance and control modes",
+      "kind": "cards",
+      "summary": "AI Engine, Endurance and Manual; Gamepad and Desktop; stick light colours; M1 and M2.",
+      "keywords": [
+        "mode",
+        "performance",
+        "battery life",
+        "tdp",
+        "fan",
+        "gamepad",
+        "desktop",
+        "colour",
+        "color",
+        "rgb",
+        "macro"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "user_scenario",
+          "title": "User Scenario",
+          "text": "AI Engine (default) tunes performance automatically. Endurance trades some speed for longer play. Manual sets CPU power to 8, 17 or 30 W, and the fan speeds.",
+          "say": "AI Engine tunes itself, Endurance saves battery, Manual lets you set the power."
+        },
+        {
+          "n": 2,
+          "id": "control_mode",
+          "title": "Control Mode",
+          "text": "Gamepad Mode is for games — remap buttons, sticks, triggers, vibration and gyro. Desktop Mode is for using Windows. Switch in MSI Center M or Quick Settings.",
+          "say": "Gamepad Mode for games, Desktop Mode for Windows."
+        },
+        {
+          "n": 3,
+          "id": "stick_colours",
+          "title": "Stick light colours",
+          "screen": "mode_color",
+          "text": "With Mystic Light set to InfoMode, the rings around the sticks show the mode.",
+          "say": "In InfoMode, the stick rings show the mode: green, blue or red."
+        },
+        {
+          "n": 4,
+          "id": "macro_buttons",
+          "title": "M1 and M2 buttons",
+          "view": "back",
+          "parts": [
+            "m1_button",
+            "m2_button"
+          ],
+          "text": "The two buttons on the back can be a button, keys, the mouse, a Windows shortcut, or a recorded macro of up to 32 inputs. Set them in Control Mode › Gamepad Mode › Key Mapping.",
+          "say": "M1 and M2 on the back can be set to anything, including a recorded macro."
+        }
+      ]
+    },
+    {
+      "id": "quick_settings",
+      "title": "Quick Settings",
+      "kind": "cards",
+      "summary": "Change settings without leaving the game.",
+      "keywords": [
+        "quick settings",
+        "brightness",
+        "volume",
+        "monitor",
+        "fps",
+        "record"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "open_qs",
+          "title": "Open Quick Settings",
+          "view": "front",
+          "parts": [
+            "quick_settings_button"
+          ],
+          "text": "Press the Quick Settings button, right of the screen. It opens over the game.",
+          "say": "Press the Quick Settings button, right of the screen."
+        },
+        {
+          "n": 2,
+          "id": "qs_items",
+          "title": "What's in it",
+          "text": "Power, Settings, Brightness and Sound are always at the top. Add up to 12 more, such as User Scenario, Control Mode, Real-time Monitor (FPS, battery, power, fans) and Record Screen.",
+          "say": "Power, settings, brightness and sound are always there; you can add up to twelve more."
+        }
+      ]
+    },
+    {
+      "id": "connect",
+      "title": "Wi-Fi and Bluetooth",
+      "kind": "steps",
+      "summary": "Connect to a network or pair a Bluetooth device.",
+      "keywords": [
+        "wifi",
+        "wi-fi",
+        "internet",
+        "network",
+        "bluetooth",
+        "pair",
+        "headphones",
+        "controller"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "open_msi_center",
+          "title": "Open Connection",
+          "view": "front",
+          "parts": [
+            "msi_button"
+          ],
+          "checkable": true,
+          "text": "Press the MSI button to open MSI Center M, then choose Connection.",
+          "say": "Press the MSI button, then choose Connection."
+        },
+        {
+          "n": 2,
+          "id": "wifi_on",
+          "title": "Turn Wi-Fi on",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Choose Wi-Fi and switch it on.",
+          "say": "Choose Wi-Fi and switch it on."
+        },
+        {
+          "n": 3,
+          "id": "pick_network",
+          "title": "Pick a network",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Pick your network from the list and connect.",
+          "say": "Pick your network and connect."
+        },
+        {
+          "n": 4,
+          "id": "bluetooth_pair",
+          "title": "Pair a Bluetooth device",
+          "view": "front",
+          "parts": [
+            "touchscreen"
+          ],
+          "checkable": true,
+          "text": "Choose Bluetooth and switch it on. Pick the device and follow the pairing prompts.",
+          "say": "For Bluetooth, switch it on, pick the device and follow the prompts."
+        }
+      ]
+    },
+    {
+      "id": "sign_in",
+      "title": "PIN and fingerprint",
+      "kind": "steps",
+      "summary": "Set up Windows Hello: password, PIN and fingerprint.",
+      "keywords": [
+        "pin",
+        "password",
+        "fingerprint",
+        "windows hello",
+        "unlock",
+        "sign in",
+        "login"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "add_password",
+          "title": "Add a password",
+          "checkable": true,
+          "text": "Open Start › Settings › Accounts › Sign-in options. Under Password, choose Add and create a password.",
+          "say": "In Settings, Accounts, Sign-in options, add a password first."
+        },
+        {
+          "n": 2,
+          "id": "set_pin",
+          "title": "Set a PIN",
+          "checkable": true,
+          "text": "Choose PIN (Windows Hello) › Set up. Confirm your password, then create a PIN.",
+          "say": "Then set up a Windows Hello PIN."
+        },
+        {
+          "n": 3,
+          "id": "start_fingerprint",
+          "title": "Start fingerprint setup",
+          "checkable": true,
+          "text": "Choose Fingerprint recognition (Windows Hello) › Set up › Get started, and enter your PIN.",
+          "say": "Now start fingerprint setup and enter your PIN."
+        },
+        {
+          "n": 4,
+          "id": "scan_finger",
+          "title": "Scan your finger",
+          "view": "top",
+          "parts": [
+            "power_button"
+          ],
+          "checkable": true,
+          "camera_hint": "the power button",
+          "text": "Touch the power button with the same finger several times, until it's recorded.",
+          "say": "Touch the power button with the same finger a few times."
+        },
+        {
+          "n": 5,
+          "id": "add_another",
+          "title": "Add another finger",
+          "checkable": true,
+          "text": "Choose Add another to record a second finger. Optional.",
+          "say": "You can add a second finger if you like."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "title": "Safety and care",
+      "kind": "cards",
+      "summary": "Heat, liquids, the charger, and when to get it checked.",
+      "keywords": [
+        "safety",
+        "heat",
+        "hot",
+        "temperature",
+        "water",
+        "wet",
+        "clean",
+        "dropped",
+        "damage"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "heat",
+          "title": "Heat and vents",
+          "view": "back",
+          "parts": [
+            "rear_vent"
+          ],
+          "note": "dont_block_vents",
+          "text": "Use it at up to 35 °C. Store it between 0 and 60 °C. Keep the vents on the top and back uncovered.",
+          "say": "Keep the vents clear, and don't use it above 35 degrees."
+        },
+        {
+          "n": 2,
+          "id": "liquids",
+          "title": "Liquids and cleaning",
+          "note": "no_liquids",
+          "text": "Keep liquids away from the openings. Don't clean it with chemicals — a dry cloth is enough.",
+          "say": "Keep liquids away and clean it with a dry cloth."
+        },
+        {
+          "n": 3,
+          "id": "charger_safety",
+          "title": "Charger",
+          "text": "Use the MSI charger and cord. Plug into an outlet you can reach. Don't cover the charger while it's in use — it gets warm. Don't put anything on the cord.",
+          "say": "Use the MSI charger and don't cover it while it's charging."
+        },
+        {
+          "n": 4,
+          "id": "when_to_check",
+          "title": "When to get it checked",
+          "note": "get_it_checked",
+          "text": "The cord or plug is damaged · liquid got inside · it was exposed to moisture · it was dropped and damaged · it's visibly broken · it doesn't work as this guide describes.",
+          "say": "Get it checked if it was dropped, got wet, or the cable is damaged."
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "title": "Help and support",
+      "kind": "cards",
+      "summary": "The full manual on the device, battery calibration, and MSI support.",
+      "keywords": [
+        "help",
+        "support",
+        "manual",
+        "contact",
+        "warranty",
+        "service",
+        "calibration"
+      ],
+      "items": [
+        {
+          "n": 1,
+          "id": "manual",
+          "title": "Full manual",
+          "note": "manual_on_device",
+          "text": "The full user manual is on the device: C:\\Windows\\User Manual\\User Manual. The QR code in the box opens the warranty service book.",
+          "say": "The full manual is on the device itself, in the Windows folder."
+        },
+        {
+          "n": 2,
+          "id": "battery_calibration",
+          "title": "Battery calibration",
+          "text": "MSI Center M › Settings › Service › Battery Calibration › Start.",
+          "say": "Battery calibration is in MSI Center M, under Settings, Service."
+        },
+        {
+          "n": 3,
+          "id": "contact",
+          "title": "MSI support",
+          "text": "MSI Center M › Settings › Service › Support opens MSI's support site. Email serwis@msi.com — replies within one working day. Phone +48 71 881 10 16, Monday to Friday, 8:00–16:00.",
+          "say": "MSI support is at serwis at msi dot com, or through MSI Center M's Service page."
+        }
+      ]
+    }
+  ]
+}
