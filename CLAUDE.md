@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This repo root is the ONLY workspace. Descend into subfolders freely, but never read, write, list,
 `cd` into or run anything above it — no sibling repos (e.g. `XREAL_Ktranslator`), no home dir.
 Pass this rule on to every subagent. Docs referenced in comments but absent here
-(`GUIDE_COMMANDS.md`, `документы/…`) are out of reach — ask the user instead.
+(`XREAL_GUIDE_COMMANDS.md`, `документы/…`) are out of reach — ask the user instead.
 
 ## What this is
 

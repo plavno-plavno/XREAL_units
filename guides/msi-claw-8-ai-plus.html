@@ -787,7 +787,7 @@ body { -webkit-font-smoothing: antialiased; }
     if (sim) simulateGlasses(evt);
   }
 
-  // What the glasses would send to the assistant (GUIDE_COMMANDS.md §7): rarely, and with the
+  // What the glasses would send to the assistant (XREAL_GUIDE_COMMANDS.md §7): rarely, and with the
   // technician's own paging coalesced into one line once they stop pressing for 1.5 s.
   function simulateGlasses(evt) {
     const st = evt.state || {};
@@ -952,7 +952,7 @@ body { -webkit-font-smoothing: antialiased; }
     });
   }
 
-  // The glasses' keys, as GUIDE_COMMANDS.md §9 maps them.
+  // The glasses' keys, as XREAL_GUIDE_COMMANDS.md §9 maps them.
   function key(k) {
     const s = currentSection();
     if (k === "plus") run({ command: "next" }, "keys");
