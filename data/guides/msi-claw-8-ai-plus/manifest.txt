@@ -1,4 +1,4 @@
-Guide msi-claw-8-ai-plus · manifest 2026-11-09.2 · protocol 1
+Guide msi-claw-8-ai-plus · manifest 2026-11-10.4 · protocol 1
 MSI Claw 8 AI+ (MS-1T52 A2VM), handheld gaming PC, Windows 11
 URL: https://xreal-units.vercel.app/guides/msi-claw-8-ai-plus.html
 
@@ -55,6 +55,16 @@ Sections (id — title — kind):
     3 start_fingerprint: Now start fingerprint setup and enter your PIN.
     4 scan_finger: Touch the power button with the same finger a few times.
     5 add_another: You can add a second finger if you like.
+  disassembly — Open the back and replace the SSD — 9 steps
+    1 shut_down: Shut it down and unplug the charger first.
+    2 face_down: Lay it screen-down on a soft cloth.
+    3 peel_seal: Peel off the white sticker at the bottom centre. There's a screw under it.
+    4 remove_screws: Unscrew all six screws on the back and keep them together.
+    5 pry_cover: Pry the back cover off with a plastic tool, then lift it away.
+    6 find_ssd: The SSD is the small card in the middle. Leave the battery below it alone.
+    7 remove_ssd: Take out the SSD screw, then slide the SSD out of its slot.
+    8 fit_new_ssd: Slide the new SSD in, press it down and put the screw back.
+    9 close_up: Put the cover back, press it home and refit the six screws.
   safety — Safety and care — 4 cards
     1 heat: Keep the vents clear, and don't use it above 35 degrees.
     2 liquids: Keep liquids away and clean it with a dry cloth.
@@ -80,8 +90,8 @@ Parts (id — name — view — say):
   left_stick — Left stick — front #10 — The left stick is at the top left of the front.
   dpad — Directional pad — front #11 — The D-pad is below the left stick.
   rear_vent — Ventilator (back) — back #12 — The vents are the two grilles on the back. Keep them uncovered.
-  m2_button — Macro 2 button — back #13 — M2 is on the back, under your right hand.
-  m1_button — Macro 1 button — back #14 — M1 is on the back, under your left hand.
+  m2_button — Macro 2 button — back #13 — M2 is on the back, under your left hand.
+  m1_button — Macro 1 button — back #14 — M1 is on the back, under your right hand.
   rb — RB bumper — top #1 — RB is the lower right shoulder button.
   rt — RT trigger — top #2 — RT is the upper right shoulder button.
   volume — Volume buttons — top #3 — Volume is the long button on the top edge, near the right shoulder.
@@ -92,6 +102,17 @@ Parts (id — name — view — say):
   lb — LB bumper — top #8 — LB is the lower left shoulder button.
   card_reader — microSD card reader — top #9 — The microSD slot is on the top edge, between the power button and the USB-C ports.
   audio_jack — Combo audio jack — top #10 — The headphone jack is on the top edge, left of the volume button.
+  back_cover — Back cover — back #15 — The back cover is the whole black back. Six screws hold it on.
+  screw_1 — Back screw 1 — back #16 — Screw 1 is top centre, on the strip above the cover.
+  screw_2 — Back screw 2 — back #17 — Screw 2 is on the right-hand grip edge, seen from the back on the left.
+  screw_3 — Back screw 3 — back #18 — Screw 3 is on the left-hand grip edge, seen from the back on the right.
+  screw_4 — Back screw 4 — back #19 — Screw 4 is in the bottom corner of the right-hand grip.
+  screw_5 — Back screw 5 — back #20 — Screw 5 is in the bottom corner of the left-hand grip.
+  screw_6 — Back screw 6 — back #21 — Screw 6 is bottom centre, under the FACTORY SEAL sticker.
+  factory_seal — FACTORY SEAL sticker — back #22 — The FACTORY SEAL sticker covers the screw at the bottom centre of the back.
+  ssd — SSD (M.2 2230) — back #23 — The SSD is the small black card in the middle, under the back cover.
+  ssd_screw — SSD screw — back #24 — One small screw at the end of the SSD holds it down.
+  battery — Battery — back #25 — The battery is the large block below the SSD. Don't touch it.
 
 Lights:
   white: On.
@@ -114,3 +135,8 @@ Notes:
   no_liquids (warning): Keep liquids and chemicals away. Wipe it with a dry cloth.
   get_it_checked (warning): Get it checked if it was dropped, got wet, or the cable is damaged.
   manual_on_device (info): The full manual is on the device: C:\Windows\User Manual\User Manual.
+  unplug_first (warning): Shut it down and unplug the charger before you open it.
+  factory_seal (warning): One screw is under the FACTORY SEAL sticker. Breaking it may affect the warranty.
+  battery_dont_touch (warning): Don't touch or press the battery. It isn't user-replaceable.
+  ssd_size (info): It takes an M.2 2230 NVMe PCIe SSD.
+  move_thermal_pad (info): If there is a thermal pad on the old SSD, move it to the new one.

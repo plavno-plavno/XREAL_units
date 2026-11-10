@@ -8,7 +8,7 @@
 window.GUIDE_MANIFEST = {
   "protocol": 1,
   "guide_id": "msi-claw-8-ai-plus",
-  "manifest_version": "2026-11-09.2",
+  "manifest_version": "2026-11-10.4",
   "title": "MSI Claw 8 AI+ — User Guide",
   "device": {
     "vendor": "MSI",
@@ -99,15 +99,15 @@ window.GUIDE_MANIFEST = {
       "what": "Air vents that cool the device. Don't cover them.",
       "say": "The vents are the two grilles on the back. Keep them uncovered." },
     { "id": "m2_button", "name": "Macro 2 button", "number": 13, "view": "back",
-      "aliases": ["m2", "right back button"],
+      "aliases": ["m2", "left back button"],
       "spots": [{ "x": 862, "y": 183, "r": 30 }],
-      "what": "Programmable button on the back, under your right hand.",
-      "say": "M2 is on the back, under your right hand." },
-    { "id": "m1_button", "name": "Macro 1 button", "number": 14, "view": "back",
-      "aliases": ["m1", "left back button"],
-      "spots": [{ "x": 258, "y": 183, "r": 30 }],
       "what": "Programmable button on the back, under your left hand.",
-      "say": "M1 is on the back, under your left hand." },
+      "say": "M2 is on the back, under your left hand." },
+    { "id": "m1_button", "name": "Macro 1 button", "number": 14, "view": "back",
+      "aliases": ["m1", "right back button"],
+      "spots": [{ "x": 258, "y": 183, "r": 30 }],
+      "what": "Programmable button on the back, under your right hand.",
+      "say": "M1 is on the back, under your right hand." },
 
     { "id": "rb", "name": "RB bumper", "number": 1, "view": "top",
       "aliases": ["right bumper"],
@@ -159,6 +159,19 @@ window.GUIDE_MANIFEST = {
       "spots": [{ "x": 700, "y": 173, "r": 20 }],
       "what": "3.5 mm jack for headphones, a microphone, or a headset with both.",
       "say": "The headphone jack is on the top edge, left of the volume button." }
+,
+
+    {"id": "back_cover", "name": "Back cover", "number": 15, "view": "back", "service": true, "aliases": ["back panel", "rear cover", "cover"], "spots": [{"x": 560, "y": 203, "r": 190}], "what": "The black back panel. Six screws hold it; under it are the SSD, the fans and the battery.", "say": "The back cover is the whole black back. Six screws hold it on."},
+    {"id": "screw_1", "name": "Back screw 1", "number": 16, "view": "back", "service": true, "aliases": ["screw 1"], "spots": [{"x": 560, "y": 43, "r": 16}], "what": "Phillips screw holding the back cover, top centre, on the strip above the cover.", "say": "Screw 1 is top centre, on the strip above the cover."},
+    {"id": "screw_2", "name": "Back screw 2", "number": 17, "view": "back", "service": true, "aliases": ["screw 2"], "spots": [{"x": 163, "y": 114, "r": 16}], "what": "Phillips screw holding the back cover, on the right-hand grip edge, seen from the back on the left.", "say": "Screw 2 is on the right-hand grip edge, seen from the back on the left."},
+    {"id": "screw_3", "name": "Back screw 3", "number": 18, "view": "back", "service": true, "aliases": ["screw 3"], "spots": [{"x": 957, "y": 114, "r": 16}], "what": "Phillips screw holding the back cover, on the left-hand grip edge, seen from the back on the right.", "say": "Screw 3 is on the left-hand grip edge, seen from the back on the right."},
+    {"id": "screw_4", "name": "Back screw 4", "number": 19, "view": "back", "service": true, "aliases": ["screw 4"], "spots": [{"x": 167, "y": 346, "r": 16}], "what": "Phillips screw holding the back cover, in the bottom corner of the right-hand grip.", "say": "Screw 4 is in the bottom corner of the right-hand grip."},
+    {"id": "screw_5", "name": "Back screw 5", "number": 20, "view": "back", "service": true, "aliases": ["screw 5"], "spots": [{"x": 953, "y": 346, "r": 16}], "what": "Phillips screw holding the back cover, in the bottom corner of the left-hand grip.", "say": "Screw 5 is in the bottom corner of the left-hand grip."},
+    {"id": "screw_6", "name": "Back screw 6", "number": 21, "view": "back", "service": true, "aliases": ["screw 6"], "spots": [{"x": 560, "y": 368, "r": 16}], "what": "Phillips screw holding the back cover, bottom centre, under the FACTORY SEAL sticker.", "say": "Screw 6 is bottom centre, under the FACTORY SEAL sticker."},
+    {"id": "factory_seal", "name": "FACTORY SEAL sticker", "number": 22, "view": "back", "service": true, "aliases": ["seal", "warranty sticker", "sticker"], "spots": [{"x": 560, "y": 368, "r": 26}], "what": "White sticker over the bottom-centre screw. Breaking it may affect the warranty.", "say": "The FACTORY SEAL sticker covers the screw at the bottom centre of the back."},
+    {"id": "ssd", "name": "SSD (M.2 2230)", "number": 23, "view": "back", "service": true, "aliases": ["drive", "storage", "m.2", "nvme", "solid state drive"], "spots": [{"x": 560, "y": 203, "r": 45}], "what": "M.2 2230 NVMe SSD in the middle, under the back cover. One screw holds it.", "say": "The SSD is the small black card in the middle, under the back cover."},
+    {"id": "ssd_screw", "name": "SSD screw", "number": 24, "view": "back", "service": true, "aliases": ["ssd retention screw"], "spots": [{"x": 514, "y": 203, "r": 14}], "what": "The single screw at the end of the SSD.", "say": "One small screw at the end of the SSD holds it down."},
+    {"id": "battery", "name": "Battery", "number": 25, "view": "back", "service": true, "aliases": ["battery pack"], "spots": [{"x": 560, "y": 289, "r": 70}], "what": "Built-in 80 Wh battery, below the SSD. It isn't user-replaceable: don't touch it.", "say": "The battery is the large block below the SSD. Don't touch it."}
   ],
 
   "leds": [
@@ -196,6 +209,12 @@ window.GUIDE_MANIFEST = {
     { "id": "no_liquids", "severity": "warning", "text": "Keep liquids and chemicals away. Wipe it with a dry cloth." },
     { "id": "get_it_checked", "severity": "warning", "text": "Get it checked if it was dropped, got wet, or the cable is damaged." },
     { "id": "manual_on_device", "severity": "info", "text": "The full manual is on the device: C:\\Windows\\User Manual\\User Manual." }
+,
+    {"id": "unplug_first", "severity": "warning", "text": "Shut it down and unplug the charger before you open it."},
+    {"id": "factory_seal", "severity": "warning", "text": "One screw is under the FACTORY SEAL sticker. Breaking it may affect the warranty."},
+    {"id": "battery_dont_touch", "severity": "warning", "text": "Don't touch or press the battery. It isn't user-replaceable."},
+    {"id": "ssd_size", "severity": "info", "text": "It takes an M.2 2230 NVMe PCIe SSD."},
+    {"id": "move_thermal_pad", "severity": "info", "text": "If there is a thermal pad on the old SSD, move it to the new one."}
   ],
 
   "sections": [
@@ -247,11 +266,13 @@ window.GUIDE_MANIFEST = {
         { "n": 1, "id": "plug_in", "title": "Plug in the charger", "view": "top", "parts": ["usb_c"],
           "checkable": true, "note": "first_start_on_charger", "camera_hint": "the top edge of the device",
           "text": "Connect the USB-C charger from the box to either USB-C port on the top edge, then plug it into the wall.",
-          "say": "Plug the charger from the box into either USB-C port on the top edge." },
+          "say": "Plug the charger from the box into either USB-C port on the top edge.",
+          "scene": {"arrows": [{"part": "usb_c", "kind": "press"}]} },
         { "n": 2, "id": "power_on", "title": "Press the power button", "view": "top", "parts": ["power_button"],
           "checkable": true, "camera_hint": "the power button on the top edge",
           "text": "Press the power button once. The rings around the sticks light up while it starts, for about 10 seconds.",
-          "say": "Press the power button on the top edge once. The stick rings light up while it starts." },
+          "say": "Press the power button on the top edge once. The stick rings light up while it starts.",
+          "scene": {"arrows": [{"part": "power_button", "kind": "press"}]} },
         { "n": 3, "id": "wait_screen", "title": "Wait for the screen", "view": "front", "parts": ["touchscreen"],
           "checkable": true,
           "text": "The screen can take up to a minute to come on, and Windows about two minutes to load.",
@@ -276,7 +297,8 @@ window.GUIDE_MANIFEST = {
           "checkable": true,
           "text": "Restart the Claw and follow the prompt to make MSI Center M the start screen. Quick Settings and the MSI features need it.",
           "details": "You can open MSI Center M any time with the MSI button, left of the screen.",
-          "say": "Restart it and choose MSI Center M as the start screen when it asks." }
+          "say": "Restart it and choose MSI Center M as the start screen when it asks.",
+          "scene": {"arrows": [{"part": "msi_button", "kind": "press"}]} }
       ]
     },
     {
@@ -286,13 +308,15 @@ window.GUIDE_MANIFEST = {
       "items": [
         { "n": 1, "id": "power_use", "title": "Power button", "view": "top", "parts": ["power_button"],
           "text": "Press: turn on. Press while on: sleep or wake. Hold, then follow the screen: shut down.",
-          "say": "Press to turn on or sleep. Hold it to shut down." },
+          "say": "Press to turn on or sleep. Hold it to shut down.",
+          "scene": {"arrows": [{"part": "power_button", "kind": "press"}]} },
         { "n": 2, "id": "led_states", "title": "Status light", "screen": "led",
           "text": "The light in the power button shows what the device is doing.",
           "say": "White is on, amber is charging, blinking amber is a battery fault." },
         { "n": 3, "id": "fingerprint", "title": "Fingerprint sensor", "view": "top", "parts": ["power_button"],
           "text": "The power button also reads your fingerprint to unlock Windows. Set it up under PIN and fingerprint.",
-          "say": "The power button doubles as the fingerprint reader." }
+          "say": "The power button doubles as the fingerprint reader.",
+          "scene": {"arrows": [{"part": "power_button", "kind": "press"}]} }
       ]
     },
     {
@@ -302,7 +326,8 @@ window.GUIDE_MANIFEST = {
       "items": [
         { "n": 1, "id": "charge_it", "title": "Charge it", "view": "top", "parts": ["usb_c"], "note": "use_box_charger",
           "text": "Plug the charger from the box into either USB-C port on the top edge. The light turns amber while it charges. You can keep using it, sleep it or turn it off — charging continues.",
-          "say": "Plug the charger into either USB-C port. The light goes amber while it charges." },
+          "say": "Plug the charger into either USB-C port. The light goes amber while it charges.",
+          "scene": {"arrows": [{"part": "usb_c", "kind": "press"}]} },
         { "n": 2, "id": "when_full", "title": "When it's full", "note": "stops_at_90",
           "text": "It stops charging when full, even with the charger connected, and won't top up again until the battery drops below about 90–99 %. Unplug the charger once it's full.",
           "say": "It stops at full and won't top up until it drops a little. Unplug it once it's full." },
@@ -321,7 +346,8 @@ window.GUIDE_MANIFEST = {
       "items": [
         { "n": 1, "id": "open_center", "title": "Open MSI Center M", "view": "front", "parts": ["msi_button"],
           "text": "Press the MSI button, left of the screen. Or open MSI Center M from the desktop — it's pre-installed.",
-          "say": "Press the MSI button, left of the screen." },
+          "say": "Press the MSI button, left of the screen.",
+          "scene": {"arrows": [{"part": "msi_button", "kind": "press"}]} },
         { "n": 2, "id": "panels", "title": "Three panels",
           "text": "Gaming Platform — install and open game stores. Game Library — start your games (controls switch to Gamepad Mode). Feature Display — User Scenario, Control Mode, News and Update, Connection, Settings.",
           "say": "It has three panels: game stores, your game library, and settings." },
@@ -346,7 +372,8 @@ window.GUIDE_MANIFEST = {
           "say": "In InfoMode, the stick rings show the mode: green, blue or red." },
         { "n": 4, "id": "macro_buttons", "title": "M1 and M2 buttons", "view": "back", "parts": ["m1_button", "m2_button"],
           "text": "The two buttons on the back can be a button, keys, the mouse, a Windows shortcut, or a recorded macro of up to 32 inputs. Set them in Control Mode › Gamepad Mode › Key Mapping.",
-          "say": "M1 and M2 on the back can be set to anything, including a recorded macro." }
+          "say": "M1 and M2 on the back can be set to anything, including a recorded macro.",
+          "scene": {"arrows": [{"part": "m1_button", "kind": "press"}, {"part": "m2_button", "kind": "press"}]} }
       ]
     },
     {
@@ -356,7 +383,8 @@ window.GUIDE_MANIFEST = {
       "items": [
         { "n": 1, "id": "open_qs", "title": "Open Quick Settings", "view": "front", "parts": ["quick_settings_button"],
           "text": "Press the Quick Settings button, right of the screen. It opens over the game.",
-          "say": "Press the Quick Settings button, right of the screen." },
+          "say": "Press the Quick Settings button, right of the screen.",
+          "scene": {"arrows": [{"part": "quick_settings_button", "kind": "press"}]} },
         { "n": 2, "id": "qs_items", "title": "What's in it",
           "text": "Power, Settings, Brightness and Sound are always at the top. Add up to 12 more, such as User Scenario, Control Mode, Real-time Monitor (FPS, battery, power, fans) and Record Screen.",
           "say": "Power, settings, brightness and sound are always there; you can add up to twelve more." }
@@ -369,7 +397,8 @@ window.GUIDE_MANIFEST = {
       "items": [
         { "n": 1, "id": "open_msi_center", "title": "Open Connection", "view": "front", "parts": ["msi_button"], "checkable": true,
           "text": "Press the MSI button to open MSI Center M, then choose Connection.",
-          "say": "Press the MSI button, then choose Connection." },
+          "say": "Press the MSI button, then choose Connection.",
+          "scene": {"arrows": [{"part": "msi_button", "kind": "press"}]} },
         { "n": 2, "id": "wifi_on", "title": "Turn Wi-Fi on", "view": "front", "parts": ["touchscreen"], "checkable": true,
           "text": "Choose Wi-Fi and switch it on.",
           "say": "Choose Wi-Fi and switch it on." },
@@ -398,10 +427,365 @@ window.GUIDE_MANIFEST = {
         { "n": 4, "id": "scan_finger", "title": "Scan your finger", "view": "top", "parts": ["power_button"], "checkable": true,
           "camera_hint": "the power button",
           "text": "Touch the power button with the same finger several times, until it's recorded.",
-          "say": "Touch the power button with the same finger a few times." },
+          "say": "Touch the power button with the same finger a few times.",
+          "scene": {"arrows": [{"part": "power_button", "kind": "press"}]} },
         { "n": 5, "id": "add_another", "title": "Add another finger", "checkable": true,
           "text": "Choose Add another to record a second finger. Optional.",
           "say": "You can add a second finger if you like." }
+      ]
+    },
+    {
+      "id": "disassembly",
+      "title": "Open the back and replace the SSD",
+      "kind": "steps",
+      "summary": "Remove the back cover and swap the M.2 2230 SSD (about 15 minutes, needs a Phillips screwdriver and a plastic pry tool).",
+      "keywords": [
+        "disassemble",
+        "disassembly",
+        "open",
+        "teardown",
+        "back cover",
+        "screws",
+        "ssd",
+        "storage",
+        "upgrade",
+        "replace drive"
+      ],
+      "source": "Not in MSI's manuals (they say to see an authorised service centre); steps from public SSD-upgrade guides.",
+      "items": [
+        {
+          "n": 1,
+          "id": "shut_down",
+          "title": "Shut it down and unplug it",
+          "view": "top",
+          "parts": [
+            "power_button",
+            "usb_c"
+          ],
+          "checkable": true,
+          "note": "unplug_first",
+          "text": "Shut down from Windows, or hold the power button until it turns off. Then unplug the charger from the USB-C port.",
+          "say": "Shut it down and unplug the charger first.",
+          "scene": {
+            "face": "top",
+            "arrows": [
+              {
+                "part": "power_button",
+                "kind": "press"
+              }
+            ]
+          }
+        },
+        {
+          "n": 2,
+          "id": "face_down",
+          "title": "Lay it screen-down",
+          "view": "back",
+          "parts": [],
+          "checkable": true,
+          "text": "Lay it screen-down on a soft, clean cloth, with the back facing you.",
+          "say": "Lay it screen-down on a soft cloth.",
+          "scene": {
+            "face": "back"
+          }
+        },
+        {
+          "n": 3,
+          "id": "peel_seal",
+          "title": "Peel off the FACTORY SEAL",
+          "view": "back",
+          "parts": [
+            "factory_seal"
+          ],
+          "checkable": true,
+          "note": "factory_seal",
+          "text": "The screw at the bottom centre is under a white FACTORY SEAL sticker. Peel it off to reach the screw.",
+          "say": "Peel off the white sticker at the bottom centre. There's a screw under it.",
+          "scene": {
+            "face": "back",
+            "removed": [
+              "factory_seal"
+            ],
+            "arrows": [
+              {
+                "part": "factory_seal",
+                "kind": "lift"
+              }
+            ]
+          }
+        },
+        {
+          "n": 4,
+          "id": "remove_screws",
+          "title": "Remove the six back screws",
+          "view": "back",
+          "parts": [
+            "screw_1",
+            "screw_2",
+            "screw_3",
+            "screw_4",
+            "screw_5",
+            "screw_6"
+          ],
+          "checkable": true,
+          "text": "Unscrew all six Phillips screws: top centre, one on each grip edge, the two bottom corners and the bottom centre. Keep them together.",
+          "say": "Unscrew all six screws on the back and keep them together.",
+          "scene": {
+            "face": "back_angle",
+            "motion": [
+              { "part": "screw_1", "kind": "unscrew" },
+              { "part": "screw_2", "kind": "unscrew" },
+              { "part": "screw_3", "kind": "unscrew" },
+              { "part": "screw_4", "kind": "unscrew" },
+              { "part": "screw_5", "kind": "unscrew" },
+              { "part": "screw_6", "kind": "unscrew" }
+            ],
+            "removed": [
+              "factory_seal",
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ],
+            "hidden": [
+              "factory_seal"
+            ],
+            "arrows": [
+              {
+                "part": "screw_1",
+                "kind": "unscrew"
+              },
+              {
+                "part": "screw_2",
+                "kind": "unscrew"
+              },
+              {
+                "part": "screw_3",
+                "kind": "unscrew"
+              },
+              {
+                "part": "screw_4",
+                "kind": "unscrew"
+              },
+              {
+                "part": "screw_5",
+                "kind": "unscrew"
+              },
+              {
+                "part": "screw_6",
+                "kind": "unscrew"
+              }
+            ]
+          }
+        },
+        {
+          "n": 5,
+          "id": "pry_cover",
+          "title": "Lift the back cover off",
+          "view": "back",
+          "parts": [
+            "back_cover"
+          ],
+          "checkable": true,
+          "text": "Work a plastic pry tool into the seam between the back cover and the frame, go round the edge to release the clips, then lift the cover off.",
+          "say": "Pry the back cover off with a plastic tool, then lift it away.",
+          "scene": {
+            "face": "back_angle",
+            "motion": [
+              { "part": "back_cover", "kind": "lift_off" }
+            ],
+            "zoom": 0.55,
+            "removed": [
+              "back_cover"
+            ],
+            "hidden": [
+              "factory_seal",
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ],
+            "arrows": [
+              {
+                "part": "back_cover",
+                "kind": "lift"
+              }
+            ]
+          }
+        },
+        {
+          "n": 6,
+          "id": "find_ssd",
+          "title": "Find the SSD",
+          "view": "back",
+          "parts": [
+            "ssd",
+            "ssd_screw"
+          ],
+          "checkable": false,
+          "note": "battery_dont_touch",
+          "text": "The SSD is the small card in the middle, held by one screw. The big block below it is the battery: don't touch it.",
+          "say": "The SSD is the small card in the middle. Leave the battery below it alone.",
+          "scene": {
+            "face": "back",
+            "hidden": [
+              "factory_seal",
+              "back_cover",
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ]
+          }
+        },
+        {
+          "n": 7,
+          "id": "remove_ssd",
+          "title": "Unscrew and slide the SSD out",
+          "view": "back",
+          "parts": [
+            "ssd_screw",
+            "ssd"
+          ],
+          "checkable": true,
+          "text": "Remove the SSD screw. The free end of the SSD rises a little; slide it out of the slot at that angle.",
+          "say": "Take out the SSD screw, then slide the SSD out of its slot.",
+          "scene": {
+            "face": "back",
+            "removed": [
+              "ssd_screw",
+              "ssd"
+            ],
+            "hidden": [
+              "factory_seal",
+              "back_cover",
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ],
+            "arrows": [
+              {
+                "part": "ssd_screw",
+                "kind": "unscrew"
+              },
+              {
+                "part": "ssd",
+                "kind": "slide"
+              }
+            ]
+          }
+        },
+        {
+          "n": 8,
+          "id": "fit_new_ssd",
+          "title": "Fit the new SSD",
+          "view": "back",
+          "parts": [
+            "ssd",
+            "ssd_screw"
+          ],
+          "checkable": true,
+          "note": "ssd_size",
+          "text": "Slide the new M.2 2230 SSD into the slot at an angle, press it down and refit the SSD screw. Move the thermal pad over if there is one.",
+          "say": "Slide the new SSD in, press it down and put the screw back.",
+          "scene": {
+            "face": "back",
+            "removed": [
+              "ssd_screw"
+            ],
+            "hidden": [
+              "factory_seal",
+              "back_cover",
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ],
+            "arrows": [
+              {
+                "part": "ssd_screw",
+                "kind": "screw"
+              }
+            ]
+          }
+        },
+        {
+          "n": 9,
+          "id": "close_up",
+          "title": "Refit the cover and screws",
+          "view": "back",
+          "parts": [
+            "back_cover",
+            "screw_1",
+            "screw_2",
+            "screw_3",
+            "screw_4",
+            "screw_5",
+            "screw_6"
+          ],
+          "checkable": true,
+          "text": "Line the cover up, press round the edge until the clips seat, then refit all six screws.",
+          "say": "Put the cover back, press it home and refit the six screws.",
+          "scene": {
+            "face": "back_angle",
+            "motion": [
+              { "part": "screw_1", "kind": "screw_in" },
+              { "part": "screw_2", "kind": "screw_in" },
+              { "part": "screw_3", "kind": "screw_in" },
+              { "part": "screw_4", "kind": "screw_in" },
+              { "part": "screw_5", "kind": "screw_in" },
+              { "part": "screw_6", "kind": "screw_in" }
+            ],
+            "removed": [
+              "screw_1",
+              "screw_2",
+              "screw_3",
+              "screw_4",
+              "screw_5",
+              "screw_6"
+            ],
+            "hidden": [
+              "factory_seal"
+            ],
+            "arrows": [
+              {
+                "part": "screw_1",
+                "kind": "screw"
+              },
+              {
+                "part": "screw_2",
+                "kind": "screw"
+              },
+              {
+                "part": "screw_3",
+                "kind": "screw"
+              },
+              {
+                "part": "screw_4",
+                "kind": "screw"
+              },
+              {
+                "part": "screw_5",
+                "kind": "screw"
+              },
+              {
+                "part": "screw_6",
+                "kind": "screw"
+              }
+            ]
+          }
+        }
       ]
     },
     {

@@ -99,6 +99,11 @@ body { -webkit-font-smoothing: antialiased; }
 .dia .zoomer { position: relative; transition: transform .45s ease; }
 .dia img { display: block; width: 100%; height: auto; }
 .dia svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* 3D view: holds the flat diagram until the model has loaded, then the shared canvas */
+.dia3d { position: relative; width: 100%; aspect-ratio: 2 / 1; border-radius: 12px; overflow: hidden; }
+.dia3d .c3d { display: none; width: 100%; height: 100%; touch-action: none; }
+.dia3d.live .c3d { display: block; }
+.dia3d.live > .dia { display: none; }
 .ring { fill: none; stroke: var(--accent); stroke-width: 7; transform-box: fill-box; transform-origin: center; animation: pulse 1.6s ease-in-out infinite; }
 .ring2 { fill: none; stroke: var(--accent); stroke-width: 3; opacity: .5; }
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.18); opacity: .55; } }
@@ -277,6 +282,12 @@ body { -webkit-font-smoothing: antialiased; }
 </div>
 
 <script src="../data/guides/msi-claw-8-ai-plus/manifest.js"></script>
+<script src="../data/guides/msi-claw-8-ai-plus/model.js"></script>
+<script type="importmap">
+{ "imports": { "three": "../assets/js/vendor/three/build/three.module.min.js",
+               "three/addons/": "../assets/js/vendor/three/examples/jsm/" } }
+</script>
+<script type="module" src="../assets/js/claw3d.js"></script>
 <script>
 (function () {
   "use strict";
@@ -596,7 +607,7 @@ body { -webkit-font-smoothing: antialiased; }
 
   // A device diagram with the given parts lit up. Everything else is dimmed while a part is lit,
   // so the eye goes straight to it; the rings pulse.
-  function diagram(viewId, lit, extraRings) {
+  function diagram(viewId, lit, extraRings, ringColour, scene) {
     const v = view(viewId);
     const spots = [];
     lit.forEach(id => { const p = part(id); if (p && p.view === viewId) p.spots.forEach(s => spots.push(s)); });
@@ -612,12 +623,27 @@ body { -webkit-font-smoothing: antialiased; }
     let origin = "50% 50%";
     const zp = S.zoomPart ? part(S.zoomPart) : (spots.length ? { spots: spots } : null);
     if (zp && zp.spots && zp.spots[0]) origin = (zp.spots[0].x / v.w * 100) + "% " + (zp.spots[0].y / v.h * 100) + "%";
-    return '<div class="dia"><div class="zoomer" style="transform:scale(' + S.zoom + ');transform-origin:' + origin + '">' +
+    const flat = '<div class="dia"><div class="zoomer" style="transform:scale(' + S.zoom + ');transform-origin:' + origin + '">' +
            '<img src="' + esc(v.image) + '" alt="' + esc(v.title) + ' of the MSI Claw 8 AI+">' + svg + "</div></div>";
+    // The 3D model takes the diagram's place once it has loaded; the flat one stays underneath
+    // as the fallback (file://, no WebGL, model still loading).
+    if (!window.GUIDE_MODEL) return flat;
+    const focus = S.zoomPart || (lit.length ? lit[0] : "");
+    return '<div class="dia3d" data-view="' + esc(viewId) + '" data-lit="' + esc(lit.join(",")) + '" data-zoom="' + S.zoom +
+           '" data-focus="' + esc(focus) + '" data-ring="' + esc(ringColour || "") + '" data-scene="' + esc(scene ? JSON.stringify(scene) : "") +
+           '">' + flat + "</div>";
   }
 
+  function attach3d() {
+    const el = $("main").querySelector(".dia3d");
+    if (el && window.Claw3D) window.Claw3D.attach(el, el.dataset.view, el.dataset.lit ? el.dataset.lit.split(",") : [],
+      { zoom: +el.dataset.zoom || 1, focus: el.dataset.focus, ring: el.dataset.ring,
+        scene: el.dataset.scene ? JSON.parse(el.dataset.scene) : null });
+  }
+  window.addEventListener("claw3d-ready", attach3d);
+
   function legend(viewId) {
-    return '<div class="legend">' + M.parts.filter(p => p.view === viewId).sort((a, b) => a.number - b.number)
+    return '<div class="legend">' + M.parts.filter(p => p.view === viewId && !p.service).sort((a, b) => a.number - b.number)
       .map(p => '<div data-part="' + p.id + '" class="' + (S.highlighted.indexOf(p.id) >= 0 ? "hl" : "") + '"><span>' + p.number + "</span>" + esc(p.name) + "</div>").join("") + "</div>";
   }
   function callout(p) {
@@ -648,7 +674,7 @@ body { -webkit-font-smoothing: antialiased; }
     else if (it.view) {
       const lit = S.highlighted.length ? S.highlighted : (it.parts || []);
       const p = S.highlighted.length ? part(S.highlighted[0]) : null;
-      right = '<div class="fig"><div class="cap">' + esc(view(it.view).title) + "</div>" + diagram(it.view, lit) +
+      right = '<div class="fig"><div class="cap">' + esc(view(it.view).title) + "</div>" + diagram(it.view, lit, "", "", it.scene) +
               (p ? '<div style="height:20px"></div>' + callout(p) : "") + "</div>";
     }
     const wide = !right;
@@ -687,7 +713,7 @@ body { -webkit-font-smoothing: antialiased; }
     if (c) ["left_stick", "right_stick"].forEach(id => part(id).spots.forEach(s => {
       rings += '<circle class="mring" cx="' + s.x + '" cy="' + s.y + '" r="' + (s.r + 6) + '" stroke="' + c.color + '"/>';
     }));
-    return '<div class="fig"><div class="cap">Front · stick rings</div>' + diagram("front", [], rings) +
+    return '<div class="fig"><div class="cap">Front · stick rings</div>' + diagram("front", [], rings, c ? c.color : "") +
       '<div class="states" style="margin-top:22px">' + M.mode_colors.map(x =>
         '<div class="' + (x.id === selected ? "sel" : "") + '" data-colour="' + x.id + '"><span class="dot" style="background:' + x.color + ";border-color:" + x.color +
         '"></span><span><b>' + esc(x.mode) + "</b> <em>— " + esc(x.meaning) + "</em></span></div>").join("") + "</div></div>";
@@ -754,6 +780,7 @@ body { -webkit-font-smoothing: antialiased; }
       counter = label + ' <span class="dots">' + s.items.map(it =>
         "<i class=\"" + (done.indexOf(it.n) >= 0 ? "done " : "") + (it.n === S.step && S.screen === "item" ? "now" : "") + "\"></i>").join("") + "</span>";
     }
+    attach3d();
     $("where").textContent = where;
     $("counter").innerHTML = counter;
     $("hint").innerHTML = hintFor();
