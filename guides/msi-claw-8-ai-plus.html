@@ -819,7 +819,7 @@ body { -webkit-font-smoothing: antialiased; }
   function simulateGlasses(evt) {
     const st = evt.state || {};
     const line = s => logLine("gl", "[glasses] guide: " + s);
-    if (evt.type === "ready") line("opened guide=" + M.guide_id + " section=" + st.section);
+    if (evt.type === "ready") line("opened guide=" + M.guide_id + " section=" + st.section + " manifest=" + M.manifest_version);
     if (evt.type === "result" && evt.ok && st.screen === "section_end" && evt.command === "next")
       line("section_end section=" + st.section + " checked=" + ((st.checked[st.section] || []).length) + "/" + st.step_count);
     if (evt.type === "state" && (evt.source === "keys" || evt.source === "touch") && st.screen !== "section_end") {

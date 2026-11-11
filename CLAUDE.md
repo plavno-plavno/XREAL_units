@@ -58,3 +58,4 @@ New files go into this structure (images → `assets/images/…`, PDFs → `asse
 ## Git
 
 Never commit `.DS_Store` or `.idea/` (both gitignored).
+Never add `Co-Authored-By: Claude` or any Claude/AI attribution to commits or PRs.

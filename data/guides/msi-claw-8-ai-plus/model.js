@@ -5,13 +5,13 @@ window.GUIDE_MODEL = {
   "url": "../assets/models/guides/msi-claw-8-ai-plus/msi_claw.glb",
   "parts": {
     "abxy": ["Button_A", "Button_B", "Button_X", "Button_Y", "Letter_A", "Letter_B", "Letter_X", "Letter_Y"],
-    "right_stick": ["Stick_R", "StickRing_R", "StickWell_R", "StickBezel_R"],
-    "left_stick": ["Stick_L", "StickRing_L", "StickWell_L", "StickBezel_L"],
-    "dpad": ["DPad", "DPad_Bezel"],
-    "menu_button": ["Button_Menu"],
-    "quick_settings_button": ["Button_QuickSettings"],
-    "view_button": ["Button_View"],
-    "msi_button": ["Button_MSICenter"],
+    "right_stick": ["Stick_R", "StickRing_R", "StickWell_R"],
+    "left_stick": ["Stick_L", "StickRing_L", "StickWell_L"],
+    "dpad": ["DPad"],
+    "menu_button": ["Button_Menu", "Icon_Menu"],
+    "quick_settings_button": ["Button_QuickSettings", "Icon_QuickSettings"],
+    "view_button": ["Button_View", "Icon_View"],
+    "msi_button": ["Button_MSICenter", "Icon_MSICenter"],
     "touchscreen": ["Screen"],
     "speakers": ["Speaker_L", "Speaker_R"],
     "microphone": ["Microphone"],
@@ -43,7 +43,7 @@ window.GUIDE_MODEL = {
     "screw_4": [0, 0, -0.014], "screw_5": [0, 0, -0.014], "screw_6": [0, 0, -0.014],
     "factory_seal": [0, -0.012, -0.008],
     "back_cover": [0, 0.14, -0.03],                // up and clear of the device: the inside shows below it
-    "ssd": [0.03, 0, -0.004],
+    "ssd": [0.012, 0, -0.012],                     // out of its slot at 45°: rises over the heat pipe beside it
     "ssd_screw": [0, 0, -0.012]
   }
 };
